@@ -118,3 +118,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.font-absans {
+  font-family: var(--font-fontAbsans);
+}
+
+.font-mattone-black {
+  font-family: var(--font-fontMattoneBlack);
+}
