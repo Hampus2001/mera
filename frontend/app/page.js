@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Calendar from "@/components/Calendar";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       </Button>
       <h1 className="font-mattone-black text-6xl">MERA</h1>
       <h2 className="font-absans text-6xl">Make</h2>
+      <Calendar />
     </div>
   );
 }
