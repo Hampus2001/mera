@@ -126,19 +126,7 @@
 .font-mattone-black {
   font-family: var(--font-fontMattoneBlack);
 }
-/* .rotating-image {
-  animation: rotate 4s linear infinite;
-  width: 200px;
-}
 
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
 @keyframes medium-spin {
   from {
     transform: rotate(0deg);
@@ -150,4 +138,23 @@
 
 .medium-rotation {
   animation: medium-spin 3.5s linear infinite;
+}
+:root {
+  --color-pinkMauve: #E0B0FF;
+  --color-pastelOrange: #FFB347;
+  --color-scarlett: #FF2400;
+  --color-malachite: #0BDA51;
+  --color-ochre: #CC7722;
+  --color-aubergine: #372528;
+  --color-chilired: #C21807;
+  --color-cobalt: #0047AB;
+  --color-coralred: #FA5053;
+  --color-amarillo: #FFEF00;
+  --color-militar: #06402B;
+  --color-cenize: #4682B4;
+  --color-apricoche: #FFC067;
+  --color-skin: #F88379;
+  --color-darkorange: #FF5C00;
+
+
 }
