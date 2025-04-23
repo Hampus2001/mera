@@ -13,3 +13,5 @@ app.use(bodyParser.json());
 app.listen(PORT, () => {
   console.log(`Bankens backend körs på http://localhost:${PORT}`);
 });
+
+//hejsan
