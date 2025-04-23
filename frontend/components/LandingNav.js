@@ -1,14 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 
 export default function LandingNav() {
+  const [open, setOpen] = useState(false);
+
+  function handleMobileMenu() {
+    setOpen((prev) => !prev);
+  }
+
   return (
-    <header className="fixed top-0 left-0 w-screen z-20 border-b">
+    <header className="fixed top-0 left-0 w-screen z-10 backdrop-blur-sm">
       <div className="flex items-center justify-between px-8 py-4">
         <div>
           <svg
-            className="w-32 lg:w-36"
+            className="w-36 lg:w-44"
             viewBox="0 0 605 99"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -35,15 +42,15 @@ export default function LandingNav() {
             />
           </svg>
         </div>
-        <nav className="space-x-8 font-absans">
+        <nav className="hidden lg:block space-x-8 font-absans">
           <Link className="cursor-pointer" href="/">
             Examples
           </Link>
           <Link className="cursor-pointer" href="/">
             Solutions
           </Link>
-          <div className="dropdown">
-            <div className="cursor-pointer  d">Resources</div>
+          <details className="dropdown">
+            <summary className="cursor-pointer">Resources</summary>
             <ul className="menu dropdown-content p-4 bg-base-200 mt-1">
               <li>
                 <a>Item</a>
@@ -52,7 +59,7 @@ export default function LandingNav() {
                 <a>Item</a>
               </li>
             </ul>
-          </div>
+          </details>
 
           <Link className="cursor-pointer" href="/">
             Pricing
@@ -64,6 +71,69 @@ export default function LandingNav() {
           </Link>
           <button className="btn">Log in</button>
         </span>
+        <nav className="block lg:hidden">
+          <button
+            onClick={handleMobileMenu}
+            className="link-hover font-mattone-bold text-xl underline-offset-8 cursor-pointer"
+          >
+            MENU
+          </button>
+          {open && (
+            <div className=" absolute top-0 left-0 w-screen h-screen z-20  overflow-hidden">
+              <ul className="flex flex-col items-center justify-center bg-base-300  w-full h-full font-mattone-bold text-4xl uppercase">
+                <span className="flex flex-col items-center justify-center gap-y-2">
+                  <li>
+                    <Link className="cursor-pointer" href="/">
+                      Examples
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="cursor-pointer" href="/">
+                      Solutions
+                    </Link>
+                  </li>
+                  <li>
+                    <details className="dropdown dropdown-center">
+                      <summary className="cursor-pointer">Resources</summary>
+                      <ul className="menu dropdown-content p-4 bg-base-300 mt-1">
+                        <li>
+                          <a>Item</a>
+                        </li>
+                        <li>
+                          <a>Item</a>
+                        </li>
+                      </ul>
+                    </details>
+                  </li>
+                  <li>
+                    <Link className="cursor-pointer" href="/">
+                      Pricing
+                    </Link>
+                  </li>
+                  <div className="divider divider-neutral"></div>
+
+                  <li>
+                    <Link className="cursor-pointer" href="/">
+                      Log In
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="cursor-pointer" href="/">
+                      Sign Up
+                    </Link>
+                  </li>
+                </span>
+
+                <button
+                  className="absolute top-4 right-8 cursor-pointer link-hover underline-offset-8 text-xl"
+                  onClick={handleMobileMenu}
+                >
+                  BACK
+                </button>
+              </ul>
+            </div>
+          )}
+        </nav>
       </div>
     </header>
   );

@@ -9,6 +9,14 @@
   font-family: var(--font-fontMattoneBlack);
 }
 
+.font-mattone-bold {
+  font-family: var(--font-fontMattoneBold);
+}
+
+.font-mattone {
+  font-family: var(--font-fontMattone);
+}
+
 .font-instrument {
   font-family: var(--font-fontInstrument);
 }
