@@ -59,7 +59,9 @@ export default function LandingNav() {
           </Link>
         </nav>
         <span className="space-x-4 py-1">
-          <button className="btn btn-secondary">Sign up</button>
+          <Link href="/signup">
+            <button className="btn btn-secondary">Sign up</button>
+          </Link>
           <button className="btn">Log in</button>
         </span>
       </div>
