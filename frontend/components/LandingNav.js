@@ -1,5 +1,5 @@
 "use client";
-import { CaretDownIcon } from "@radix-ui/react-icons";
+
 import Link from "next/link";
 
 export default function LandingNav() {
@@ -42,9 +42,9 @@ export default function LandingNav() {
           <Link className="cursor-pointer" href="/">
             Solutions
           </Link>
-          <details className="dropdown">
-            <summary className="cursor-pointer  d">Resources</summary>
-            <ul className="menu dropdown-content p-4 bg-base-200 mt-1 p-4">
+          <div className="dropdown">
+            <div className="cursor-pointer  d">Resources</div>
+            <ul className="menu dropdown-content p-4 bg-base-200 mt-1">
               <li>
                 <a>Item</a>
               </li>
@@ -52,7 +52,7 @@ export default function LandingNav() {
                 <a>Item</a>
               </li>
             </ul>
-          </details>
+          </div>
 
           <Link className="cursor-pointer" href="/">
             Pricing
