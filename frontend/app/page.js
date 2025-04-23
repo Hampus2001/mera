@@ -1,42 +1,20 @@
-import { Button } from "@/components/ui/button";
-import Calendar from "@/components/Calendar";
-import ImageRotating from "@/components/ImageRotating";
+import LandingNav from "@/components/LandingNav";
 
 export default function Home() {
   return (
-    <div>
-      <Button variant="secondary" className="font-absans bg-[var(--color-malachite)]">
-        Button
-      </Button>
-      <Button variant="secondary" className="font-absans bg-[var(--color-amarillo)]">
-        Button
-      </Button>
-      <Button variant="secondary" className="font-absans text-white bg-[var(--color-militar)]">
-        Button
-      </Button>
-      <Button variant="secondary" className="font-absans bg-[var(--color-cenize)]">
-        Button
-      </Button>
-      <Button size="lg" className="font-mattone-black bg-[var(--color-scarlett)]">
-        Button
-      </Button>
-      <Button size="lg" className="font-mattone-black bg-[var(--color-aubergine)]">
-        Button
-      </Button>
-      <Button size="lg" className="font-mattone-black bg-[var(--color-cobalt)]">
-        Button
-      </Button>
-      <Button size="lg" className="font-mattone-black bg-[var(--color-coralred)]">
-        Button
-      </Button>
-      <Button size="lg" className="font-mattone-black bg-[var(--color-ochre)]">
-        Button
-      </Button>
-      <h1 className="font-mattone-black text-6xl flex items-center justify-center ">MERA</h1>
-      <h2 className="font-absans text-6xl">Make</h2>
-      <div className="flex items-center justify-center bg-white"><ImageRotating/></div>
-      <Calendar />
-      
-    </div>
+    <main className="">
+      <LandingNav />
+      <section className="flex flex-col items-center justify-center h-screen px-20 lg:px-80 gap-y-4">
+        <h1 className="font-instrument text-6xl lg:text-8xl">Make more time</h1>
+        <h2 className="font-absans text-xl text-center mb-4 leading-snug">
+          Create Time Schedules and management systems for your business
+          instantly — so you can stay focused doing what you do best!
+        </h2>
+        <span className="flex items-center gap-4">
+          <button className="btn btn-lg btn-primary">Get Started</button>
+          <button className="btn btn-lg">Book a demo</button>
+        </span>
+      </section>
+    </main>
   );
 }

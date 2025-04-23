@@ -8,3 +8,7 @@
 .font-mattone-black {
   font-family: var(--font-fontMattoneBlack);
 }
+
+.font-instrument {
+  font-family: var(--font-fontInstrument);
+}
