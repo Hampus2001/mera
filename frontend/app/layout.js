@@ -1,5 +1,6 @@
 import "./globals.css";
 import localFont from "next/font/local";
+import WorkspaceContext from "@/context/WorkspaceContext";
 
 import { Instrument_Serif } from "next/font/google";
 
@@ -36,11 +37,13 @@ const fontMattoneBold = localFont({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${fontAbsans.variable} ${fontMattone.variable} ${fontMattoneBold.variable} ${fontMattoneBlack.variable} ${fontInstrument.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <WorkspaceContext>
+        <body
+          className={`${fontAbsans.variable} ${fontMattone.variable} ${fontMattoneBold.variable} ${fontMattoneBlack.variable} ${fontInstrument.variable} antialiased`}
+        >
+          {children}
+        </body>
+      </WorkspaceContext>
     </html>
   );
 }
