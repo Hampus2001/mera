@@ -13,7 +13,7 @@ export default function LandingNav({ variant }) {
 
   return (
     <header className="fixed top-0 left-0 w-screen z-10 backdrop-blur-sm">
-      <div className="flex items-center justify-between px-8 py-4">
+      <div className="flex items-center justify-between px-8 py-4 h-20">
         <div>
           <Link href="/">
             <svg
@@ -39,17 +39,9 @@ export default function LandingNav({ variant }) {
               <Link className="cursor-pointer" href="/">
                 Solutions
               </Link>
-              <details className="dropdown">
-                <summary className="cursor-pointer">Resources</summary>
-                <ul className="menu dropdown-content p-4 bg-base-200 mt-1">
-                  <li>
-                    <a>Item</a>
-                  </li>
-                  <li>
-                    <a>Item</a>
-                  </li>
-                </ul>
-              </details>
+              <Link className="cursor-pointer" href="/">
+                Resources
+              </Link>
 
               <Link className="cursor-pointer" href="/">
                 Pricing
