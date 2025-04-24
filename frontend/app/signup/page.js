@@ -17,6 +17,11 @@ export default function AuthPage() {
     } else {
       console.log("Skapa konto:", payload);
     }
+    //     //     // await fetch("/api/signup", {
+//     //     //   method: "POST",
+//     //     //   headers: { "Content-Type": "application/json" },
+//     //     //   body: JSON.stringify(newAccount),
+//     //     // });
 
     setUsername("");
     setPassword("");
@@ -30,7 +35,7 @@ export default function AuthPage() {
           <button
             onClick={() => setIsLogin(false)}
             className={`px-4 py-2 rounded-full ${
-              !isLogin ? "bg-black text-white" : "bg-gray-200"
+              !isLogin ? "btn" : "btn"
             }`}
           >
             Skapa konto
@@ -38,14 +43,14 @@ export default function AuthPage() {
           <button
             onClick={() => setIsLogin(true)}
             className={`px-4 py-2 rounded-full ${
-              isLogin ? "bg-black text-white" : "bg-gray-200"
+              isLogin ? "btn" : "btn"
             }`}
           >
             Logga in
           </button>
         </div>
 
-        <h1 className="font-instrument text-5xl lg:text-7xl text-center">
+        <h1 className="font-instrument text-black text-5xl lg:text-7xl text-center">
           {isLogin ? "Logga in" : "Skapa ett konto"}
         </h1>
         <p className="font-absans text-md lg:text-lg text-gray-600 text-center max-w-xl leading-snug">
