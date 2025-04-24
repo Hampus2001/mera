@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-
+import Navbar from "@/components/Navbar";
 
 export default function SignUp() {
   const [username, setUsername] = useState("");
@@ -91,10 +91,7 @@ export default function SignUp() {
               onChange={(e) => setPassword(e.target.value)}
               className="border border-gray-300 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-black"
             />
-            <button
-              type="submit"
-              className="btn btn-lg btn-primary"
-            >
+            <button type="submit" className="btn btn-lg btn-primary">
               Skapa konto
             </button>
           </form>
