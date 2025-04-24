@@ -14,56 +14,6 @@ app.listen(PORT, () => {
   console.log(`Bankens backend körs på http://localhost:${PORT}`);
 });
 
-let companies = {
-  id: 30293,
-  name: "Hemköp",
-  design_setting: "SOFT_VANILLA",
-};
-
-let users = {
-  id: 101,
-  company_id: 30293,
-  email: "test@gmail.com",
-  username: "joe doe",
-  password: "hidden",
-  role: "kassa",
-  admin: true,
-};
-
-let time = {
-  id: 101,
-  week_1: 40,
-  week_2: 38,
-  week_3: 30,
-  week_4: 36,
-  break_left: 0.24,
-  abscense: 0,
-  availabilty: 5,
-};
-
-let roles = {
-  company_id: 30293,
-  role_1: "kassa",
-  role_2: "manager",
-  role_3: "färsk",
-  role_4: "kollo",
-  role_5: "frukt",
-  role_6: "fryst",
-  role_7: "mejeri",
-  role_8: "jour",
-};
-
-let shifts = {
-  id: 1,
-  schedule_name: "myproject",
-  user_id: 101,
-  date: "23/04/25",
-  start: 6,
-  end: 15,
-  break: 1,
-  desciptions: "frukt och grönt",
-};
-
 //updatera users och pusha till usersData
 const usersData = [];
 //updatera shifts och pusha till scheduleData
@@ -72,3 +22,66 @@ const scheduleData = [];
 const userTimeData = [];
 //updatera companies och pusha till companiesData
 const companiesData = [];
+
+// functions
+
+app.post("/addEmployee", (req, res) => {
+  const data = req.body;
+
+  //Admin creates company account and admin user
+  if (data.company) {
+    //generate company id
+    const company = {
+      company_id: Date.now(),
+      company_name: data.company,
+      company_setting: "",
+    };
+    companiesData.push(company);
+
+    let adminUsers = {
+      company_id: company.company_id,
+      id: usersData.length + 100,
+      email: data.email,
+      username: data.username,
+      password: data.password,
+      role: data.role,
+      admin: data.admin,
+    };
+    //add admin to all users array
+    usersData.push(adminUsers);
+
+    res.json({
+      company_id: company.company_id,
+    });
+  }
+  //Admin adds employees
+  else {
+    let users = {
+      company_id: data.company_id,
+      id: usersData.length + 100,
+      email: data.email,
+      role: data.role,
+      username: data.username,
+      password: data.password,
+      admin: data.admin,
+    };
+    //add new user to all users array
+    usersData.push(users);
+
+    let timeData = {
+      user_id: users.id,
+      available: data.time,
+      break_left: 0,
+      abscense: 0,
+      worked_hours: 0,
+    };
+
+    //add new time object to time array
+    userTimeData.push(timeData);
+
+    res.json({
+      usersData,
+      userTimeData,
+    });
+  }
+});

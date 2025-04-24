@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function LandingNav({ variant }) {
   const [open, setOpen] = useState(false);
-  const isSignUp = variant === "signUp";
+ 
 
   function handleMobileMenu() {
     setOpen((prev) => !prev);
@@ -30,7 +30,17 @@ export default function LandingNav({ variant }) {
             </svg>
           </Link>
         </div>
-        {!isSignUp && (
+
+        {variant === "login" && (
+          <div className="font-absans text-sm text-gray-600">
+            Har du inget konto?{" "}
+            <Link href="/signup" className="underline">
+              Skapa ett här
+            </Link>
+          </div>
+        )}
+
+        {variant !== "signUp" && variant !== "login" && (
           <>
             <nav className="hidden lg:block space-x-8 font-absans">
               <Link className="cursor-pointer" href="/">
