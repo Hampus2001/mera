@@ -1,10 +1,14 @@
 import { Button } from "@/components/ui/button";
 import Calendar from "@/components/Calendar";
 import ImageRotating from "@/components/ImageRotating";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <div>
+      <Link href="/createprojects">
+      <Button className="bg-blue-600 text-white m-4">Go to create schedule</Button>
+      </Link>
       <Button variant="secondary" className="font-absans bg-[var(--color-malachite)]">
         Button
       </Button>
