@@ -17,7 +17,7 @@ export default function LandingNav({ variant }) {
         <div>
           <Link href="/">
             <svg
-              className="w-36 lg:w-44 hover:text-primary"
+              className="w-36 lg:w-44 cursor-pointer"
               viewBox="0 0 605 99"
               fill="currentColor"
               xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@ export default function LandingNav({ variant }) {
                 Pricing
               </Link>
             </nav>
-            <span className="space-x-4 py-1 hidden lg:block">
+            <span className="space-x-4 hidden lg:block">
               <Link href="/signup">
                 <button className="btn btn-secondary">Sign up</button>
               </Link>
