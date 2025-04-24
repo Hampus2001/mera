@@ -1,6 +1,14 @@
 import "./globals.css";
 import localFont from "next/font/local";
 
+import { Instrument_Serif } from "next/font/google";
+
+const fontInstrument = Instrument_Serif({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-fontInstrument",
+});
+
 const fontAbsans = localFont({
   src: "./fonts/Absans-Regular.woff",
   display: "swap",
@@ -13,11 +21,23 @@ const fontMattoneBlack = localFont({
   variable: "--font-fontMattoneBlack",
 });
 
+const fontMattone = localFont({
+  src: "./fonts/Mattone-Regular.woff",
+  display: "swap",
+  variable: "--font-fontMattone",
+});
+
+const fontMattoneBold = localFont({
+  src: "./fonts/Mattone-Bold.woff",
+  display: "swap",
+  variable: "--font-fontMattoneBold",
+});
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${fontAbsans.variable} ${fontMattoneBlack.variable} antialiased`}
+        className={`${fontAbsans.variable} ${fontMattone.variable} ${fontMattoneBold.variable} ${fontMattoneBlack.variable} ${fontInstrument.variable} antialiased`}
       >
         {children}
       </body>
