@@ -24,7 +24,7 @@ export default function AuthPage() {
 
   return (
     <>
-      <LandingNav variant={isLogin ? "login" : "signUp"} />
+      <LandingNav variant="LogInPage" />
       <section className="flex flex-col items-center justify-center min-h-screen px-6 lg:px-40 gap-y-6 bg-gradient-to-b from-white to-slate-50 pt-24">
         <div className="flex space-x-4 mb-4">
           <button
