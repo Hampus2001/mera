@@ -49,10 +49,12 @@ export default function LandingNav({ variant }) {
               </Link>
             </nav>
             <span className="space-x-4 hidden lg:block">
-              <Link href="/signup">
+              <Link href="/createWorkspace">
                 <button className="btn btn-secondary">Sign up</button>
               </Link>
-              <button className="btn">Log in</button>
+              <Link href="logIn">
+                <button className="btn">Log in</button>
+              </Link>
             </span>
             <nav className="block lg:hidden">
               <button
