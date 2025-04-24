@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
+
+
 
 export default function SignUp() {
   const [username, setUsername] = useState("");
@@ -105,5 +106,6 @@ export default function SignUp() {
         </section>
       </header>
     </div>
+  
   );
 }
