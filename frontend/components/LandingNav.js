@@ -65,7 +65,7 @@ export default function LandingNav() {
             Pricing
           </Link>
         </nav>
-        <span className="space-x-4 py-1">
+        <span className="space-x-4 py-1 hidden lg:block">
           <Link href="/signup">
             <button className="btn btn-secondary">Sign up</button>
           </Link>
@@ -83,18 +83,18 @@ export default function LandingNav() {
               <ul className="flex flex-col items-center justify-center bg-base-300  w-full h-full font-mattone-bold text-4xl uppercase">
                 <span className="flex flex-col items-center justify-center gap-y-2">
                   <li>
-                    <Link className="cursor-pointer" href="/">
+                    <Link className=" opacity-25" href="/">
                       Examples
                     </Link>
                   </li>
                   <li>
-                    <Link className="cursor-pointer" href="/">
+                    <Link className=" opacity-25" href="/">
                       Solutions
                     </Link>
                   </li>
                   <li>
                     <details className="dropdown dropdown-center">
-                      <summary className="cursor-pointer">Resources</summary>
+                      <summary className="cursor-pointer ">Resources</summary>
                       <ul className="menu dropdown-content p-4 bg-base-300 mt-1">
                         <li>
                           <a>Item</a>
@@ -106,7 +106,7 @@ export default function LandingNav() {
                     </details>
                   </li>
                   <li>
-                    <Link className="cursor-pointer" href="/">
+                    <Link className="cursor-pointer opacity-25" href="/">
                       Pricing
                     </Link>
                   </li>
