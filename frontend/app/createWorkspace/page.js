@@ -1,6 +1,7 @@
 "use client";
 import LandingNav from "@/components/LandingNav";
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
+import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 
 export default function CreateWorkspace() {
@@ -346,7 +347,7 @@ export default function CreateWorkspace() {
                 <input
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  type="password"
+                  type="text"
                   placeholder="Password"
                   className="p-2 bg-base-300"
                 />
@@ -439,14 +440,15 @@ export default function CreateWorkspace() {
           <hr></hr>
           {toggleSlide == 2 && (
             <div className="flex">
-              <button
+              <Link
+                href="/createprojects"
                 onClick={() => {
                   workspaceData();
                 }}
                 className="btn btn-lg btn-primary w-full tracking-widest"
               >
                 {users.length != 1 ? "Finish" : "Finish - Add Employees Later"}
-              </button>
+              </Link>
             </div>
           )}
         </div>
