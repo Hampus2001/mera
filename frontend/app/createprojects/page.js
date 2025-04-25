@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import LandingNav from "@/components/LandingNav";
 
 const users = [
   { id: 1, name: "Irene ", role: "UI/UX" },
