@@ -1,5 +1,5 @@
 "use client";
-import Navbar from "@/components/Navbar";
+import LandingNav from "@/components/LandingNav";
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 import { useContext, useEffect, useState } from "react";
 
@@ -204,7 +204,7 @@ export default function CreateWorkspace() {
   //TODO - html
   return (
     <>
-      <Navbar />
+      <LandingNav variant="appMode" />
       <div className="flex flex-col min-h-screen items-center p-36 gap-10 font-instrument">
         <h1 className="text-4xl tracking-widest text-center">{slideTitle}</h1>
 
