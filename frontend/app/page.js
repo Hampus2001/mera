@@ -12,7 +12,7 @@ export default function Home() {
           instantly — so you can stay focused doing what you do best!
         </h2>
         <span className="flex items-center gap-4">
-          <Link href="createWorkspace">
+          <Link href="./createWorkspace">
             <button className="btn btn-lg btn-primary">Get Started</button>
           </Link>
         </span>

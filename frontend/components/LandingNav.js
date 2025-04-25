@@ -5,19 +5,25 @@ import { useState } from "react";
 
 export default function LandingNav({ variant }) {
   const [open, setOpen] = useState(false);
-  const isLogInPage = variant === "LogInPage";
+  const isAppMode = variant === "appMode";
 
   function handleMobileMenu() {
     setOpen((prev) => !prev);
   }
 
   return (
-    <header className="fixed top-0 left-0 w-screen z-10 backdrop-blur-sm">
+    <header
+      className={`fixed top-0 left-0 w-screen z-10 backdrop-blur-sm ${
+        isAppMode ? "bg-black" : ""
+      }`}
+    >
       <div className="flex items-center justify-between px-8 py-4 h-20">
         <div>
           <Link href="/">
             <svg
-              className="w-36 lg:w-44 cursor-pointer"
+              className={`w-36 lg:w-44 cursor-pointer ${
+                isAppMode ? "text-white" : "text-black"
+              }`}
               viewBox="0 0 605 99"
               fill="currentColor"
               xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +37,7 @@ export default function LandingNav({ variant }) {
           </Link>
         </div>
 
-        {!isLogInPage && (
+        {!isAppMode && (
           <>
             <nav className="hidden lg:block space-x-8 font-absans">
               <Link className="cursor-pointer" href="/">
