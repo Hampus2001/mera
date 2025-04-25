@@ -1,5 +1,6 @@
 import LandingNav from "@/components/LandingNav";
 import Link from "next/link";
+import BigCalendar from "@/components/BigCalendar";
 
 export default function Home() {
   return (
@@ -17,7 +18,10 @@ export default function Home() {
           </Link>
         </span>
       </section>
-      <div className="h-screen"></div>
+      <div className="h-screen w-screen p-4">
+        {" "}
+        <BigCalendar />
+      </div>
     </>
   );
 }
