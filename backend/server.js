@@ -22,66 +22,53 @@ const scheduleData = [];
 const userTimeData = [];
 //updatera companies och pusha till companiesData
 const companiesData = [];
+//DB for companyRoles
+const companyRoles = [];
 
 // functions
 
-app.post("/addEmployee", (req, res) => {
+app.post("/createCompanyAccount", (req, res) => {
   const data = req.body;
 
-  //Admin creates company account and admin user
-  if (data.company) {
-    //generate company id
-    const company = {
-      company_id: Date.now(),
-      company_name: data.company,
-      company_setting: "",
-    };
-    companiesData.push(company);
+  const users = data.users;
+  const company = data.companies;
+  const roles = data.roles;
 
-    let adminUsers = {
-      company_id: company.company_id,
-      id: usersData.length + 100,
-      email: data.email,
-      username: data.username,
-      password: data.password,
-      role: data.role,
-      admin: data.admin,
-    };
-    //add admin to all users array
-    usersData.push(adminUsers);
-
-    res.json({
-      company_id: company.company_id,
-    });
+  //Create id for all users
+  for (let i = 0; i < users.length; i++) {
+    users[i].id = usersData.length + 100 + i;
   }
-  //Admin adds employees
-  else {
-    let users = {
-      company_id: data.company_id,
-      id: usersData.length + 100,
-      email: data.email,
-      role: data.role,
-      username: data.username,
-      password: data.password,
-      admin: data.admin,
-    };
-    //add new user to all users array
-    usersData.push(users);
 
-    let timeData = {
-      user_id: users.id,
-      available: data.time,
+  //Create time data for every user
+  for (let i = 0; i < users.length; i++) {
+    userTimeData.push({
+      id: users[i].id,
       break_left: 0,
       abscense: 0,
-      worked_hours: 0,
-    };
-
-    //add new time object to time array
-    userTimeData.push(timeData);
-
-    res.json({
-      usersData,
-      userTimeData,
+      availability: users[i].hours,
     });
   }
+  // Remove the `hours` property from each user
+  for (let i = 0; i < users.length; i++) {
+    delete users[i].hours;
+  }
+
+  // Create object and Add Company id to roles
+  const rolesObject = { company_id: users[0].company_id, roles: [...roles] };
+
+  //* Save data in backend variables
+  usersData.push(users);
+  companiesData.push(company);
+  companyRoles.push(rolesObject);
+
+  console.log(
+    "users",
+    usersData,
+    "company",
+    companiesData,
+    "roles",
+    companyRoles,
+    "time",
+    userTimeData
+  );
 });
