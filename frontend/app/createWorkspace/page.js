@@ -1,6 +1,9 @@
 "use client";
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 import { useContext, useEffect, useState } from "react";
+import LandingNav from "@/components/LandingNav";
+
+
 export default function CreateWorkspace() {
   const [toggleSlide, setToggleSlide] = useState(1);
   const [slideTitle, setSlideTitle] = useState("Let's set up your account!");
