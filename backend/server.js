@@ -27,6 +27,7 @@ const companyRoles = [];
 
 // functions
 
+//* Create Company and Sign up
 app.post("/createCompanyAccount", (req, res) => {
   const data = req.body;
 
@@ -71,4 +72,20 @@ app.post("/createCompanyAccount", (req, res) => {
     "time",
     userTimeData
   );
+});
+
+//*Create schedule
+
+app.post("/sendUsers", (req, res) => {
+  let company_id = req.body.contextId; // Correct: Access `req.body` for the request payload
+  console.log("Received company_id:", company_id);
+
+  //Flatten data in users array
+  const allUsers = usersData.flat();
+
+  // Filter users with the same company_id
+  const filtered = allUsers.filter((user) => user.company_id == company_id);
+
+  // Send the filtered users back to client
+  res.status(200).json(filtered);
 });

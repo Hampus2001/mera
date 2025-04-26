@@ -22,6 +22,12 @@ export default function CreateWorkspace() {
   const [companyId, setCompanyId] = useState(Date.now());
   const [users, setUsers] = useState([]);
 
+  //Send companyId to context
+  const { contextId, setContextId } = useContext(HandleWorkspaceContext);
+  useEffect(() => {
+    setContextId(companyId);
+  }, [companyId]);
+
   //TODO - functions
   //* Create admin account and company account
   function createAccount() {

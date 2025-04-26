@@ -1,20 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LandingNav from "@/components/LandingNav";
+import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 
-const users = [
+/* const users = [
   { id: 1, name: "Irene ", role: "UI/UX" },
   { id: 2, name: "Joel ", role: "UI/UX" },
   { id: 3, name: "Hampus", role: "Backend" },
   { id: 4, name: "Justus", role: "DevOps" },
   { id: 5, name: "Mohamed", role: "Frontend" },
-];
+]; */
 
 export default function UserSchedule() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [shifts, setShifts] = useState([]);
   const [newShift, setNewShift] = useState({ date: "", start: "", end: "" });
+  const { contextId } = useContext(HandleWorkspaceContext);
+  const [users, setUsers] = useState();
 
   const handleAddShift = () => {
     if (selectedUser && newShift.date && newShift.start && newShift.end) {
@@ -30,13 +33,16 @@ export default function UserSchedule() {
   };
 
   //Send data and get data from server
-
-  async function sendShift() {
-    await fetch("http://localhost:3001/addNewShift", {
+  async function getUsersAndTime() {
+    const response = await fetch("http://localhost:3001/sendUsers", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ contextId }),
     });
+
+    const filteredUsers = await response.json();
+    console.log("users", filteredUsers);
+    setUsers(filteredUsers);
   }
 
   const userShifts = shifts.filter((s) => s.userId === selectedUser?.id);
@@ -50,6 +56,10 @@ export default function UserSchedule() {
             User Schedule
           </h2>
 
+          <button className="btn btn-lg btn-primary" onClick={getUsersAndTime}>
+            test
+          </button>
+
           <select
             className="p-3 rounded-xl bg-blue-300 dark:bg-slate-600 dark:text-white text-black font-semibold"
             onChange={(e) =>
@@ -59,9 +69,9 @@ export default function UserSchedule() {
             }
           >
             <option value="">Select a user</option>
-            {users.map((user) => (
+            {users?.map((user) => (
               <option key={user.id} value={user.id}>
-                {user.name}
+                {user.username}
               </option>
             ))}
           </select>
