@@ -12,7 +12,7 @@ const fontInstrument = Instrument_Serif({
 });
 
 const fontRoboto = Roboto({
-  weight: "500",
+  weight: ["400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
   variable: "--font-fontRoboto",
 });

@@ -24,7 +24,7 @@ const localizer = dateFnsLocalizer({
 const myEventsList = [
   {
     title: "Hampus Jobbpass",
-    start: new Date(2025, 4, 25, 10, 0), // Year, Month, Date, Hour, Minute
+    start: new Date(2025, 4, 25, 10, 0),
     end: new Date(2025, 4, 25, 12, 0),
     color: "#cd1c18",
   },
@@ -40,40 +40,102 @@ const myEventsList = [
     end: new Date(2025, 4, 27, 11, 0),
     color: "#4682B4",
   },
+
   {
-    title: "Justus Jobbpass",
-    start: new Date(2025, 4, 27, 9, 0),
-    end: new Date(2025, 4, 27, 11, 0),
-    color: "#4682B4",
+    title: "Emma Förmiddagspass",
+    start: new Date(2025, 4, 28, 8, 0),
+    end: new Date(2025, 4, 28, 12, 0),
+    color: "#6a0dad",
+  },
+  {
+    title: "Oscar Eftermiddagspass",
+    start: new Date(2025, 4, 28, 13, 0),
+    end: new Date(2025, 4, 28, 17, 0),
+    color: "#ffa500",
+  },
+  {
+    title: "Maja Kvällspass",
+    start: new Date(2025, 4, 29, 17, 0),
+    end: new Date(2025, 4, 29, 21, 0),
+    color: "#20b2aa",
+  },
+  {
+    title: "Anton Heldag",
+    start: new Date(2025, 4, 30, 9, 0),
+    end: new Date(2025, 4, 30, 17, 0),
+    color: "#dc143c",
+  },
+  {
+    title: "Sofia Möte",
+    start: new Date(2025, 4, 30, 11, 0),
+    end: new Date(2025, 4, 30, 12, 0),
+    color: "#00ced1",
+  },
+  {
+    title: "Hampus Extrajobb",
+    start: new Date(2025, 4, 31, 15, 0),
+    end: new Date(2025, 4, 31, 19, 0),
+    color: "#6495ed",
+  },
+  {
+    title: "Irene Kvällsmöte",
+    start: new Date(2025, 4, 31, 18, 0),
+    end: new Date(2025, 4, 31, 20, 0),
+    color: "#ff69b4",
+  },
+  {
+    title: "Justus Morgonmöte",
+    start: new Date(2025, 4, 25, 8, 0),
+    end: new Date(2025, 4, 25, 9, 30),
+    color: "#ff69b4",
   },
 ];
 
 // Helper function to get the grid layout for the days
-const generateDays = (startOfMonth) => {
+const generateDays = (startOfMonth, events) => {
   const days = [];
   const startOfWeekDay = startOfWeek(startOfMonth);
+
   for (let i = 0; i < 42; i++) {
-    // 6 rows x 7 days
+    // 6 weeks
     const currentDay = new Date(startOfWeekDay);
     currentDay.setDate(currentDay.getDate() + i);
-    days.push(currentDay);
+
+    // Find all events for this day
+    const eventsForDay = events.filter(
+      (event) =>
+        format(event.start, "yyyy-MM-dd") === format(currentDay, "yyyy-MM-dd")
+    );
+
+    days.push({
+      date: currentDay,
+      events: eventsForDay,
+    });
   }
+
   return days;
 };
 
 const MyCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date(2025, 4, 1)); // Starting with May 2025
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedDay, setSelectedDay] = useState(null);
 
   const startOfMonth = new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),
     1
   );
-  const daysInMonth = generateDays(startOfMonth);
+
+  const daysInMonth = generateDays(startOfMonth, myEventsList);
 
   const handleEventClick = (event) => {
     setSelectedEvent(event); // Set the selected event when clicked
+  };
+
+  const handleDayClick = (day) => {
+    setSelectedDay(day);
+    setSelectedEvent(null); // optional: clear event selection when clicking a day
   };
 
   const goToNextMonth = () => {
@@ -85,71 +147,63 @@ const MyCalendar = () => {
   };
 
   return (
-    <div className="border w-full h-full bg-base-300 flex flex-col justify-start items-start gap-y-4 lg:grid lg:grid-cols-4 ">
-      {/* Header */}
-      <div className="flex flex-col w-full bg-base-200 p-4 lg:col-span-2 rounded-lg ">
-        <div className="flex justify-between items-center mb-4">
-          <button className="btn btn-outline btn-sm" onClick={goToPrevMonth}>
+    <div className=" w-full flex flex-col justify-start items-start lg:grid lg:grid-cols-4">
+      <div className=" border flex flex-col w-full p-4 lg:col-span-2 aspect-square gap-y-4">
+        <div className="flex justify-between items-center">
+          <button className="btn btn-neutral btn-sm" onClick={goToPrevMonth}>
             Prev
           </button>
-          <h2 className="text-xl font-bold">
+          <h5 className=" text-xl font-mattone-bold ">
             {format(currentDate, "MMMM yyyy")}
-          </h2>
-          <button className="btn btn-outline btn-sm" onClick={goToNextMonth}>
+          </h5>
+          <button className="btn btn-neutral btn-sm" onClick={goToNextMonth}>
             Next
           </button>
         </div>
 
         {/* Calendar Grid */}
-        <div className="grid grid-cols-7 gap-2 bg-white shadow-xl border p-4 aspect-square ">
+        <div className="grid grid-cols-7  w-full font-mattone-bold text-sm">
           {/* Weekdays Header */}
-          <div className="font-bold text-center">S</div>
-          <div className="font-bold text-center">M</div>
-          <div className="font-bold text-center">T</div>
-          <div className="font-bold text-center">W</div>
-          <div className="font-bold text-center">T</div>
-          <div className="font-bold text-center">F</div>
-          <div className="font-bold text-center">S</div>
-
+          <div className=" text-center">S</div>
+          <div className=" text-center">M</div>
+          <div className=" text-center">T</div>
+          <div className=" text-center">W</div>
+          <div className=" text-center">T</div>
+          <div className=" text-center">F</div>
+          <div className=" text-center">S</div>
+        </div>
+        <div className="grid grid-cols-7 gap-1">
           {/* Days */}
-          {daysInMonth.map((day, index) => (
+          {daysInMonth.map((dayObj, index) => (
             <div
               key={index}
-              className={`grid grid-rows-3 grid-cols-3 text-sm text-center p-4 cursor-pointer border aspect-square ${
-                day.getMonth() !== startOfMonth.getMonth()
-                  ? "text-gray-400"
-                  : "hover:bg-blue-100"
-              } rounded`}
-              onClick={() => setSelectedEvent(null)} // Deselect event when clicking on a day
+              className={` z-0 grid grid-rows-3 items-center justify-center text-sm text-center cursor-pointer aspect-square p-1 ${
+                dayObj.date.getMonth() !== startOfMonth.getMonth()
+                  ? "text-gray-400 bg-base-100"
+                  : "hover:bg-primary bg-base-300"
+              } `}
+              onClick={() => handleDayClick(dayObj)} // Deselect event when clicking on a day
             >
-              <span className="row-start-2 col-start-2">
-                {format(day, "d")}
-              </span>
+              <span className="row-start-2">{format(dayObj.date, "d")}</span>
 
               {/* Render events if any */}
-              <div className="row-start-3 col-start-2">
-                {myEventsList
-                  .filter(
-                    (event) =>
-                      format(event.start, "yyyy-MM-dd") ===
-                      format(day, "yyyy-MM-dd")
-                  )
-                  .map((event, idx) => (
+              <div className="flex flex-row items-start justify-start row-start-3">
+                {dayObj.events.map((event, idx) => (
+                  <div
+                    key={idx}
+                    className="  "
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the day click handler from triggering
+                      handleEventClick(event); // Handle event click
+                    }}
+                  >
+                    {/* Event Badge */}
                     <div
-                      key={idx}
-                      className="relative flex justify-center"
-                      onClick={(e) => {
-                        e.stopPropagation(); // Prevent the day click handler from triggering
-                        handleEventClick(event); // Handle event click
-                      }}
-                    >
-                      {/* Event Badge */}
-                      <div
-                        className="w-2 h-2 lg:w-3 lg:h-3 rounded-full   hover:opacity-75 col-start-2 row-start-3"
-                        style={{ backgroundColor: event.color, color: "#fff" }}
-                      ></div>
-                    </div>
-                  ))}
+                      className=" w-2 h-2 m-0.5 rounded-full"
+                      style={{ backgroundColor: event.color }}
+                    ></div>
+                  </div>
+                ))}
               </div>
             </div>
           ))}
@@ -157,11 +211,17 @@ const MyCalendar = () => {
       </div>
 
       {/* Event Details Section */}
-      <div className="col-span-3 col-start-3 w-full lg:w-auto bg-base-200 border-l p-4 h-full">
+      <div className="w-full lg:col-span-2">
         {selectedEvent && (
-          <div className=" p-4 bg-base-100 border shadow-lg">
-            <h3 className=" font-bold">Event Details</h3>
-            <div className="mt-2 text-sm">
+          <div className="pt-8 lg:p-4">
+            <h6 className="text-xl font-mattone-bold mb-4 lg:mb-12 lg:text-base">
+              {" "}
+              Event Details
+            </h6>
+            <div
+              className="mt-2 text-sm p-4"
+              style={{ backgroundColor: selectedEvent.color }}
+            >
               <p>
                 <strong>Title:</strong> {selectedEvent.title}
               </p>
@@ -171,6 +231,39 @@ const MyCalendar = () => {
               <p>
                 <strong>End:</strong> {format(selectedEvent.end, "Pp")}
               </p>
+              <hr className="my-2" />
+            </div>
+          </div>
+        )}
+
+        {selectedDay && !selectedEvent && (
+          <div className="pt-8 lg:p-4">
+            <h6 className="text-xl font-mattone-bold mb-4 lg:mb-14 ">
+              {format(selectedDay.date, "PPPP")}
+            </h6>
+            <div className="mt-2 text-sm">
+              {selectedDay.events.length > 0 ? (
+                selectedDay.events.map((event, idx) => (
+                  <div
+                    key={idx}
+                    className="mb-4 p-4"
+                    style={{ backgroundColor: event.color }}
+                  >
+                    <p>
+                      <strong>Title:</strong> {event.title}
+                    </p>
+                    <p>
+                      <strong>Start:</strong> {format(event.start, "Pp")}
+                    </p>
+                    <p>
+                      <strong>End:</strong> {format(event.end, "Pp")}
+                    </p>
+                    <hr className="my-2" />
+                  </div>
+                ))
+              ) : (
+                <p className="p-4">No events for this day.</p>
+              )}
             </div>
           </div>
         )}
