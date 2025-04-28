@@ -20,3 +20,7 @@
 .font-instrument {
   font-family: var(--font-fontInstrument);
 }
+
+.font-roboto {
+  font-family: var(--font-fontRoboto);
+}

@@ -13,8 +13,8 @@ export default function LandingNav({ variant }) {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-screen z-10 backdrop-blur-sm ${
-        isAppMode ? "bg-black" : ""
+      className={`fixed top-0 left-0 w-screen z-20  ${
+        isAppMode ? "bg-black" : "bg-base-100"
       }`}
     >
       <div className="flex items-center justify-between px-8 py-4 h-20">
@@ -23,7 +23,7 @@ export default function LandingNav({ variant }) {
             <svg
               className={`w-36 lg:w-44 cursor-pointer ${
                 isAppMode ? "text-white" : "text-black"
-              }`}
+              } `}
               viewBox="0 0 605 99"
               fill="currentColor"
               xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +39,8 @@ export default function LandingNav({ variant }) {
 
         {!isAppMode && (
           <>
-            <nav className="hidden lg:block space-x-8 font-absans">
+            {/* Desktop nav */}
+            <nav className="hidden lg:flex space-x-8 font-roboto">
               <Link className="cursor-pointer" href="/">
                 Examples
               </Link>
@@ -49,87 +50,70 @@ export default function LandingNav({ variant }) {
               <Link className="cursor-pointer" href="/">
                 Resources
               </Link>
-
               <Link className="cursor-pointer" href="/">
                 Pricing
               </Link>
             </nav>
-            <span className="space-x-4 hidden lg:block">
+
+            {/* Desktop buttons */}
+            <div className="hidden lg:flex space-x-4">
               <Link href="/createWorkspace">
-                <button className="btn btn-secondary">Sign up</button>
+                <button className="btn btn-neutral">Sign up</button>
               </Link>
-              <Link href="logIn">
+              <Link href="/logIn">
                 <button className="btn">Log in</button>
               </Link>
-            </span>
-            <nav className="block lg:hidden">
-              <button
-                onClick={handleMobileMenu}
-                className="link-hover font-mattone-bold text-xl underline-offset-8 cursor-pointer"
-              >
-                MENU
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="lg:hidden">
+              <button className="btn btn-ghost" onClick={handleMobileMenu}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h8m-8 6h16"
+                  />
+                </svg>
               </button>
-              {open && (
-                <div className=" absolute top-0 left-0 w-screen h-screen z-20  overflow-hidden">
-                  <ul className="flex flex-col items-center justify-center bg-base-300  w-full h-full font-mattone-bold text-4xl uppercase">
-                    <span className="flex flex-col items-center justify-center gap-y-2">
-                      <li>
-                        <Link className=" opacity-25" href="/">
-                          Examples
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className=" opacity-25" href="/">
-                          Solutions
-                        </Link>
-                      </li>
-                      <li>
-                        <details className="dropdown dropdown-center">
-                          <summary className="cursor-pointer ">
-                            Resources
-                          </summary>
-                          <ul className="menu dropdown-content p-4 bg-base-300 mt-1">
-                            <li>
-                              <a>Item</a>
-                            </li>
-                            <li>
-                              <a>Item</a>
-                            </li>
-                          </ul>
-                        </details>
-                      </li>
-                      <li>
-                        <Link className="cursor-pointer opacity-25" href="/">
-                          Pricing
-                        </Link>
-                      </li>
-                      <div className="divider divider-neutral"></div>
-
-                      <li>
-                        <Link className="cursor-pointer" href="/">
-                          Log In
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="cursor-pointer" href="/">
-                          Sign Up
-                        </Link>
-                      </li>
-                    </span>
-
-                    <button
-                      className="absolute top-4 right-8 cursor-pointer link-hover underline-offset-8 text-xl"
-                      onClick={handleMobileMenu}
-                    >
-                      BACK
-                    </button>
-                  </ul>
-                </div>
-              )}
-            </nav>
+            </div>
           </>
         )}
       </div>
+
+      {/* Mobile full-screen menu */}
+      {open && !isAppMode && (
+        <div className="fixed top-20 left-0  z-20 flex flex-col items-start justify-start font-roboto text-xl uppercase h-full px-2 w-full">
+          <nav className=" flex flex-col p-8 aspect-square w-full bg-accent">
+            <Link onClick={handleMobileMenu} href="/">
+              Examples
+            </Link>
+            <Link onClick={handleMobileMenu} href="/">
+              Solutions
+            </Link>
+            <Link onClick={handleMobileMenu} href="/">
+              Resources
+            </Link>
+            <Link onClick={handleMobileMenu} href="/">
+              Pricing
+            </Link>
+            <div className="border-t my-4"></div>
+            <Link onClick={handleMobileMenu} href="/logIn">
+              Log In
+            </Link>
+            <Link onClick={handleMobileMenu} href="/createWorkspace">
+              Sign Up
+            </Link>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
