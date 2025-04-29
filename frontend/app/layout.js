@@ -17,16 +17,22 @@ const fontRoboto = Roboto({
   variable: "--font-fontRoboto",
 });
 
+const fontDiatypeRegular = localFont({
+  src: "./fonts/ABCDiatypeEdu-Regular.woff",
+  display: "swap",
+  variable: "--font-fontDiatypeRegular",
+});
+
 const fontDiatypeMedium = localFont({
   src: "./fonts/ABCDiatypeEdu-Medium.woff",
   display: "swap",
   variable: "--font-fontDiatypeMedium",
 });
 
-const fontDiatypeRegular = localFont({
-  src: "./fonts/ABCDiatypeEdu-Regular.woff",
+const fontDiatypeBold = localFont({
+  src: "./fonts/ABCDiatypeEdu-Bold.woff",
   display: "swap",
-  variable: "--font-fontDiatypeRegular",
+  variable: "--font-fontDiatypeBold",
 });
 
 const fontAbsans = localFont({
@@ -58,7 +64,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <WorkspaceContext>
         <body
-          className={`${fontAbsans.variable} ${fontMattone.variable} ${fontMattoneBold.variable} ${fontMattoneBlack.variable} ${fontInstrument.variable} ${fontRoboto.variable} ${fontDiatypeMedium.variable} ${fontDiatypeRegular.variable} antialiased`}
+          className={`${fontAbsans.variable} ${fontMattone.variable} ${fontMattoneBold.variable} ${fontMattoneBlack.variable} ${fontInstrument.variable} ${fontRoboto.variable} ${fontDiatypeRegular.variable} ${fontDiatypeMedium.variable} ${fontDiatypeBold.variable}  antialiased`}
         >
           {children}
         </body>

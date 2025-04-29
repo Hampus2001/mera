@@ -7,7 +7,7 @@ import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
 import sv from "date-fns/locale/sv";
-import { addMonths, subMonths } from "date-fns";
+import { addMonths, subMonths, addDays, subDays } from "date-fns";
 
 const locales = {
   sv: sv,
@@ -26,68 +26,67 @@ const myEventsList = [
     title: "Hampus Jobbpass",
     start: new Date(2025, 4, 25, 10, 0),
     end: new Date(2025, 4, 25, 12, 0),
-    color: "#cd1c18",
+    color: "hsl(var(--primary))",
   },
   {
     title: "Irenes Jobbpass",
     start: new Date(2025, 4, 26, 14, 0),
     end: new Date(2025, 4, 26, 16, 0),
-    color: "#ffc067",
+    color: "hsl(var(--secondary))",
   },
   {
     title: "Justus Jobbpass",
     start: new Date(2025, 4, 27, 9, 0),
     end: new Date(2025, 4, 27, 11, 0),
-    color: "#4682B4",
+    color: "hsl(var(--accent))",
   },
-
   {
     title: "Emma Förmiddagspass",
     start: new Date(2025, 4, 28, 8, 0),
     end: new Date(2025, 4, 28, 12, 0),
-    color: "#6a0dad",
+    color: "hsl(var(--info))",
   },
   {
     title: "Oscar Eftermiddagspass",
     start: new Date(2025, 4, 28, 13, 0),
     end: new Date(2025, 4, 28, 17, 0),
-    color: "#ffa500",
+    color: "hsl(var(--warning))",
   },
   {
     title: "Maja Kvällspass",
     start: new Date(2025, 4, 29, 17, 0),
     end: new Date(2025, 4, 29, 21, 0),
-    color: "#20b2aa",
+    color: "hsl(var(--success))",
   },
   {
     title: "Anton Heldag",
     start: new Date(2025, 4, 30, 9, 0),
     end: new Date(2025, 4, 30, 17, 0),
-    color: "#dc143c",
+    color: "hsl(var(--error))",
   },
   {
     title: "Sofia Möte",
     start: new Date(2025, 4, 30, 11, 0),
     end: new Date(2025, 4, 30, 12, 0),
-    color: "#00ced1",
+    color: "hsl(var(--info))",
   },
   {
     title: "Hampus Extrajobb",
     start: new Date(2025, 4, 31, 15, 0),
     end: new Date(2025, 4, 31, 19, 0),
-    color: "#6495ed",
+    color: "hsl(var(--primary))",
   },
   {
     title: "Irene Kvällsmöte",
     start: new Date(2025, 4, 31, 18, 0),
     end: new Date(2025, 4, 31, 20, 0),
-    color: "#ff69b4",
+    color: "hsl(var(--secondary))",
   },
   {
     title: "Justus Morgonmöte",
     start: new Date(2025, 4, 25, 8, 0),
     end: new Date(2025, 4, 25, 9, 30),
-    color: "#ff69b4",
+    color: "hsl(var(--accent))",
   },
 ];
 
@@ -116,6 +115,8 @@ const generateDays = (startOfMonth, events) => {
 const MyCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date(2025, 4, 1)); // Starting with May 2025
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [expandedEventId, setExpandedEventId] = useState(null);
+
   const [selectedDay, setSelectedDay] = useState(null);
 
   const startOfMonth = new Date(
@@ -133,6 +134,7 @@ const MyCalendar = () => {
   const handleDayClick = (day) => {
     setSelectedDay(day);
     setSelectedEvent(null);
+    setExpandedEventId(null); // Collapse expanded events
   };
 
   const goToNextMonth = () => {
@@ -143,23 +145,46 @@ const MyCalendar = () => {
     setCurrentDate(subMonths(currentDate, 1));
   };
 
+  const goToPrevDay = () => {
+    if (!selectedDay) return;
+    const newDate = subDays(selectedDay.date, 1);
+    const day = daysInMonth.find(
+      (d) => format(d.date, "yyyy-MM-dd") === format(newDate, "yyyy-MM-dd")
+    );
+    if (day) setSelectedDay(day);
+  };
+
+  const goToNextDay = () => {
+    if (!selectedDay) return;
+    const newDate = addDays(selectedDay.date, 1);
+    const day = daysInMonth.find(
+      (d) => format(d.date, "yyyy-MM-dd") === format(newDate, "yyyy-MM-dd")
+    );
+    if (day) setSelectedDay(day);
+  };
+
   return (
-    <div className=" w-full flex flex-col justify-start items-start lg:grid lg:grid-cols-4 p-4">
-      <div className=" border flex flex-col w-full p-4 lg:col-span-2 aspect-square bg-base-100 ">
-        <div className="flex justify-between items-center mb-4">
-          <button className="btn btn-sm" onClick={goToPrevMonth}>
+    <div className=" w-full flex flex-col justify-start items-start lg:grid lg:grid-cols-4 px-2  ">
+      <div className=" flex flex-col w-full p-4 lg:col-span-2 aspect-square bg-warning rounded-3xl">
+        <div className="flex justify-between items-center  h-8 mb-2">
+          <button
+            className="btn btn-sm btn-app btn-neutral"
+            onClick={goToPrevMonth}
+          >
             Prev
           </button>
-          <h5 className=" text-xl font-mattone-bold ">
+          <h5 className=" text-xl font-diatype-medium leading-auto text-warning-content ">
             {format(currentDate, "MMMM yyyy")}
           </h5>
-          <button className="btn btn-sm" onClick={goToNextMonth}>
+          <button
+            className=" btn btn-sm btn-app btn-neutral"
+            onClick={goToNextMonth}
+          >
             Next
           </button>
         </div>
-        <hr className="mb-4" />
 
-        <div className="grid grid-cols-7  w-full font-mattone-bold text-sm mb-4">
+        <div className="grid grid-cols-7  w-full font-diatype-bold text-warning-content h-8">
           <div className=" text-center">S</div>
           <div className=" text-center">M</div>
           <div className=" text-center">T</div>
@@ -172,10 +197,10 @@ const MyCalendar = () => {
           {daysInMonth.map((dayObj, index) => (
             <div
               key={index}
-              className={` z-0 grid grid-rows-3 items-center justify-center text-sm text-center cursor-pointer aspect-square p-1 ${
+              className={` z-0 grid grid-rows-3 items-center justify-center font-diatype-bold  text-center  aspect-square p-1  rounded-xl ${
                 dayObj.date.getMonth() !== startOfMonth.getMonth()
-                  ? "text-gray-400 bg-base-100"
-                  : "hover:bg-primary bg-base-200"
+                  ? "text-neutral-content bg-base-100"
+                  : "hover:bg-primary-content hover:text-primary cursor-pointer text-primary-content bg-primary"
               } `}
               onClick={() => handleDayClick(dayObj)}
             >
@@ -193,74 +218,71 @@ const MyCalendar = () => {
                     }}
                   >
                     {/* Event Badge */}
-                    <div
-                      className=" w-2 h-2 m-0.5 rounded-full"
-                      style={{ backgroundColor: event.color }}
-                    ></div>
+                    <div className="bg-base-content w-2 h-2 m-0.5 rounded-full"></div>
                   </div>
                 ))}
               </div>
             </div>
           ))}
         </div>
-        <hr className="" />
       </div>
 
       {/* DAY INFO SECTION */}
-      <div className="w-full lg:col-span-2">
-        {selectedEvent && (
-          <div className="pt-8 lg:p-4">
-            <h6 className="text-xl font-mattone-bold mb-8 lg:mb-12 lg:text-base">
-              Event Details
-            </h6>
-            <div
-              className="mt-4 text-sm p-4"
-              style={{ backgroundColor: selectedEvent.color }}
-            >
-              <p>
-                <strong>Title:</strong> {selectedEvent.title}
-              </p>
-              <p>
-                <strong>Start:</strong> {format(selectedEvent.start, "Pp")}
-              </p>
-              <p>
-                <strong>End:</strong> {format(selectedEvent.end, "Pp")}
-              </p>
-              <hr className="my-2" />
+      <div className="w-full h-full lg:col-span-2 bg-warning rounded-3xl p-4 aspect-square">
+        {selectedDay && (
+          <>
+            <div className="flex justify-between items-center h-8 mb-10">
+              <button
+                className="btn btn-sm btn-app btn-neutral"
+                onClick={goToPrevDay}
+              >
+                Prev
+              </button>
+              <h5 className="text-xl font-diatype-medium text-warning-content">
+                {format(selectedDay.date, "PPPP")}
+              </h5>
+              <button
+                className="btn btn-sm btn-app btn-neutral"
+                onClick={goToNextDay}
+              >
+                Next
+              </button>
             </div>
-          </div>
-        )}
 
-        {selectedDay && !selectedEvent && (
-          <div className="pt-8 lg:p-4">
-            <h6 className="text-xl font-mattone-bold mb-4 lg:mb-14 ">
-              {format(selectedDay.date, "PPPP")}
-            </h6>
-            <div className="mt-2 text-sm">
-              {selectedDay.events.length > 0 ? (
-                selectedDay.events.map((event, idx) => (
+            {selectedDay.events.length > 0 ? (
+              selectedDay.events.map((event, idx) => {
+                const isExpanded = expandedEventId === idx;
+
+                return (
                   <div
                     key={idx}
-                    className="mb-4 p-4"
-                    style={{ backgroundColor: event.color }}
+                    onClick={() => setExpandedEventId(isExpanded ? null : idx)}
+                    className="mb-1 p-4 rounded-xl cursor-pointer bg-primary text-primary-content"
                   >
-                    <p>
-                      <strong>Title:</strong> {event.title}
-                    </p>
+                    <p className="text-md font-bold">{event.title}</p>
                     <p>
                       <strong>Start:</strong> {format(event.start, "Pp")}
                     </p>
                     <p>
                       <strong>End:</strong> {format(event.end, "Pp")}
                     </p>
-                    <hr className="my-2" />
+
+                    {isExpanded && (
+                      <>
+                        <hr className="my-2" />
+                        <p>
+                          <strong>Extra details here:</strong> For example,
+                          location, notes, or who’s attending.
+                        </p>
+                      </>
+                    )}
                   </div>
-                ))
-              ) : (
-                <p className="p-4">No events for this day.</p>
-              )}
-            </div>
-          </div>
+                );
+              })
+            ) : (
+              <p className="p-4">No events for this day.</p>
+            )}
+          </>
         )}
       </div>
     </div>

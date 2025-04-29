@@ -14,7 +14,7 @@ export default function LandingNav({ variant }) {
   return (
     <header
       className={`fixed top-0 left-0 w-screen z-20    ${
-        isAppMode ? "bg-indigo-400" : ""
+        isAppMode ? "bg-base-200" : ""
       } ${open ? "backdrop-blur-xl h-full" : ""}`}
     >
       <div
@@ -26,7 +26,7 @@ export default function LandingNav({ variant }) {
           <Link href="/">
             <svg
               className={`w-36 lg:w-44 cursor-pointer ${
-                isAppMode ? "text-neutral" : "text-neutral"
+                isAppMode ? "text-base-content" : "text-base-content"
               } `}
               viewBox="0 0 605 99"
               fill="currentColor"
@@ -44,7 +44,7 @@ export default function LandingNav({ variant }) {
         {!isAppMode && (
           <>
             {/* Desktop nav */}
-            <nav className="hidden ml--4 lg:flex space-x-8 items-center font-diatype-medium    w-full">
+            <nav className="hidden lg:flex space-x-8 items-center font-diatype-medium    w-full">
               <Link className="cursor-pointer" href="/">
                 Examples
               </Link>
@@ -98,45 +98,25 @@ export default function LandingNav({ variant }) {
       {/* Mobile full-screen menu */}
       {open && !isAppMode && (
         <div className="fixed top-16 left-0  z-20 flex flex-col items-start justify-start  text-xl h-full px-2 w-full font-diatype-medium  ">
-          <nav className=" flex flex-col px-4 pt-8 aspect-square w-full bg-indigo-300 rounded-3xl text-indigo-900 hover:text-indigo-700">
-            <Link
-              className="text-indigo-900 hover:text-indigo-400"
-              onClick={handleMobileMenu}
-              href="/"
-            >
+          <nav className=" flex flex-col px-4 pt-8 aspect-square w-full bg-error rounded-3xl text-error-content ">
+            <Link className="" onClick={handleMobileMenu} href="/">
               Examples
             </Link>
-            <Link
-              className="text-indigo-900 hover:text-indigo-400"
-              onClick={handleMobileMenu}
-              href="/"
-            >
+            <Link className="" onClick={handleMobileMenu} href="/">
               Solutions
             </Link>
-            <Link
-              className="text-indigo-900 hover:text-indigo-400"
-              onClick={handleMobileMenu}
-              href="/"
-            >
+            <Link className="" onClick={handleMobileMenu} href="/">
               Resources
             </Link>
-            <Link
-              className="text-indigo-900 hover:text-indigo-400"
-              onClick={handleMobileMenu}
-              href="/"
-            >
+            <Link className="" onClick={handleMobileMenu} href="/">
               Pricing
             </Link>
             <div className="border-t my-4"></div>
-            <Link
-              className="text-indigo-900 hover:text-indigo-400"
-              onClick={handleMobileMenu}
-              href="/logIn"
-            >
+            <Link className="" onClick={handleMobileMenu} href="/logIn">
               Log In
             </Link>
             <Link
-              className="text-indigo-900 hover:text-indigo-400"
+              className=""
               onClick={handleMobileMenu}
               href="/createWorkspace"
             >
