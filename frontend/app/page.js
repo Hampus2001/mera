@@ -43,7 +43,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <div className="h-screen w-screen p-4">
+      <div className="h-screen w-full p-4">
         {" "}
         <BigCalendar />
       </div>
