@@ -6,46 +6,91 @@ export default function Home() {
   return (
     <>
       <LandingNav />
-      <section className="flex flex-col items-center justify-center w-screen h-screen px-20 lg:px-80 gap-y-4 lg:gap-y-2 overflow-x-hidden  ">
-        <h1 className="">Make More Time</h1>
-        <h3 className="font-mattone-bold px-4 lg:px-8 text-center mb-4 leading-snug text-base lg:text-2xl ">
-          Management system for your business — so you can stay focused doing
-          what you do best!
-        </h3>
-        <div className="absolute bottom-24 lg:bottom-32 items-center gap-4 flex flex-row ">
-          <Link href="./createWorkspace">
-            <button className="btn btn-primary btn-lg lg:btn-xl ">
-              Get Started
-            </button>
-          </Link>
-          <Link href="/">
-            <button className="btn btn-malachite-500 btn-lg lg:btn-xl ">
-              Book a Demo
-            </button>
-          </Link>
-        </div>
-      </section>
-      <section className="flex flex-col px-2 lg:px-4      w-screen aspect-square lg:aspect-video">
-        <div className="w-full h-full flex items-center justify-start bg-secondary">
-          <div className=" flex flex-col w-full lg:w-1/3   px-16 py-16 ">
-            <h4 className="font-mattone-black text-xs mb-4">TIME MANAGEMENT</h4>
-            <h2 className="font-instrument text-5xl leading-auto mb-4">
-              Make More Time
-            </h2>
-
-            <p className="font-roboto leading-snug lg:mb-2">
-              Through expert insights and in-depth research, we forecast 'what's
-              next' and infuse it into our production studio. This not only
-              keeps your brand ahead but deeply connects with your audience.
-              With us, you don't just ride the wave; you direct the tide,
-              transforming trends into lasting impact.
-            </p>
+      <div className="w-screen overflow-x-hidden">
+        <section className=" container-xl mx-auto flex flex-col items-center justify-center w-full h-screen  px-8 lg:px-32 gap-y-4 lg:gap-y-16 ">
+          <h1 className=" text-center uppercase">Make More Time</h1>
+          <h3 className=" px-4 lg:px-16 text-center mb-4 leading-snug lg:leading-tight ">
+            Create your Management system for your business today — so you can
+            stay focused doing what you do best!
+          </h3>
+          <div className=" flex flex-row flex-wrap items-center justify-center gap-4 px-4 lg:px-32">
+            <Link href="./createWorkspace">
+              <button className="btn btn-primary font-absans tracking-wide  btn-lg lg:btn-xl  font-absans uppercase ">
+                Get started
+              </button>
+            </Link>
           </div>
+        </section>
+        <section className=" container-xl mx-auto flex flex-col items-center justify-center w-full h-screen  px-8 lg:px-32 gap-y-4 lg:gap-y-2 ">
+          <h3 className=" px-4 lg:px-16 text-center mb-16 leading-snug lg:leading-tight ">
+            Create your Management system for your business today — so you can
+            stay focused doing what you do best!
+          </h3>
+          <div className=" flex flex-row flex-wrap items-center justify-center gap-4 px-4 lg:px-32">
+            <Link href="./createWorkspace">
+              <button className="btn btn-primary font-absans tracking-wide  btn-lg  font-absans uppercase ">
+                Primary
+              </button>
+            </Link>
+            <Link href="/">
+              <button className="btn btn-secondary font-absans uppercase tracking-wide btn-lg">
+                Secondary
+              </button>
+            </Link>
+            <Link href="/">
+              <button className="btn btn-accent font-absans uppercase tracking-wide btn-lg ">
+                Accent
+              </button>
+            </Link>
+            <Link href="/">
+              <button className="btn btn-neutral font-absans uppercase tracking-wide  btn-lg ">
+                Neutral
+              </button>
+            </Link>
+            <Link href="./createWorkspace">
+              <button className="btn btn-info font-absans tracking-wide  btn-lg font-absans uppercase ">
+                Info
+              </button>
+            </Link>
+            <Link href="/">
+              <button className="btn btn-error font-absans tracking-wide uppercase btn-lg ">
+                ERROR
+              </button>
+            </Link>
+            <Link href="/">
+              <button className="btn btn-warning  font-absans uppercase tracking-wide btn-lg ">
+                Warning
+              </button>
+            </Link>
+            <Link href="/">
+              <button className="btn btn-success  font-absans uppercase tracking-wide  btn-lg  ">
+                SUCCESS
+              </button>
+            </Link>
+          </div>
+        </section>
+        <section className="container-xl mx-auto flex flex-col aspect-square lg:aspect-video bg-red-600">
+          <div className="w-full h-full flex items-center justify-start ">
+            <div className=" flex flex-col w-full lg:w-1/3   px-16 py-16 ">
+              <h4 className="font-mattone-black text-xs mb-4">
+                TIME MANAGEMENT
+              </h4>
+              <h2 className=" leading-tight mb-4">Make More Time</h2>
+
+              <p className=" leading-snug lg:mb-2">
+                Through expert insights and in-depth research, we forecast
+                'what's next' and infuse it into our production studio. This not
+                only keeps your brand ahead but deeply connects with your
+                audience. With us, you don't just ride the wave; you direct the
+                tide, transforming trends into lasting impact.
+              </p>
+            </div>
+          </div>
+        </section>
+        <div className="h-screen w-full bg-green-600">
+          {" "}
+          <BigCalendar />
         </div>
-      </section>
-      <div className="h-screen w-full ">
-        {" "}
-        <BigCalendar />
       </div>
     </>
   );

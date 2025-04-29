@@ -1,49 +1,45 @@
 @import "tailwindcss";
 @plugin "daisyui";
-@plugin "daisyui/theme" {
-  name: "meraTheme";
-  default: true;
-  prefersdark: false; /* set as default dark mode (prefers-color-scheme:dark) */
-  color-scheme: light;
 
-  --color-base-100: oklch(98% 0.003 247.858);
-  --color-base-200: oklch(96% 0.007 247.896);
-  --color-base-300: oklch(92% 0.013 255.508);
+@plugin "daisyui/theme" {
+  name: "mera";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(98% 0.002 247.839);
+  --color-base-200: oklch(96% 0.003 264.542);
+  --color-base-300: oklch(92% 0.006 264.531);
   --color-base-content: oklch(20% 0.042 265.755);
-  --color-primary: oklch(83% 0.145 321.434);
-  --color-primary-content: oklch(29% 0.136 325.661);
-  --color-secondary: oklch(84% 0.238 128.85);
-  --color-secondary-content: oklch(27% 0.072 132.109);
-  --color-accent: oklch(90% 0.182 98.111);
-  --color-accent-content: oklch(28% 0.066 53.813);
-  --color-neutral: oklch(12% 0.042 264.695);
-  --color-neutral-content: oklch(92% 0.004 286.32);
-  --color-info: oklch(70% 0.165 254.624);
-  --color-info-content: oklch(28% 0.091 267.935);
-  --color-success: oklch(52% 0.154 150.069);
-  --color-success-content: oklch(96% 0.044 156.743);
-  --color-warning: oklch(75% 0.183 55.934);
+  --color-primary: oklch(85% 0.199 91.936);
+  --color-primary-content: oklch(42% 0.095 57.708);
+  --color-secondary: oklch(92% 0.006 264.531);
+  --color-secondary-content: oklch(37% 0.034 259.733);
+  --color-accent: oklch(84% 0.238 128.85);
+  --color-accent-content: oklch(40% 0.101 131.063);
+  --color-neutral: oklch(21% 0.034 264.665);
+  --color-neutral-content: oklch(70% 0.022 261.325);
+  --color-info: oklch(39% 0.195 277.366);
+  --color-info-content: oklch(67% 0.182 276.935);
+  --color-success: oklch(26% 0.065 152.934);
+  --color-success-content: oklch(62% 0.194 149.214);
+  --color-warning: oklch(55% 0.163 48.998);
   --color-warning-content: oklch(27% 0.077 45.635);
   --color-error: oklch(57% 0.245 27.325);
-  --color-error-content: oklch(96% 0.015 12.422);
-
+  --color-error-content: oklch(88% 0.062 18.334);
   --radius-selector: 2rem;
   --radius-field: 2rem;
   --radius-box: 2rem;
-
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
-
   --border: 1px;
-
-  --depth: 1;
-  --noise: 1;
+  --depth: 0;
+  --noise: 0;
 }
 
 @layer base {
   h1 {
     font-size: var(--text-8xl);
-    font-family: var(--font-fontInstrument);
+    font-family: var(--font-fontMattoneBlack);
     line-height: var(--leading-tight);
   }
 
@@ -53,8 +49,8 @@
   }
 
   h3 {
-    font-size: var(--text-2xl);
-    font-family: var(--font-fontMattoneBold);
+    font-size: var(--text-3xl);
+    font-family: var(--font-fontAbsans);
   }
 
   h4 {
@@ -66,18 +62,8 @@
   li,
   ul {
     font-size: var(--text-base);
-    font-family: var(--font-fontRoboto);
+    font-family: var(--font-fontDiatypeMedium);
     font-weight: var(--font-weight-medium);
-  }
-}
-
-@media (max-width: 768px) {
-  h1 {
-    font-size: var(--text-6xl);
-  }
-
-  h3 {
-    font-size: var(--text-base);
   }
 }
 
@@ -103,4 +89,33 @@
 
 .font-roboto {
   font-family: var(--font-fontRoboto);
+}
+
+.font-diatype-regular {
+  font-family: var(--font-fontDiatypeRegular);
+}
+
+.font-diatype-medium {
+  font-family: var(--font-fontDiatypeMedium);
+}
+
+.btn-landing {
+  text-transform: uppercase;
+  font-family: var(--font-fontAbsans);
+  letter-spacing: 0.025em;
+}
+
+.btn-app {
+  font-family: var(--font-fontDiatypeRegular);
+  letter-spacing: 0.025em;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: var(--text-3xl);
+  }
+
+  h3 {
+    font-size: var(--text-xl);
+  }
 }

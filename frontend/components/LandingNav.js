@@ -13,16 +13,20 @@ export default function LandingNav({ variant }) {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-screen z-20  ${
-        isAppMode ? "bg-black" : "bg-base-100"
-      }`}
+      className={`fixed top-0 left-0 w-screen z-20    ${
+        isAppMode ? "bg-indigo-400" : ""
+      } ${open ? "backdrop-blur-xl h-full" : ""}`}
     >
-      <div className="flex items-center justify-between px-8 py-4 h-20">
+      <div
+        className={`flex items-center justify-between lg:justify-start pl-5 ${
+          isAppMode ? " lg:pl-36" : " pr-3 lg:pl-11 lg:pr-9"
+        }  h-16 lg:h-20 lg:gap-x-16`}
+      >
         <div>
           <Link href="/">
             <svg
               className={`w-36 lg:w-44 cursor-pointer ${
-                isAppMode ? "text-white" : "text-black"
+                isAppMode ? "text-neutral" : "text-neutral"
               } `}
               viewBox="0 0 605 99"
               fill="currentColor"
@@ -40,7 +44,7 @@ export default function LandingNav({ variant }) {
         {!isAppMode && (
           <>
             {/* Desktop nav */}
-            <nav className="hidden lg:flex space-x-8 font-roboto">
+            <nav className="hidden ml--4 lg:flex space-x-8 items-center font-diatype-medium    w-full">
               <Link className="cursor-pointer" href="/">
                 Examples
               </Link>
@@ -56,18 +60,21 @@ export default function LandingNav({ variant }) {
             </nav>
 
             {/* Desktop buttons */}
-            <div className="hidden lg:flex space-x-4">
+            <div className="hidden lg:flex justify-end items-center space-x-4 w-full  ">
               <Link href="/createWorkspace">
-                <button className="btn btn-neutral">Sign up</button>
+                <button className="btn btn-primary btn-app">Sign up</button>
               </Link>
               <Link href="/logIn">
-                <button className="btn">Log in</button>
+                <button className="btn btn-secondary btn-app">Log in</button>
               </Link>
             </div>
 
             {/* Mobile menu button */}
             <div className="lg:hidden">
-              <button className="btn btn-ghost" onClick={handleMobileMenu}>
+              <button
+                className="btn bg-transparent border-none"
+                onClick={handleMobileMenu}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -90,25 +97,49 @@ export default function LandingNav({ variant }) {
 
       {/* Mobile full-screen menu */}
       {open && !isAppMode && (
-        <div className="fixed top-20 left-0  z-20 flex flex-col items-start justify-start font-roboto text-xl uppercase h-full px-2 w-full">
-          <nav className=" flex flex-col p-8 aspect-square w-full bg-accent">
-            <Link onClick={handleMobileMenu} href="/">
+        <div className="fixed top-16 left-0  z-20 flex flex-col items-start justify-start  text-xl h-full px-2 w-full font-diatype-medium  ">
+          <nav className=" flex flex-col px-4 pt-8 aspect-square w-full bg-indigo-300 rounded-3xl text-indigo-900 hover:text-indigo-700">
+            <Link
+              className="text-indigo-900 hover:text-indigo-400"
+              onClick={handleMobileMenu}
+              href="/"
+            >
               Examples
             </Link>
-            <Link onClick={handleMobileMenu} href="/">
+            <Link
+              className="text-indigo-900 hover:text-indigo-400"
+              onClick={handleMobileMenu}
+              href="/"
+            >
               Solutions
             </Link>
-            <Link onClick={handleMobileMenu} href="/">
+            <Link
+              className="text-indigo-900 hover:text-indigo-400"
+              onClick={handleMobileMenu}
+              href="/"
+            >
               Resources
             </Link>
-            <Link onClick={handleMobileMenu} href="/">
+            <Link
+              className="text-indigo-900 hover:text-indigo-400"
+              onClick={handleMobileMenu}
+              href="/"
+            >
               Pricing
             </Link>
             <div className="border-t my-4"></div>
-            <Link onClick={handleMobileMenu} href="/logIn">
+            <Link
+              className="text-indigo-900 hover:text-indigo-400"
+              onClick={handleMobileMenu}
+              href="/logIn"
+            >
               Log In
             </Link>
-            <Link onClick={handleMobileMenu} href="/createWorkspace">
+            <Link
+              className="text-indigo-900 hover:text-indigo-400"
+              onClick={handleMobileMenu}
+              href="/createWorkspace"
+            >
               Sign Up
             </Link>
           </nav>

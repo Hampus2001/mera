@@ -144,8 +144,8 @@ const MyCalendar = () => {
   };
 
   return (
-    <div className=" w-full flex flex-col justify-start items-start lg:grid lg:grid-cols-4">
-      <div className=" border flex flex-col w-full p-4 lg:col-span-2 aspect-square ">
+    <div className=" w-full flex flex-col justify-start items-start lg:grid lg:grid-cols-4 p-4">
+      <div className=" border flex flex-col w-full p-4 lg:col-span-2 aspect-square bg-base-100 ">
         <div className="flex justify-between items-center mb-4">
           <button className="btn btn-sm" onClick={goToPrevMonth}>
             Prev
@@ -175,7 +175,7 @@ const MyCalendar = () => {
               className={` z-0 grid grid-rows-3 items-center justify-center text-sm text-center cursor-pointer aspect-square p-1 ${
                 dayObj.date.getMonth() !== startOfMonth.getMonth()
                   ? "text-gray-400 bg-base-100"
-                  : "hover:bg-primary bg-base-300"
+                  : "hover:bg-primary bg-base-200"
               } `}
               onClick={() => handleDayClick(dayObj)}
             >
