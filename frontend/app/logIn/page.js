@@ -31,7 +31,7 @@ export default function AuthPage() {
 
       const data = await res.json();
       console.log("Inloggad företag:", data);
-      // Aquí puedes guardar token, redirigir, etc.
+
     } catch (err) {
       console.error("Fel vid inloggning:", err);
     }
