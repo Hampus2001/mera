@@ -10,7 +10,7 @@ export default function AuthPage() {
     e.preventDefault();
     const payload = { username, password };
     console.log("Logga in:", payload);
-g
+
     setUsername("");
     setPassword("");
   }
