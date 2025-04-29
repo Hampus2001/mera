@@ -94,9 +94,13 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <div className="h-screen w-full">
-          {" "}
-          <BigCalendar />
+        <div className=" w-full  grid grid-cols-6 p-16 bg-success ">
+          <div className="col-span-5 h-32 bg-accent rounded-3xl mb-2"></div>
+          <div className="col-span-1 h-32 bg-error rounded-3xl ml-2 mb-2"></div>
+          <div className="col-span-1 bg-base-300 rounded-3xl"></div>
+          <div className="col-span-5">
+            <BigCalendar />
+          </div>
         </div>
       </div>
     </>

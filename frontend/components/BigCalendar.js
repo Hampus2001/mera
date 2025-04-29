@@ -21,74 +21,74 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-const myEventsList = [
+const rawShifts = [
   {
-    title: "Hampus Jobbpass",
-    start: new Date(2025, 4, 25, 10, 0),
-    end: new Date(2025, 4, 25, 12, 0),
-    color: "hsl(var(--primary))",
+    company_id: "abc123",
+    date: "2025-05-25",
+    start: "10:00",
+    end: "12:00",
+    user: {
+      username: "hampus",
+      email: "hampus@example.com",
+      role: "worker",
+      admin: false,
+      hours: 30,
+    },
   },
   {
-    title: "Irenes Jobbpass",
-    start: new Date(2025, 4, 26, 14, 0),
-    end: new Date(2025, 4, 26, 16, 0),
-    color: "hsl(var(--secondary))",
+    company_id: "abc123",
+    date: "2025-05-26",
+    start: "14:00",
+    end: "16:00",
+    user: {
+      username: "irene",
+      email: "irene@example.com",
+      role: "admin",
+      admin: true,
+      hours: 40,
+    },
   },
   {
-    title: "Justus Jobbpass",
-    start: new Date(2025, 4, 27, 9, 0),
-    end: new Date(2025, 4, 27, 11, 0),
-    color: "hsl(var(--accent))",
-  },
-  {
-    title: "Emma Förmiddagspass",
-    start: new Date(2025, 4, 28, 8, 0),
-    end: new Date(2025, 4, 28, 12, 0),
-    color: "hsl(var(--info))",
-  },
-  {
-    title: "Oscar Eftermiddagspass",
-    start: new Date(2025, 4, 28, 13, 0),
-    end: new Date(2025, 4, 28, 17, 0),
-    color: "hsl(var(--warning))",
-  },
-  {
-    title: "Maja Kvällspass",
-    start: new Date(2025, 4, 29, 17, 0),
-    end: new Date(2025, 4, 29, 21, 0),
-    color: "hsl(var(--success))",
-  },
-  {
-    title: "Anton Heldag",
-    start: new Date(2025, 4, 30, 9, 0),
-    end: new Date(2025, 4, 30, 17, 0),
-    color: "hsl(var(--error))",
-  },
-  {
-    title: "Sofia Möte",
-    start: new Date(2025, 4, 30, 11, 0),
-    end: new Date(2025, 4, 30, 12, 0),
-    color: "hsl(var(--info))",
-  },
-  {
-    title: "Hampus Extrajobb",
-    start: new Date(2025, 4, 31, 15, 0),
-    end: new Date(2025, 4, 31, 19, 0),
-    color: "hsl(var(--primary))",
-  },
-  {
-    title: "Irene Kvällsmöte",
-    start: new Date(2025, 4, 31, 18, 0),
-    end: new Date(2025, 4, 31, 20, 0),
-    color: "hsl(var(--secondary))",
-  },
-  {
-    title: "Justus Morgonmöte",
-    start: new Date(2025, 4, 25, 8, 0),
-    end: new Date(2025, 4, 25, 9, 30),
-    color: "hsl(var(--accent))",
+    company_id: "abc133",
+    date: "2025-05-26",
+    start: "13:00",
+    end: "14:00",
+    user: {
+      username: "joel",
+      email: "joel@example.com",
+      role: "CEO",
+      admin: false,
+      hours: 40,
+    },
   },
 ];
+
+const toEventObject = (shift) => {
+  const [startHour, startMin] = shift.start.split(":").map(Number);
+  const [endHour, endMin] = shift.end.split(":").map(Number);
+  const date = new Date(shift.date);
+
+  return {
+    ...shift,
+    title: `${shift.user.username}`,
+    start: new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      startHour,
+      startMin
+    ),
+    end: new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      endHour,
+      endMin
+    ),
+  };
+};
+
+const myEventsList = rawShifts.map(toEventObject);
 
 const generateDays = (startOfMonth, events) => {
   const days = [];
@@ -197,7 +197,7 @@ const MyCalendar = () => {
           {daysInMonth.map((dayObj, index) => (
             <div
               key={index}
-              className={` z-0 grid grid-rows-3 items-center justify-center font-diatype-bold  text-center  aspect-square p-1  rounded-xl ${
+              className={` z-0 grid grid-rows-3 items-center justify-center font-diatype-bold  text-center  aspect-square p-1  rounded-2xl ${
                 dayObj.date.getMonth() !== startOfMonth.getMonth()
                   ? "text-neutral-content bg-base-100"
                   : "hover:bg-primary-content hover:text-primary cursor-pointer text-primary-content bg-primary"
@@ -257,25 +257,59 @@ const MyCalendar = () => {
                   <div
                     key={idx}
                     onClick={() => setExpandedEventId(isExpanded ? null : idx)}
-                    className="mb-1 p-4 rounded-xl cursor-pointer bg-primary text-primary-content"
+                    className="mb-1 p-2 rounded-3xl bg-primary "
                   >
-                    <p className="text-md font-bold">{event.title}</p>
-                    <p>
-                      <strong>Start:</strong> {format(event.start, "Pp")}
-                    </p>
-                    <p>
-                      <strong>End:</strong> {format(event.end, "Pp")}
-                    </p>
-
-                    {isExpanded && (
-                      <>
-                        <hr className="my-2" />
-                        <p>
-                          <strong>Extra details here:</strong> For example,
-                          location, notes, or who’s attending.
+                    <div className=" p-2 cursor-pointer  text-primary-content rounded-3xl">
+                      <span className="flex items-center justify-between gap-2 mb-2">
+                        <p className="text-2xl font-diatype-medium">
+                          {event.title}
                         </p>
-                      </>
-                    )}
+                        <button
+                          onClick={() =>
+                            setExpandedEventId(isExpanded ? null : idx)
+                          }
+                          className="btn btn-sm btn-app btn-neutral"
+                        >
+                          Details
+                        </button>
+                      </span>
+                      <p>
+                        <strong className="font-diatype-bold">Start:</strong>{" "}
+                        {format(event.start, "Pp")}
+                      </p>
+                      <p>
+                        <strong className="font-diatype-bold">End:</strong>{" "}
+                        {format(event.end, "Pp")}
+                      </p>
+
+                      {isExpanded && event.user && (
+                        <div className="mt-2 bg-neutral text-neutral-content rounded-3xl p-4 font-diatype-medium ">
+                          <p>
+                            <strong className="font-diatype-bold">
+                              Email:{" "}
+                            </strong>
+
+                            {event.user.email}
+                          </p>
+                          <p>
+                            <strong className="font-diatype-bold">Role:</strong>{" "}
+                            {event.user.role}
+                          </p>
+                          <p>
+                            <strong className="font-diatype-bold">
+                              Admin:
+                            </strong>{" "}
+                            {event.user.admin ? "Yes" : "No"}
+                          </p>
+                          <p>
+                            <strong className="font-diatype-bold">
+                              Hours:
+                            </strong>{" "}
+                            {event.user.hours}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 );
               })
