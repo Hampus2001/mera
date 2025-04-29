@@ -3,11 +3,18 @@ import localFont from "next/font/local";
 import WorkspaceContext from "@/context/WorkspaceContext";
 
 import { Instrument_Serif } from "next/font/google";
+import { Roboto } from "next/font/google";
 
 const fontInstrument = Instrument_Serif({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-fontInstrument",
+});
+
+const fontRoboto = Roboto({
+  weight: ["400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+  variable: "--font-fontRoboto",
 });
 
 const fontAbsans = localFont({
@@ -39,7 +46,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <WorkspaceContext>
         <body
-          className={`${fontAbsans.variable} ${fontMattone.variable} ${fontMattoneBold.variable} ${fontMattoneBlack.variable} ${fontInstrument.variable} antialiased`}
+          className={`${fontAbsans.variable} ${fontMattone.variable} ${fontMattoneBold.variable} ${fontMattoneBlack.variable} ${fontInstrument.variable} ${fontRoboto.variable} antialiased`}
         >
           {children}
         </body>

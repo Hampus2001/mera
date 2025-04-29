@@ -17,6 +17,7 @@
     "daisyui": "^5.0.27",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.488.0",
+    "motion": "^12.9.2",
     "next": "15.3.0",
     "react": "^19.1.0",
     "react-big-calendar": "^1.18.0",
