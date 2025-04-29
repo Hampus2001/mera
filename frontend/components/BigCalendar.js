@@ -91,17 +91,14 @@ const myEventsList = [
   },
 ];
 
-// Helper function to get the grid layout for the days
 const generateDays = (startOfMonth, events) => {
   const days = [];
   const startOfWeekDay = startOfWeek(startOfMonth);
 
   for (let i = 0; i < 42; i++) {
-    // 6 weeks
     const currentDay = new Date(startOfWeekDay);
     currentDay.setDate(currentDay.getDate() + i);
 
-    // Find all events for this day
     const eventsForDay = events.filter(
       (event) =>
         format(event.start, "yyyy-MM-dd") === format(currentDay, "yyyy-MM-dd")
@@ -130,40 +127,39 @@ const MyCalendar = () => {
   const daysInMonth = generateDays(startOfMonth, myEventsList);
 
   const handleEventClick = (event) => {
-    setSelectedEvent(event); // Set the selected event when clicked
+    setSelectedEvent(event);
   };
 
   const handleDayClick = (day) => {
     setSelectedDay(day);
-    setSelectedEvent(null); // optional: clear event selection when clicking a day
+    setSelectedEvent(null);
   };
 
   const goToNextMonth = () => {
-    setCurrentDate(addMonths(currentDate, 1)); // Go to next month
+    setCurrentDate(addMonths(currentDate, 1));
   };
 
   const goToPrevMonth = () => {
-    setCurrentDate(subMonths(currentDate, 1)); // Go to previous month
+    setCurrentDate(subMonths(currentDate, 1));
   };
 
   return (
     <div className=" w-full flex flex-col justify-start items-start lg:grid lg:grid-cols-4">
-      <div className=" border flex flex-col w-full p-4 lg:col-span-2 aspect-square gap-y-4">
-        <div className="flex justify-between items-center">
-          <button className="btn btn-neutral btn-sm" onClick={goToPrevMonth}>
+      <div className=" border flex flex-col w-full p-4 lg:col-span-2 aspect-square ">
+        <div className="flex justify-between items-center mb-4">
+          <button className="btn btn-sm" onClick={goToPrevMonth}>
             Prev
           </button>
           <h5 className=" text-xl font-mattone-bold ">
             {format(currentDate, "MMMM yyyy")}
           </h5>
-          <button className="btn btn-neutral btn-sm" onClick={goToNextMonth}>
+          <button className="btn btn-sm" onClick={goToNextMonth}>
             Next
           </button>
         </div>
+        <hr className="mb-4" />
 
-        {/* Calendar Grid */}
-        <div className="grid grid-cols-7  w-full font-mattone-bold text-sm">
-          {/* Weekdays Header */}
+        <div className="grid grid-cols-7  w-full font-mattone-bold text-sm mb-4">
           <div className=" text-center">S</div>
           <div className=" text-center">M</div>
           <div className=" text-center">T</div>
@@ -173,7 +169,6 @@ const MyCalendar = () => {
           <div className=" text-center">S</div>
         </div>
         <div className="grid grid-cols-7 gap-1">
-          {/* Days */}
           {daysInMonth.map((dayObj, index) => (
             <div
               key={index}
@@ -182,19 +177,19 @@ const MyCalendar = () => {
                   ? "text-gray-400 bg-base-100"
                   : "hover:bg-primary bg-base-300"
               } `}
-              onClick={() => handleDayClick(dayObj)} // Deselect event when clicking on a day
+              onClick={() => handleDayClick(dayObj)}
             >
               <span className="row-start-2">{format(dayObj.date, "d")}</span>
 
-              {/* Render events if any */}
+              {/* VISA EVENTS  */}
               <div className="flex flex-row items-start justify-start row-start-3">
                 {dayObj.events.map((event, idx) => (
                   <div
                     key={idx}
                     className="  "
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevent the day click handler from triggering
-                      handleEventClick(event); // Handle event click
+                      e.stopPropagation();
+                      handleEventClick(event);
                     }}
                   >
                     {/* Event Badge */}
@@ -208,18 +203,18 @@ const MyCalendar = () => {
             </div>
           ))}
         </div>
+        <hr className="" />
       </div>
 
-      {/* Event Details Section */}
+      {/* DAY INFO SECTION */}
       <div className="w-full lg:col-span-2">
         {selectedEvent && (
           <div className="pt-8 lg:p-4">
-            <h6 className="text-xl font-mattone-bold mb-4 lg:mb-12 lg:text-base">
-              {" "}
+            <h6 className="text-xl font-mattone-bold mb-8 lg:mb-12 lg:text-base">
               Event Details
             </h6>
             <div
-              className="mt-2 text-sm p-4"
+              className="mt-4 text-sm p-4"
               style={{ backgroundColor: selectedEvent.color }}
             >
               <p>

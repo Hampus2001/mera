@@ -6,16 +6,21 @@ export default function Home() {
   return (
     <>
       <LandingNav />
-      <section className="flex flex-col items-center justify-center h-screen px-20 lg:px-80 gap-y-4 lg:gap-y-2  ">
+      <section className="flex flex-col items-center justify-center w-screen h-screen px-20 lg:px-80 gap-y-4 lg:gap-y-2 overflow-x-hidden  ">
         <h1 className="">Make More Time</h1>
         <h3 className="font-mattone-bold px-4 lg:px-8 text-center mb-4 leading-snug text-base lg:text-2xl ">
           Management system for your business — so you can stay focused doing
           what you do best!
         </h3>
-        <div className="absolute bottom-24 lg:bottom-32 items-center gap-4 animate-bounce">
+        <div className="absolute bottom-24 lg:bottom-32 items-center gap-4 flex flex-row ">
           <Link href="./createWorkspace">
             <button className="btn btn-primary btn-lg lg:btn-xl ">
               Get Started
+            </button>
+          </Link>
+          <Link href="/">
+            <button className="btn btn-malachite-500 btn-lg lg:btn-xl ">
+              Book a Demo
             </button>
           </Link>
         </div>
