@@ -6,6 +6,7 @@ import LandingNav from "@/components/LandingNav";
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 
 export default function UserSchedule() {
+  const { contextId } = useContext(HandleWorkspaceContext);
   const [step, setStep] = useState(1);
   const [projectName, setProjectName] = useState("");
   const [memberCount, setMemberCount] = useState(1);
@@ -14,9 +15,13 @@ export default function UserSchedule() {
 
   const [selectedUser, setSelectedUser] = useState(null);
   const [shifts, setShifts] = useState([]);
-  const [newShift, setNewShift] = useState({ date: "", start: "", end: "" });
+  const [newShift, setNewShift] = useState({
+    company_id: contextId,
+    date: "",
+    start: "",
+    end: "",
+  });
 
-  const { contextId } = useContext(HandleWorkspaceContext);
   const [users, setUsers] = useState();
 
   const handleNextStep = () => {
@@ -31,15 +36,28 @@ export default function UserSchedule() {
   const handleAddShift = () => {
     if (selectedUser && newShift.date && newShift.start && newShift.end) {
       const shift = {
+        company_id: contextId,
         userId: selectedUser.id,
         date: newShift.date,
         start: newShift.start,
         end: newShift.end,
       };
       setShifts([...shifts, shift]);
+      sendShift();
       setNewShift({ date: "", start: "", end: "" });
     }
   };
+
+  async function sendShift() {
+    const response = await fetch("http://localhost:3001/sendShift", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contextId, newShift }),
+    });
+
+    const allShifts = await response.json();
+    console.log("all shifts:", allShifts);
+  }
 
   async function getUsersAndTime() {
     const response = await fetch("http://localhost:3001/sendUsers", {
@@ -148,23 +166,25 @@ export default function UserSchedule() {
                   Choose a Calendar Template
                 </h3>
                 <div className="grid grid-cols-2 gap-8">
-                  {["default", "modern", "classic", "creative"].map((template) => (
-                    <div
-                      key={template}
-                      onClick={() => setCalendarTemplate(template)}
-                      className={`cursor-pointer p-6 rounded-2xl border-4 ${
-                        calendarTemplate === template
-                          ? "border-blue-500"
-                          : "border-transparent"
-                      } bg-white dark:bg-slate-700 shadow-lg flex flex-col items-center justify-center transition-all hover:scale-105`}
-                    >
-                      {/* Placeholder for image */}
-                      <div className="w-40 h-32 bg-gray-300 dark:bg-gray-600 rounded-xl mb-4" />
-                      <p className="text-xl capitalize text-black dark:text-white">
-                        {template}
-                      </p>
-                    </div>
-                  ))}
+                  {["default", "modern", "classic", "creative"].map(
+                    (template) => (
+                      <div
+                        key={template}
+                        onClick={() => setCalendarTemplate(template)}
+                        className={`cursor-pointer p-6 rounded-2xl border-4 ${
+                          calendarTemplate === template
+                            ? "border-blue-500"
+                            : "border-transparent"
+                        } bg-white dark:bg-slate-700 shadow-lg flex flex-col items-center justify-center transition-all hover:scale-105`}
+                      >
+                        {/* Placeholder for image */}
+                        <div className="w-40 h-32 bg-gray-300 dark:bg-gray-600 rounded-xl mb-4" />
+                        <p className="text-xl capitalize text-black dark:text-white">
+                          {template}
+                        </p>
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -180,7 +200,9 @@ export default function UserSchedule() {
               transition={{ duration: 0.5 }}
               className="flex flex-col w-full gap-5 p-10 m-10 bg-blue-200 dark:bg-slate-800 rounded-xl border-8 border-blue-300 dark:border-slate-700 shadow-lg"
             >
-              <h2 className="text-3xl font-bold text-black dark:text-white">User Schedule</h2>
+              <h2 className="text-3xl font-bold text-black dark:text-white">
+                User Schedule
+              </h2>
 
               <select
                 className="p-3 rounded-xl bg-blue-300 dark:bg-slate-600 dark:text-white text-black font-semibold"
@@ -225,7 +247,9 @@ export default function UserSchedule() {
                       <option value="">from</option>
                       {Array.from({ length: 24 }, (_, hour) =>
                         ["00", "15", "30", "45"].map((minute) => {
-                          const time = `${hour.toString().padStart(2, "0")}:${minute}`;
+                          const time = `${hour
+                            .toString()
+                            .padStart(2, "0")}:${minute}`;
                           return (
                             <option key={time} value={time}>
                               {time}
@@ -245,7 +269,9 @@ export default function UserSchedule() {
                       <option value="">to</option>
                       {Array.from({ length: 24 }, (_, hour) =>
                         ["00", "15", "30", "45"].map((minute) => {
-                          const time = `${hour.toString().padStart(2, "0")}:${minute}`;
+                          const time = `${hour
+                            .toString()
+                            .padStart(2, "0")}:${minute}`;
                           return (
                             <option key={time} value={time}>
                               {time}
