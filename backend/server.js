@@ -89,3 +89,19 @@ app.post("/sendUsers", (req, res) => {
   // Send the filtered users back to client
   res.status(200).json(filtered);
 });
+
+app.post("/sendShift", (req, res) => {
+  let data = req.body;
+
+  let company_id = data.contextId;
+  let newShift = data.newShift;
+
+  scheduleData.push(newShift);
+
+  let companyShifts = scheduleData.filter(
+    (shift) => shift.company_id == company_id
+  );
+
+  console.log("company shifts", companyShifts);
+  res.json({ companyShifts });
+});
