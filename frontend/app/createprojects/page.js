@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import LandingNav from "@/components/LandingNav";
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
@@ -21,6 +21,12 @@ export default function UserSchedule() {
     start: "",
     end: "",
   });
+
+  useEffect(() => {
+    if (contextId) {
+      setNewShift((prev) => ({ ...prev, company_id: contextId }));
+    }
+  }, [contextId]);
 
   const [users, setUsers] = useState();
 
@@ -44,7 +50,7 @@ export default function UserSchedule() {
       };
       setShifts([...shifts, shift]);
       sendShift();
-      setNewShift({ date: "", start: "", end: "" });
+      setNewShift({ company_id: contextId, date: "", start: "", end: "" });
     }
   };
 

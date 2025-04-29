@@ -101,7 +101,7 @@ app.post("/sendShift", (req, res) => {
   let companyShifts = scheduleData.filter(
     (shift) => shift.company_id == company_id
   );
-
+  console.log("all shifts", scheduleData);
   console.log("company shifts", companyShifts);
   res.json({ companyShifts });
 });
