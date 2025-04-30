@@ -1,11 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LandingNav from "@/components/LandingNav";
+import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
+import { useRouter } from "next/navigation";
 
 export default function AuthPage() {
+  const router = useRouter();
   const [company, setCompany] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const { contextId, setContextId } = useContext(HandleWorkspaceContext);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -17,7 +22,7 @@ export default function AuthPage() {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/sessions", {
+      const res = await fetch("http://localhost:3001/session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,8 +35,9 @@ export default function AuthPage() {
       }
 
       const data = await res.json();
-      console.log("Inloggad företag:", data);
-
+      console.log("Inloggad företag:", data.response.company_id);
+      setContextId(data.response.company_id);
+      router.push("/createprojects");
     } catch (err) {
       console.error("Fel vid inloggning:", err);
     }

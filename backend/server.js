@@ -74,6 +74,40 @@ app.post("/createCompanyAccount", (req, res) => {
   );
 });
 
+//* Login
+app.post("/session", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  const company_name = req.body.company;
+
+  //Get company_id
+  const company = companiesData.find(
+    (company) => company.name === company_name
+  );
+  const company_id = company ? company.company_id : null;
+
+  //fetch users from company
+  let companyUsers = usersData.filter((user) => user.company_id == company_id);
+
+  companyUsers = companyUsers.flat();
+  console.log("company users", companyUsers);
+  //Check credentials
+  let response = null;
+  for (let i = 0; i < companyUsers.length; i++) {
+    if (
+      companyUsers[i].username == username &&
+      companyUsers[i].password == password
+    ) {
+      response = companyUsers[i];
+    }
+  }
+  if (response !== null) {
+    res.json({ response });
+  } else {
+    res.status(401).json({ error: "Invalid credentials" });
+  }
+});
+
 //*Create schedule
 
 app.post("/sendUsers", (req, res) => {
