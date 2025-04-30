@@ -65,7 +65,7 @@ export default function AuthPage() {
           />
           <input
             type="text"
-            placeholder="Företagsnamn eller email"
+            placeholder="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className="input"
