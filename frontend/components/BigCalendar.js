@@ -124,7 +124,7 @@ const MyCalendar = ({ variant }) => {
 
   //fetch all shifts using company id
   async function fetchShifts() {
-    const response = await fetch("http://localhost:3001/sendShifts", {
+    const response = await fetch("http://localhost:3001/getShifts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ contextId }),

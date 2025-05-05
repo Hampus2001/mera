@@ -124,7 +124,7 @@ app.post("/sendUsers", (req, res) => {
   res.status(200).json(filtered);
 });
 
-app.post("/addAndSendShift", (req, res) => {
+app.post("/sendShift", (req, res) => {
   let data = req.body;
 
   let company_id = data.contextId;
@@ -142,7 +142,7 @@ app.post("/addAndSendShift", (req, res) => {
 
 //* Send company schedule
 
-app.post("/sendShifts", (req, res) => {
+app.post("/getShifts", (req, res) => {
   let data = req.body;
   let company_id = data.contextId;
 
