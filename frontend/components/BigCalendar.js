@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
@@ -8,6 +8,7 @@ import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
 import sv from "date-fns/locale/sv";
 import { addMonths, subMonths, addDays, subDays } from "date-fns";
+import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 
 const locales = {
   sv: sv,
@@ -107,6 +108,10 @@ const generateDays = (startOfMonth, events) => {
 };
 
 const MyCalendar = ({ variant }) => {
+  //context
+  const { activeUser, setActiveUser, contextId } = useContext(
+    HandleWorkspaceContext
+  );
   // State
   const [currentDate, setCurrentDate] = useState(new Date(2025, 4, 1)); // May 2025
   const [selectedUser, setSelectedUser] = useState("all");
@@ -116,6 +121,21 @@ const MyCalendar = ({ variant }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [firstClick, setFirstClick] = useState(false);
   const [gridLayout, setGridLayout] = useState(true);
+
+  //fetch all shifts using company id
+  async function fetchShifts() {
+    const response = await fetch("http://localhost:3001/sendShifts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contextId }),
+    });
+
+    const filteredShifts = await response.json();
+    console.log("shifts", filteredShifts);
+  }
+  useEffect(() => {
+    fetchShifts();
+  }, [contextId]);
 
   useEffect(() => {
     if (variant === "flex") {

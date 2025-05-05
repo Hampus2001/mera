@@ -124,13 +124,27 @@ app.post("/sendUsers", (req, res) => {
   res.status(200).json(filtered);
 });
 
-app.post("/sendShift", (req, res) => {
+app.post("/addAndSendShift", (req, res) => {
   let data = req.body;
 
   let company_id = data.contextId;
   let newShift = data.newShift;
 
   scheduleData.push(newShift);
+
+  let companyShifts = scheduleData.filter(
+    (shift) => shift.company_id == company_id
+  );
+  console.log("all shifts", scheduleData);
+  console.log("company shifts", companyShifts);
+  res.json({ companyShifts });
+});
+
+//* Send company schedule
+
+app.post("/sendShifts", (req, res) => {
+  let data = req.body;
+  let company_id = data.contextId;
 
   let companyShifts = scheduleData.filter(
     (shift) => shift.company_id == company_id
