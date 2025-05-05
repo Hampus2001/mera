@@ -22,7 +22,7 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-const rawShifts = [
+/* const rawShifts = [
   {
     company_id: "abc123",
     date: "2025-05-25",
@@ -62,7 +62,7 @@ const rawShifts = [
       hours: 40,
     },
   },
-];
+]; */
 
 const toEventObject = (shift) => {
   const [startHour, startMin] = shift.start.split(":").map(Number);
@@ -121,6 +121,7 @@ const MyCalendar = ({ variant }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [firstClick, setFirstClick] = useState(false);
   const [gridLayout, setGridLayout] = useState(true);
+  const [rawShifts, setRawShifts] = useState([]);
 
   //fetch all shifts using company id
   async function fetchShifts() {
@@ -130,12 +131,13 @@ const MyCalendar = ({ variant }) => {
       body: JSON.stringify({ contextId }),
     });
 
-    const filteredShifts = await response.json();
+    let filteredShifts = await response.json();
+    filteredShifts = filteredShifts.companyShifts;
     console.log("shifts", filteredShifts);
   }
   useEffect(() => {
     fetchShifts();
-  }, [contextId]);
+  }, []);
 
   useEffect(() => {
     if (variant === "flex") {
