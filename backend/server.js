@@ -139,3 +139,17 @@ app.post("/sendShift", (req, res) => {
   console.log("company shifts", companyShifts);
   res.json({ companyShifts });
 });
+
+//* Send company schedule
+
+app.post("/getShifts", (req, res) => {
+  let data = req.body;
+  let company_id = data.contextId;
+
+  let companyShifts = scheduleData.filter(
+    (shift) => shift.company_id == company_id
+  );
+  console.log("all shifts", scheduleData);
+  console.log("company shifts", companyShifts);
+  res.json({ companyShifts });
+});

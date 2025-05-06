@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import LandingNav from "@/components/LandingNav";
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 import { useRouter } from "next/navigation";
-
+import Navbar from "@/components/Navbar";
 export default function AuthPage() {
   const router = useRouter();
   const [company, setCompany] = useState("");
@@ -49,7 +49,9 @@ export default function AuthPage() {
 
   return (
     <>
-      <LandingNav variant="appMode" />
+{/*     
+    //   <LandingNav variant="appMode" />
+     */}
       <section className="flex flex-col items-center justify-center min-h-screen px-6 lg:px-40 gap-y-6 pt-24">
         <h1 className="font-instrument text-5xl lg:text-7xl text-center">
           Logga in
@@ -87,6 +89,7 @@ export default function AuthPage() {
             Logga in
           </button>
         </form>
+        <Navbar/>
       </section>
     </>
   );

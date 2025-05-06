@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
@@ -8,6 +8,7 @@ import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
 import sv from "date-fns/locale/sv";
 import { addMonths, subMonths, addDays, subDays } from "date-fns";
+import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 
 const locales = {
   sv: sv,
@@ -21,7 +22,7 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-const rawShifts = [
+/* const rawShifts = [
   {
     company_id: "abc123",
     date: "2025-05-25",
@@ -61,7 +62,7 @@ const rawShifts = [
       hours: 40,
     },
   },
-];
+]; */
 
 const toEventObject = (shift) => {
   const [startHour, startMin] = shift.start.split(":").map(Number);
@@ -107,6 +108,10 @@ const generateDays = (startOfMonth, events) => {
 };
 
 const MyCalendar = ({ variant }) => {
+  //context
+  const { activeUser, setActiveUser, contextId } = useContext(
+    HandleWorkspaceContext
+  );
   // State
   const [currentDate, setCurrentDate] = useState(new Date(2025, 4, 1)); // May 2025
   const [selectedUser, setSelectedUser] = useState("all");
@@ -116,6 +121,23 @@ const MyCalendar = ({ variant }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [firstClick, setFirstClick] = useState(false);
   const [gridLayout, setGridLayout] = useState(true);
+  const [rawShifts, setRawShifts] = useState([]);
+
+  //fetch all shifts using company id
+  async function fetchShifts() {
+    const response = await fetch("http://localhost:3001/getShifts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contextId }),
+    });
+
+    let filteredShifts = await response.json();
+    filteredShifts = filteredShifts.companyShifts;
+    console.log("shifts", filteredShifts);
+  }
+  useEffect(() => {
+    fetchShifts();
+  }, []);
 
   useEffect(() => {
     if (variant === "flex") {

@@ -23,7 +23,9 @@ export default function CreateWorkspace() {
   const [users, setUsers] = useState([]);
 
   //Send companyId to context
-  const { contextId, setContextId } = useContext(HandleWorkspaceContext);
+  const { contextId, setContextId, activeUser, setActiveUser } = useContext(
+    HandleWorkspaceContext
+  );
   useEffect(() => {
     setContextId(companyId);
   }, [companyId]);
@@ -185,6 +187,8 @@ export default function CreateWorkspace() {
 
   //* Send all data to backend - direct user to next page
   async function workspaceData() {
+    setActiveUser(users[0]);
+
     const data = {
       users: users,
       companies: companyObject,
