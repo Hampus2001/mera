@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <LandingNav />
       <div className="w-screen overflow-x-hidden">
-        <section className=" container-xl mx-auto flex flex-col items-center justify-center w-full h-screen  px-8 lg:px-32 gap-y-4 lg:gap-y-4 bg-base-100">
+        <section className=" container-xl mx-auto flex flex-col items-center justify-center w-full h-screen  px-8 lg:px-32 gap-y-4 lg:gap-y-4">
           <h1 className=" text-center uppercase text-base-content">
             Make More Time
           </h1>
@@ -24,7 +24,7 @@ export default function Home() {
             </Link>
           </div>
         </section>
-        <section className=" container-xl mx-auto flex flex-col items-center justify-center w-full h-screen  px-8 lg:px-32 gap-y-4 lg:gap-y-2 ">
+        <section className=" container-xl mx-auto flex flex-col items-center justify-center w-full h-screen  px-8 lg:px-32 gap-y-4 lg:gap-y-2">
           <h3 className=" px-4 lg:px-16 text-center mb-16 leading-snug lg:leading-tight ">
             Create your Management system for your business today — so you can
             stay focused doing what you do best!
@@ -46,7 +46,7 @@ export default function Home() {
               </button>
             </Link>
             <Link href="/">
-              <button className="btn btn-neutral font-absans uppercase tracking-wide  btn-lg ">
+              <button className="btn btn-neutral btn-landing  btn-lg ">
                 Neutral
               </button>
             </Link>
@@ -73,8 +73,8 @@ export default function Home() {
           </div>
         </section>
         <section className="container-xl mx-auto flex flex-col    p-2">
-          <div className="  aspect-square lg:aspect-video flex items-center justify-start bg-info rounded-3xl">
-            <div className="aspect-square flex flex-col items-start justify-center  w-auto lg:w-1/2   p-8 lg:p-32 text-info-content">
+          <div className="  aspect-square lg:aspect-video flex items-center justify-start bg-secondary  rounded-3xl">
+            <div className="aspect-square flex flex-col items-start justify-center  w-auto lg:w-1/2   p-8 lg:p-32 ">
               <h4 className="font-mattone-black text-xs mb-4">
                 TIME MANAGEMENT
               </h4>

@@ -189,7 +189,7 @@ const MyCalendar = ({ variant }) => {
       <div className=" flex flex-col w-full p-4 lg:col-span-2 aspect-square bg-secondary text-secondary-content rounded-3xl">
         <div className="flex justify-between items-center  h-8 mb-2">
           <button
-            className="btn btn-sm lg:btn-md btn-app btn-neutral"
+            className="btn btn-sm lg:btn-md btn-app "
             onClick={goToPrevMonth}
           >
             Prev
@@ -200,7 +200,7 @@ const MyCalendar = ({ variant }) => {
           </h5>
 
           <button
-            className=" btn btn-sm lg:btn-md  btn-app btn-neutral"
+            className=" btn btn-sm lg:btn-md  btn-app"
             onClick={goToNextMonth}
           >
             Next

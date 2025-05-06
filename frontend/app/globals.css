@@ -6,26 +6,26 @@
   default: true;
   prefersdark: false;
   color-scheme: "light";
-  --color-base-100: oklch(98% 0.002 247.839);
-  --color-base-200: oklch(96% 0.003 264.542);
-  --color-base-300: oklch(92% 0.006 264.531);
-  --color-base-content: oklch(20% 0.042 265.755);
+  --color-base-100: oklch(96% 0.018 272.314);
+  --color-base-200: oklch(93% 0.034 272.788);
+  --color-base-300: oklch(87% 0.065 274.039);
+  --color-base-content: oklch(25% 0.09 281.288);
   --color-primary: oklch(85% 0.199 91.936);
-  --color-primary-content: oklch(42% 0.095 57.708);
-  --color-secondary: oklch(92% 0.006 264.531);
-  --color-secondary-content: oklch(37% 0.034 259.733);
+  --color-primary-content: oklch(28% 0.066 53.813);
+  --color-secondary: oklch(67% 0.182 276.935);
+  --color-secondary-content: oklch(25% 0.09 281.288);
   --color-accent: oklch(84% 0.238 128.85);
-  --color-accent-content: oklch(72% 0.219 149.579)
-  --color-neutral: oklch(21% 0.034 264.665);
-  --color-neutral-content: oklch(70% 0.022 261.325);
-  --color-info: oklch(39% 0.195 277.366);
-  --color-info-content: oklch(93% 0.034 272.788);
-  --color-success: oklch(26% 0.065 152.934);
-  --color-success-content: oklch(62% 0.194 149.214);
-  --color-warning: oklch(55% 0.163 48.998);
+  --color-accent-content: oklch(45% 0.124 130.933);
+  --color-neutral: oklch(25% 0.09 281.288);
+  --color-neutral-content: oklch(93% 0.034 272.788);
+  --color-info: oklch(48% 0.243 264.376);
+  --color-info-content: oklch(88% 0.059 254.128);
+  --color-success: oklch(44% 0.119 151.328);
+  --color-success-content: oklch(87% 0.15 154.449);
+  --color-warning: oklch(66% 0.179 58.318);
   --color-warning-content: oklch(27% 0.077 45.635);
   --color-error: oklch(57% 0.245 27.325);
-  --color-error-content: oklch(88% 0.062 18.334);
+  --color-error-content: oklch(97% 0.013 17.38);
   --radius-selector: 2rem;
   --radius-field: 2rem;
   --radius-box: 2rem;
@@ -35,7 +35,6 @@
   --depth: 0;
   --noise: 0;
 }
-
 
 @plugin "daisyui/theme" {
   name: "mera-dark";
@@ -71,8 +70,6 @@
   --depth: 0;
   --noise: 1;
 }
-
-
 
 @layer base {
   h1 {
