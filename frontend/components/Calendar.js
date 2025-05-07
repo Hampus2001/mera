@@ -113,10 +113,10 @@ export default function Calendar() {
 
   return (
     <>
-      <div className="flex flex-col w-full rounded-xl border-8 border-red-200 bg-red-100 gap-5 p-10 m-10">
+      <div className="flex flex-col w-full rounded-xl  gap-5 p-10 m-10">
         <div className="flex gap-10">
           <select
-            className="flex font-bold w-1/6 outline-none text-2xl p-2 rounded-xl "
+            className="flex font-bold w-1/6 outline-none text-red-900 text-2xl p-2 rounded-xl "
             value={year}
             onChange={(e) => {
               setYear(e.target.value);
@@ -129,7 +129,7 @@ export default function Calendar() {
             <option value={todaysYear + 2}>{todaysYear + 2}</option>
           </select>
           <select
-            className="flex font-bold w-1/6 outline-none text-2xl p-2 rounded-xl "
+            className="flex font-bold w-1/6 outline-none text-red-900 text-2xl p-2 rounded-xl "
             value={month}
             onChange={(e) => {
               setMonth(e.target.value);
