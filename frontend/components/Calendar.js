@@ -3,6 +3,21 @@
 import { useEffect, useRef, useState } from "react";
 
 export default function Calendar() {
+  //Get "röda dagar"
+  const [redDays, setRedDays] = useState();
+  const [activeRedDays, setActiveRedDays] = useState([]);
+  async function getRedDays() {
+    const response = await fetch(
+      `https://date.nager.at/api/v3/PublicHolidays/2025/SE`
+    );
+    const data = await response.json();
+    setRedDays(data);
+  }
+  useEffect(() => {
+    getRedDays();
+  }, []);
+
+  //states
   const todaysDate = new Date();
   const todaysMonth = todaysDate.getMonth();
   const todaysYear = todaysDate.getFullYear();
@@ -14,9 +29,7 @@ export default function Calendar() {
   const [monthString, setMonthString] = useState("");
 
   //Get x and y coordinates for modal window
-
   const [position, setPosition] = useState({ x: 0, y: 0 });
-
   const getCoordinates = (e) => {
     const rect = e.target.getBoundingClientRect();
     setPosition({
@@ -24,10 +37,6 @@ export default function Calendar() {
       y: rect.top + window.scrollY,
     });
   };
-
-  useEffect(() => {
-    console.log(position);
-  }, [position]);
 
   function getDaysInCurrentMonth() {
     convertMonthToString();
@@ -54,6 +63,33 @@ export default function Calendar() {
     const lastDayOfCurrentMonth = new Date(currentYear, currentMonth + 1, 0);
     const daysInMonth = lastDayOfCurrentMonth.getDate();
 
+    //Get red days from that month
+    setActiveRedDays([]);
+    let activeMonth = 0;
+    if (currentMonth.length == 0) {
+      activeMonth = 0 + currentMonth;
+    } else if (currentMonth.length > 0) {
+      activeMonth = currentMonth;
+    }
+
+    if (redDays) {
+      for (let i = 0; i < redDays.length; i++) {
+        if (redDays[i].date.includes(currentYear + "-" + (activeMonth + 1))) {
+          setActiveRedDays([...activeRedDays, redDays[i]]);
+        }
+      }
+    }
+    if (redDays) {
+      console.log(
+        "röda dagar denna månad",
+        activeRedDays,
+        "includes",
+        currentYear + "-" + 0 + (currentMonth + 1),
+        "date",
+        redDays[1].date
+      );
+    }
+
     // Fill in days from the previous month
     for (
       let i = daysInPreviousMonth - daysFromPreviousMonth + 1;
@@ -76,7 +112,7 @@ export default function Calendar() {
           key={`prev-${i}`}
           className="flex hover:cursor-pointer flex-col p-5 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-100 text-base-content "
         >
-          <p className=" font-extrabold">{i}</p>
+          <p>{i}</p>
         </button>
       );
     }
@@ -97,7 +133,8 @@ export default function Calendar() {
           key={`current-${i}`}
           className={`flex hover:cursor-pointer flex-col p-5  border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square  ${currentDayStyle} text-base-content `}
         >
-          <p className=" font-extrabold">{i}</p>
+          <p>{i}</p>
+          <p></p>
         </button>
       );
     }
@@ -229,16 +266,16 @@ export default function Calendar() {
       </div>
       {showModal && (
         <div
-          className={`absolute bg-white w-1/6 rounded-xl h-96`}
+          className={`absolute bg-white w-1/6 p-4 gap-4 rounded-xl h-96`}
           style={{ top: position.y, left: position.x }}
         >
           <button
-            className="flex p-5 text-xl font-bold text-center hover:cursor-pointer"
+            className="btn btn-app btn-accent"
             onClick={() => setShowModal(false)}
           >
             Close
           </button>
-          <p className="text-3xl font-bold">{selectedDate}</p>
+          <p>{selectedDate}</p>
         </div>
       )}
     </>
