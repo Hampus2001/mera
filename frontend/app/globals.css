@@ -6,18 +6,18 @@
   default: true;
   prefersdark: false;
   color-scheme: "light";
-  --color-base-100: oklch(96% 0.018 272.314);
-  --color-base-200: oklch(93% 0.034 272.788);
-  --color-base-300: oklch(87% 0.065 274.039);
-  --color-base-content: oklch(25% 0.09 281.288);
+  --color-base-100: oklch(98% 0.026 102.212);
+  --color-base-200: oklch(92% 0.003 48.717);
+  --color-base-300: oklch(90% 0.182 98.111);
+  --color-base-content: oklch(28% 0.066 53.813);
   --color-primary: oklch(85% 0.199 91.936);
-  --color-primary-content: oklch(28% 0.066 53.813);
-  --color-secondary: oklch(67% 0.182 276.935);
-  --color-secondary-content: oklch(25% 0.09 281.288);
+  --color-primary-content: oklch(42% 0.095 57.708);
+  --color-secondary: oklch(78% 0.115 274.713);
+  --color-secondary-content: oklch(39% 0.195 277.366);
   --color-accent: oklch(84% 0.238 128.85);
   --color-accent-content: oklch(45% 0.124 130.933);
-  --color-neutral: oklch(25% 0.09 281.288);
-  --color-neutral-content: oklch(93% 0.034 272.788);
+  --color-neutral: oklch(28% 0.066 53.813);
+  --color-neutral-content: oklch(85% 0.199 91.936);
   --color-info: oklch(48% 0.243 264.376);
   --color-info-content: oklch(88% 0.059 254.128);
   --color-success: oklch(44% 0.119 151.328);
@@ -33,7 +33,7 @@
   --size-field: 0.25rem;
   --border: 1px;
   --depth: 0;
-  --noise: 0;
+  --noise: 1;
 }
 
 @plugin "daisyui/theme" {
@@ -89,8 +89,8 @@
   }
 
   h4 {
-    font-size: var(--text-m);
-    font-family: var(--font-fontMattoneBlack);
+    font-size: var(--text-xl);
+    font-family: var(--font-fontDiatypeBold);
   }
 
   p,
@@ -138,15 +138,16 @@
   font-family: var(--font-fontDiatypeBold);
 }
 
-.btn-landing {
+.ui-landing {
   text-transform: uppercase;
   font-family: var(--font-fontAbsans);
   letter-spacing: 0.025em;
 }
 
-.btn-app {
+.ui-app {
   font-family: var(--font-fontDiatypeRegular);
   letter-spacing: 0.025em;
+  font-weight: 400;
 }
 
 @media (max-width: 768px) {

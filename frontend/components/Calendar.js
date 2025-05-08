@@ -1,22 +1,9 @@
 "use client";
 
+import next from "next";
 import { useEffect, useRef, useState } from "react";
 
 export default function Calendar() {
-  //Get "röda dagar"
-  const [redDays, setRedDays] = useState();
-  const [activeRedDays, setActiveRedDays] = useState([]);
-  async function getRedDays() {
-    const response = await fetch(
-      `https://date.nager.at/api/v3/PublicHolidays/2025/SE`
-    );
-    const data = await response.json();
-    setRedDays(data);
-  }
-  useEffect(() => {
-    getRedDays();
-  }, []);
-
   //states
   const todaysDate = new Date();
   const todaysMonth = todaysDate.getMonth();
@@ -38,6 +25,32 @@ export default function Calendar() {
     });
   };
 
+  //Get "röda dagar"
+  const [redDays, setRedDays] = useState();
+  const [activeRedDays, setActiveRedDays] = useState([]);
+  async function getRedDays() {
+    const response = await fetch(
+      `https://date.nager.at/api/v3/PublicHolidays/${year}/SE`
+    );
+    const thisYear = await response.json();
+
+    const response2 = await fetch(
+      `https://date.nager.at/api/v3/PublicHolidays/${year - 1}/SE`
+    );
+    const lastYear = await response2.json();
+
+    const response3 = await fetch(
+      `https://date.nager.at/api/v3/PublicHolidays/${year + 1}/SE`
+    );
+    const nextYear = await response3.json();
+
+    const allHolidays = [thisYear, lastYear, nextYear];
+    setRedDays(allHolidays.flat());
+  }
+  useEffect(() => {
+    getRedDays();
+  }, []);
+
   function getDaysInCurrentMonth() {
     convertMonthToString();
 
@@ -47,7 +60,7 @@ export default function Calendar() {
     const currentYear = parseInt(year);
     const currentMonth = parseInt(month); // 0-based (0 = January, 11 = December)
     const currentDay = currentDate.getDate();
-    console.log(currentDay);
+
     // Get the first day of the current month
     const firstDayOfCurrentMonth = new Date(currentYear, currentMonth, 1);
     const firstDayOfWeek = firstDayOfCurrentMonth.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
@@ -69,7 +82,6 @@ export default function Calendar() {
     let activeMonth = 0;
     if (currentMonth < 10) {
       activeMonth = "0" + currentMonth;
-      console.log("test");
     } else if (currentMonth > 9) {
       activeMonth = currentMonth;
     }
@@ -102,15 +114,17 @@ export default function Calendar() {
             let thisDayDate = "";
             if (currentMonth == 0) {
               thisDayDate = currentYear - 1 + "-" + 12 + "-" + i;
-            } else if (currentMonth > 0) {
+            } else if (currentMonth > 0 && currentMonth < 10) {
               thisDayDate = currentYear + "-" + "0" + currentMonth + "-" + i;
+            } else if (currentMonth > 0 && currentMonth > 9) {
+              thisDayDate = currentYear + "-" + currentMonth + "-" + i;
             }
 
             if (holiday.date == thisDayDate) {
               return (
                 <p
                   key={i}
-                  className="flex w-5/6 rounded-lg p-1 bg-red-400 justify-center"
+                  className="flex w-5/6 rounded-lg p-1 bg-red-400 text-red-900 justify-center"
                 >
                   {holiday.name}
                 </p>
@@ -141,24 +155,19 @@ export default function Calendar() {
           {redDays?.map((holiday) => {
             let thisDayDate = "";
             if (currentMonth == 0) {
-              thisDayDate = currentYear - 1 + "-" + 12 + "-" + i;
-            } else if (currentMonth > 0) {
+              thisDayDate = currentYear + "-" + 1 + "-" + i;
+            } else if (currentMonth > 0 && currentMonth < 10) {
               thisDayDate =
                 currentYear + "-" + "0" + (currentMonth + 1) + "-" + i;
+            } else if (currentMonth > 0 && currentMonth > 9) {
+              thisDayDate = currentYear + "-" + (currentMonth + 1) + "-" + i;
             }
-
-            console.log(
-              "holiday.date",
-              holiday.date,
-              "recemblance",
-              thisDayDate
-            );
 
             if (holiday.date == thisDayDate) {
               return (
                 <p
                   key={i}
-                  className="flex w-5/6 rounded-lg p-1 bg-red-400 justify-center"
+                  className="flex w-5/6 rounded-lg p-1 bg-red-400 text-red-900 justify-center"
                 >
                   {holiday.name}
                 </p>
@@ -191,6 +200,28 @@ export default function Calendar() {
           className="flex hover:cursor-pointer flex-col p-5 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-100 text-base-content"
         >
           <p>{i}</p>
+
+          {redDays?.map((holiday) => {
+            let thisDayDate = "";
+            if (currentMonth == 11) {
+              thisDayDate = currentYear + 1 + "-" + 1 + "-" + i;
+            } else if (currentMonth > 0 && currentMonth < 10) {
+              thisDayDate = currentYear + "-" + "0" + currentMonth + "-" + i;
+            } else if (currentMonth > 0 && currentMonth > 9) {
+              thisDayDate = currentYear + "-" + currentMonth + "-" + i;
+            }
+
+            if (holiday.date == thisDayDate) {
+              return (
+                <p
+                  key={i}
+                  className="flex w-5/6 rounded-lg p-1 bg-red-400 text-red-900 justify-center"
+                >
+                  {holiday.name}
+                </p>
+              );
+            }
+          })}
         </button>
       );
     }

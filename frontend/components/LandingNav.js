@@ -14,7 +14,7 @@ export default function LandingNav({ variant }) {
   return (
     <header
       className={`fixed top-0 left-0 w-screen z-20    ${
-        isAppMode ? "bg-base-200" : ""
+        isAppMode ? "bg-neutral" : ""
       } ${open ? "backdrop-blur-xl h-full" : ""}`}
     >
       <div
@@ -26,7 +26,7 @@ export default function LandingNav({ variant }) {
           <Link href="/">
             <svg
               className={`w-36 lg:w-44 cursor-pointer ${
-                isAppMode ? "text-base-content" : "text-base-content"
+                isAppMode ? "text-neutral-content" : "text-base-content"
               } `}
               viewBox="0 0 605 99"
               fill="currentColor"
