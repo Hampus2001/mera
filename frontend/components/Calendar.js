@@ -65,29 +65,13 @@ export default function Calendar() {
 
     //Get red days from that month
     setActiveRedDays([]);
+    //convert month 6 to 06 and leave dubble digit months
     let activeMonth = 0;
-    if (currentMonth.length == 0) {
-      activeMonth = 0 + currentMonth;
-    } else if (currentMonth.length > 0) {
+    if (currentMonth < 10) {
+      activeMonth = "0" + currentMonth;
+      console.log("test");
+    } else if (currentMonth > 9) {
       activeMonth = currentMonth;
-    }
-
-    if (redDays) {
-      for (let i = 0; i < redDays.length; i++) {
-        if (redDays[i].date.includes(currentYear + "-" + (activeMonth + 1))) {
-          setActiveRedDays([...activeRedDays, redDays[i]]);
-        }
-      }
-    }
-    if (redDays) {
-      console.log(
-        "röda dagar denna månad",
-        activeRedDays,
-        "includes",
-        currentYear + "-" + 0 + (currentMonth + 1),
-        "date",
-        redDays[1].date
-      );
     }
 
     // Fill in days from the previous month
@@ -110,9 +94,29 @@ export default function Calendar() {
             }
           }}
           key={`prev-${i}`}
-          className="flex hover:cursor-pointer flex-col p-5 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-100 text-base-content "
+          className="flex hover:cursor-pointer items-center flex-col p-5 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-100 text-base-content "
         >
           <p>{i}</p>
+
+          {redDays?.map((holiday) => {
+            let thisDayDate = "";
+            if (currentMonth == 0) {
+              thisDayDate = currentYear - 1 + "-" + 12 + "-" + i;
+            } else if (currentMonth > 0) {
+              thisDayDate = currentYear + "-" + "0" + currentMonth + "-" + i;
+            }
+
+            if (holiday.date == thisDayDate) {
+              return (
+                <p
+                  key={i}
+                  className="flex w-5/6 rounded-lg p-1 bg-red-400 justify-center"
+                >
+                  {holiday.name}
+                </p>
+              );
+            }
+          })}
         </button>
       );
     }
@@ -131,10 +135,36 @@ export default function Calendar() {
             getCoordinates(e);
           }}
           key={`current-${i}`}
-          className={`flex hover:cursor-pointer flex-col p-5  border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square  ${currentDayStyle} text-base-content `}
+          className={`flex hover:cursor-pointer items-center flex-col p-5  border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square  ${currentDayStyle} text-base-content `}
         >
           <p>{i}</p>
-          <p></p>
+          {redDays?.map((holiday) => {
+            let thisDayDate = "";
+            if (currentMonth == 0) {
+              thisDayDate = currentYear - 1 + "-" + 12 + "-" + i;
+            } else if (currentMonth > 0) {
+              thisDayDate =
+                currentYear + "-" + "0" + (currentMonth + 1) + "-" + i;
+            }
+
+            console.log(
+              "holiday.date",
+              holiday.date,
+              "recemblance",
+              thisDayDate
+            );
+
+            if (holiday.date == thisDayDate) {
+              return (
+                <p
+                  key={i}
+                  className="flex w-5/6 rounded-lg p-1 bg-red-400 justify-center"
+                >
+                  {holiday.name}
+                </p>
+              );
+            }
+          })}
         </button>
       );
     }
