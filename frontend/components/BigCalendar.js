@@ -22,7 +22,7 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-/* const rawShifts = [
+const rawShifts = [
   {
     company_id: "abc123",
     date: "2025-05-25",
@@ -62,7 +62,7 @@ const localizer = dateFnsLocalizer({
       hours: 40,
     },
   },
-]; */
+];
 
 const toEventObject = (shift) => {
   const [startHour, startMin] = shift.start.split(":").map(Number);
@@ -135,9 +135,9 @@ const MyCalendar = ({ variant }) => {
     filteredShifts = filteredShifts.companyShifts;
     console.log("shifts", filteredShifts);
   }
-  useEffect(() => {
-    fetchShifts();
-  }, []);
+  // useEffect(() => {
+  //   fetchShifts();
+  // }, []);
 
   useEffect(() => {
     if (variant === "flex") {
@@ -208,10 +208,10 @@ const MyCalendar = ({ variant }) => {
 
   return (
     <div className=" w-full flex flex-col justify-start items-start lg:grid lg:grid-cols-4 p-2  ">
-      <div className=" flex flex-col w-full p-4 lg:col-span-2 aspect-square bg-secondary text-secondary-content rounded-3xl">
+      <div className=" flex flex-col w-full p-4 lg:col-span-2 aspect-square   rounded-3xl">
         <div className="flex justify-between items-center  h-8 mb-2">
           <button
-            className="btn btn-sm lg:btn-md btn-app "
+            className="btn btn-sm lg:btn-md ui-app "
             onClick={goToPrevMonth}
           >
             Prev
@@ -222,7 +222,7 @@ const MyCalendar = ({ variant }) => {
           </h5>
 
           <button
-            className=" btn btn-sm lg:btn-md  btn-app"
+            className=" btn btn-sm lg:btn-md  ui-app"
             onClick={goToNextMonth}
           >
             Next
@@ -300,20 +300,7 @@ const MyCalendar = ({ variant }) => {
             </div>
           ))}
         </div>
-        <span className="flex flex-row items-center gap-x-2 mt-2">
-          <select
-            value={selectedUser}
-            onChange={(e) => setSelectedUser(e.target.value)}
-            className="select select-sm select-info font-diatype-bold w-full btn-info bg-info text-info-content border-info"
-          >
-            <option value="all">Filter All</option>
-            {uniqueUsernames.map((username) => (
-              <option key={username} value={username}>
-                {username.charAt(0).toUpperCase() + username.slice(1)}
-              </option>
-            ))}
-          </select>
-        </span>
+        <span className="flex flex-row items-center gap-x-2 mt-2"></span>
       </div>
 
       {/* DAY INFO SECTION */}
