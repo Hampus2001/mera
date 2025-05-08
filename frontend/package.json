@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "tailwind:init": "tailwindcss init"
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.4",
-    "tailwindcss": "^4.1.4"
+    "@tailwindcss/typography": "^0.5.16",
+    "tailwindcss": "^4.1.5"
   }
 }
