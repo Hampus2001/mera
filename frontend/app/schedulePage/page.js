@@ -4,7 +4,7 @@ import Calendar from "@/components/Calendar";
 
 export default function SchedulePage() {
   return (
-    <div className="flex flex-col items-center px-20 gap-10 font-instrument">
+    <div className="flex flex-col items-center gap-10 mt-20 font-instrument">
       <Calendar />
     </div>
   );
