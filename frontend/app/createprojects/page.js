@@ -80,7 +80,7 @@ export default function UserSchedule() {
       <LandingNav variant="appMode" />
       <div className="flex min-h-screen">
         {/* Main Content */}
-        <div className="flex flex-col flex-grow items-center px-8 pt-16 pb-16 gap-10 pr-64">
+        <div className="flex flex-col flex-grow items-center px-8 pt-24 pb-16 gap-10 ">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -278,13 +278,49 @@ export default function UserSchedule() {
             </div>
           </motion.div>
         </div>
+      </div>
+      {/* Drawer */}
+      <div className="drawer drawer-end fixed z-40">
+        {/* Drawer toggle input */}
+        <input
+          id="my-drawer-4"
+          type="checkbox"
+          className="drawer-toggle peer hidden"
+        />
 
-        <aside className="fixed right-0 top-16 w-64 h-[calc(100vh-64px)] bg-base-200 border-l border-base-300 p-4 hidden lg:flex flex-col items-center gap-4 shadow-md">
-          <button className="btn btn-primary w-full">Overview</button>
-          <button className="btn btn-secondary w-full">Mail</button>
-          <button className="btn btn-accent w-full">Tasks</button>
-          <button className="btn btn-info w-full">Settings</button>
-        </aside>
+        {/* Drawer content (main page content area) */}
+        <div className="drawer-content">
+          {/* Toggle button */}
+          <label
+            htmlFor="my-drawer-4"
+            className="btn btn-primary fixed right-4 top-20 z-50 peer-checked:hidden"
+          >
+            Open drawer
+          </label>
+        </div>
+
+        {/* Drawer sidebar on the right */}
+        <div className="drawer-side">
+          <label
+            htmlFor="my-drawer-4"
+            className="drawer-overlay"
+            aria-label="close sidebar"
+          ></label>
+          <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+            <li>
+              <a>Overview</a>
+            </li>
+            <li>
+              <a>Mail</a>
+            </li>
+            <li>
+              <a>Tasks</a>
+            </li>
+            <li>
+              <a>Settings</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </>
   );

@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import next from "next";
+import { useEffect, useRef, useState } from "react";
 
 export default function Calendar() {
+  //states
   const todaysDate = new Date();
   const todaysMonth = todaysDate.getMonth();
   const todaysYear = todaysDate.getFullYear();
@@ -11,15 +13,54 @@ export default function Calendar() {
   const [year, setYear] = useState(todaysYear);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [monthString, setMonthString] = useState("");
+
+  //Get x and y coordinates for modal window
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const getCoordinates = (e) => {
+    const rect = e.target.getBoundingClientRect();
+    setPosition({
+      x: rect.left + window.scrollX,
+      y: rect.top + window.scrollY,
+    });
+  };
+
+  //Get "röda dagar"
+  const [redDays, setRedDays] = useState();
+  const [activeRedDays, setActiveRedDays] = useState([]);
+  async function getRedDays() {
+    const response = await fetch(
+      `https://date.nager.at/api/v3/PublicHolidays/${year}/SE`
+    );
+    const thisYear = await response.json();
+
+    const response2 = await fetch(
+      `https://date.nager.at/api/v3/PublicHolidays/${year - 1}/SE`
+    );
+    const lastYear = await response2.json();
+
+    const response3 = await fetch(
+      `https://date.nager.at/api/v3/PublicHolidays/${year + 1}/SE`
+    );
+    const nextYear = await response3.json();
+
+    const allHolidays = [thisYear, lastYear, nextYear];
+    setRedDays(allHolidays.flat());
+  }
+  useEffect(() => {
+    getRedDays();
+  }, []);
 
   function getDaysInCurrentMonth() {
+    convertMonthToString();
+
     const newCalendar = [];
 
     const currentDate = new Date();
     const currentYear = parseInt(year);
     const currentMonth = parseInt(month); // 0-based (0 = January, 11 = December)
     const currentDay = currentDate.getDate();
-    console.log(currentDay);
+
     // Get the first day of the current month
     const firstDayOfCurrentMonth = new Date(currentYear, currentMonth, 1);
     const firstDayOfWeek = firstDayOfCurrentMonth.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
@@ -35,6 +76,16 @@ export default function Calendar() {
     const lastDayOfCurrentMonth = new Date(currentYear, currentMonth + 1, 0);
     const daysInMonth = lastDayOfCurrentMonth.getDate();
 
+    //Get red days from that month
+    setActiveRedDays([]);
+    //convert month 6 to 06 and leave dubble digit months
+    let activeMonth = 0;
+    if (currentMonth < 10) {
+      activeMonth = "0" + currentMonth;
+    } else if (currentMonth > 9) {
+      activeMonth = currentMonth;
+    }
+
     // Fill in days from the previous month
     for (
       let i = daysInPreviousMonth - daysFromPreviousMonth + 1;
@@ -43,39 +94,86 @@ export default function Calendar() {
     ) {
       newCalendar.push(
         <button
-          onClick={() => {
+          onClick={(e) => {
             if (currentMonth == 0) {
               setSelectedDate(`${currentYear}-${currentMonth}-${i}`);
               setShowModal(true);
+              getCoordinates(e);
             } else {
               setSelectedDate(`${currentYear}-${currentMonth}-${i}`);
               setShowModal(true);
+              getCoordinates(e);
             }
           }}
           key={`prev-${i}`}
-          className="flex hover:cursor-pointer flex-col p-5 gap-2 w-full h-44 rounded-lg bg-red-100 text-red-900 shadow-md"
+          className="flex hover:cursor-pointer items-center flex-col p-5 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-100 text-base-content "
         >
-          <p className="text-2xl font-extrabold">{i}</p>
+          <p>{i}</p>
+
+          {redDays?.map((holiday) => {
+            let thisDayDate = "";
+            if (currentMonth == 0) {
+              thisDayDate = currentYear - 1 + "-" + 12 + "-" + i;
+            } else if (currentMonth > 0 && currentMonth < 10) {
+              thisDayDate = currentYear + "-" + "0" + currentMonth + "-" + i;
+            } else if (currentMonth > 0 && currentMonth > 9) {
+              thisDayDate = currentYear + "-" + currentMonth + "-" + i;
+            }
+
+            if (holiday.date == thisDayDate) {
+              return (
+                <p
+                  key={i}
+                  className="flex w-5/6 rounded-lg p-1 bg-red-400 text-red-900 justify-center"
+                >
+                  {holiday.name}
+                </p>
+              );
+            }
+          })}
         </button>
       );
     }
 
     // Fill in days of the current month
     for (let i = 1; i <= daysInMonth; i++) {
-      let currentDayStyle = " bg-red-300 shadow-red-500";
+      let currentDayStyle = " bg-base-200 ";
       if (i == currentDay && month == todaysMonth && year == todaysYear) {
-        currentDayStyle = " bg-red-400 shadow-red-600";
+        currentDayStyle = " bg-base-300 ";
       }
       newCalendar.push(
         <button
-          onClick={() => {
+          onClick={(e) => {
             setSelectedDate(`${currentYear}-${currentMonth + 1}-${i}`);
             setShowModal(true);
+            getCoordinates(e);
           }}
           key={`current-${i}`}
-          className={`flex hover:cursor-pointer flex-col p-5 gap-2 w-full h-44 rounded-lg ${currentDayStyle} text-red-900 shadow-md`}
+          className={`flex hover:cursor-pointer items-center flex-col p-5  border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square  ${currentDayStyle} text-base-content `}
         >
-          <p className="text-2xl font-extrabold">{i}</p>
+          <p>{i}</p>
+          {redDays?.map((holiday) => {
+            let thisDayDate = "";
+            if (currentMonth == 0) {
+              thisDayDate = currentYear + "-" + 1 + "-" + i;
+            } else if (currentMonth > 0 && currentMonth < 10) {
+              thisDayDate =
+                currentYear + "-" + "0" + (currentMonth + 1) + "-" + i;
+            } else if (currentMonth > 0 && currentMonth > 9) {
+              thisDayDate = currentYear + "-" + (currentMonth + 1) + "-" + i;
+            }
+
+            if (holiday.date == thisDayDate) {
+              return (
+                <p
+                  key={i}
+                  className="flex w-5/6 rounded-lg p-1 bg-red-400 text-red-900 justify-center"
+                >
+                  {holiday.name}
+                </p>
+              );
+            }
+          })}
         </button>
       );
     }
@@ -87,19 +185,43 @@ export default function Calendar() {
     for (let i = 1; i <= remainingDays; i++) {
       newCalendar.push(
         <button
-          onClick={() => {
+          onClick={(e) => {
             if (currentMonth == 11) {
               setSelectedDate(`${currentYear}-${currentMonth + 2}-${i}`);
               setShowModal(true);
+              getCoordinates(e);
             } else {
               setSelectedDate(`${currentYear}-${currentMonth + 2}-${i}`);
               setShowModal(true);
+              getCoordinates(e);
             }
           }}
           key={`next-${i}`}
-          className="flex hover:cursor-pointer flex-col p-5 gap-2 w-full h-44 rounded-lg bg-red-100 text-red-900 shadow-md"
+          className="flex hover:cursor-pointer flex-col p-5 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-100 text-base-content"
         >
-          <p className="text-2xl font-extrabold">{i}</p>
+          <p>{i}</p>
+
+          {redDays?.map((holiday) => {
+            let thisDayDate = "";
+            if (currentMonth == 11) {
+              thisDayDate = currentYear + 1 + "-" + 1 + "-" + i;
+            } else if (currentMonth > 0 && currentMonth < 10) {
+              thisDayDate = currentYear + "-" + "0" + currentMonth + "-" + i;
+            } else if (currentMonth > 0 && currentMonth > 9) {
+              thisDayDate = currentYear + "-" + currentMonth + "-" + i;
+            }
+
+            if (holiday.date == thisDayDate) {
+              return (
+                <p
+                  key={i}
+                  className="flex w-5/6 rounded-lg p-1 bg-red-400 text-red-900 justify-center"
+                >
+                  {holiday.name}
+                </p>
+              );
+            }
+          })}
         </button>
       );
     }
@@ -107,92 +229,114 @@ export default function Calendar() {
     setCalendar(newCalendar);
   }
 
+  function convertMonthToString() {
+    if (month === 0) {
+      setMonthString("January");
+    } else if (month === 1) {
+      setMonthString("February");
+    } else if (month === 2) {
+      setMonthString("March");
+    } else if (month === 3) {
+      setMonthString("April");
+    } else if (month === 4) {
+      setMonthString("May");
+    } else if (month === 5) {
+      setMonthString("June");
+    } else if (month === 6) {
+      setMonthString("July");
+    } else if (month === 7) {
+      setMonthString("August");
+    } else if (month === 8) {
+      setMonthString("September");
+    } else if (month === 9) {
+      setMonthString("October");
+    } else if (month === 10) {
+      setMonthString("November");
+    } else if (month === 11) {
+      setMonthString("December");
+    }
+  }
+
   useEffect(() => {
     getDaysInCurrentMonth();
-  }, [month, year]);
+  }, [month]);
 
   return (
     <>
-      <div className="flex flex-col w-full rounded-xl border-8 border-red-200 bg-red-100 gap-5 p-10 m-10">
-        <div className="flex gap-10">
-          <select
-            className="flex font-bold w-1/6 outline-none text-2xl p-2 rounded-xl "
-            value={year}
-            onChange={(e) => {
-              setYear(e.target.value);
+      <div className="flex flex-col w-3/4 rounded-xl gap-4">
+        <div className="flex gap-4">
+          <h4 className="w-1/5">
+            {monthString} - {year}
+          </h4>
+          <button
+            className="btn btn-app btn-secondary btn-sm md:btn-md lg:btn-lg"
+            onClick={() => {
+              if (month != 0) {
+                setMonth(month - 1);
+              } else if (month == 0) {
+                setYear(year - 1);
+                setMonth(11);
+              }
             }}
           >
-            <option value={todaysYear - 2}>{todaysYear - 2}</option>
-            <option value={todaysYear - 1}>{todaysYear - 1}</option>
-            <option value={todaysYear}>{todaysYear}</option>
-            <option value={todaysYear + 1}>{todaysYear + 1}</option>
-            <option value={todaysYear + 2}>{todaysYear + 2}</option>
-          </select>
-          <select
-            className="flex font-bold w-1/6 outline-none text-2xl p-2 rounded-xl "
-            value={month}
-            onChange={(e) => {
-              setMonth(e.target.value);
+            Privious
+          </button>
+
+          <button
+            className="btn btn-app btn-secondary btn-sm md:btn-md lg:btn-lg"
+            onClick={() => {
+              if (month != 11) {
+                setMonth(month + 1);
+              } else if (month == 11) {
+                setYear(year + 1);
+                setMonth(0);
+              }
             }}
           >
-            <option value="0">January</option>
-            <option value="1">February</option>
-            <option value="2">Mars</option>
-            <option value="3">April</option>
-            <option value="4">May</option>
-            <option value="5">June</option>
-            <option value="6">Juli</option>
-            <option value="7">August</option>
-            <option value="8">September</option>
-            <option value="9">October</option>
-            <option value="10">November</option>
-            <option value="11">December</option>
-          </select>
+            Next
+          </button>
         </div>
 
         <div className="grid grid-cols-7 grid-rows-1 gap-2">
-          <p className="flex justify-center font-bold text-2xl text-red-900">
+          <p className="flex justify-center font-bold  text-base-content">
             mon
           </p>
-          <p className="flex justify-center font-bold text-2xl text-red-900">
+          <p className="flex justify-center font-bold  text-base-content">
             tue
           </p>
-          <p className="flex justify-center font-bold text-2xl text-red-900">
+          <p className="flex justify-center font-bold  text-base-content">
             wed
           </p>
-          <p className="flex justify-center font-bold text-2xl text-red-900">
+          <p className="flex justify-center font-bold  text-base-content">
             thur
           </p>
-          <p className="flex justify-center font-bold text-2xl text-red-900">
+          <p className="flex justify-center font-bold  text-base-content">
             fri
           </p>
-          <p className="flex justify-center font-bold text-2xl text-red-900">
+          <p className="flex justify-center font-bold  text-base-content">
             sat
           </p>
-          <p className="flex justify-center font-bold text-2xl text-red-900">
+          <p className="flex justify-center font-bold  text-base-content">
             sun
           </p>
         </div>
 
-        <div
-          className={`w-full grid grid-cols-7 ${
-            calendar.length % 10 === 0
-              ? `grid-rows-${calendar.length / 10}`
-              : `grid-rows-${Math.floor(calendar.length / 10) + 1}`
-          } gap-2`}
-        >
+        <div className="flex flex-wrap border-t-2 border-r-2 border-gray-300">
           {calendar}
         </div>
       </div>
       {showModal && (
-        <div className="fixed top-0 bg-white w-full rounded-xl min-h-screen">
+        <div
+          className={`absolute bg-white w-1/6 p-4 gap-4 rounded-xl h-96`}
+          style={{ top: position.y, left: position.x }}
+        >
           <button
-            className="flex p-5 text-xl font-bold text-center hover:cursor-pointer"
+            className="btn btn-app btn-accent"
             onClick={() => setShowModal(false)}
           >
             Close
           </button>
-          <p className="text-3xl font-bold">{selectedDate}</p>
+          <p>{selectedDate}</p>
         </div>
       )}
     </>

@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "tailwind:init": "tailwindcss init"
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
@@ -22,12 +23,14 @@
     "react": "^19.1.0",
     "react-big-calendar": "^1.18.0",
     "react-dom": "^19.1.0",
+    "react-icons": "^5.5.0",
     "sass": "^1.87.0",
     "tailwind-merge": "^3.2.0",
     "tw-animate-css": "^1.2.5"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.4",
-    "tailwindcss": "^4.1.4"
+    "@tailwindcss/postcss": "^4.1.5",
+    "@tailwindcss/typography": "^0.5.16",
+    "tailwindcss": "^4.1.5"
   }
 }
