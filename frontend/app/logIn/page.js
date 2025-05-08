@@ -89,7 +89,7 @@ export default function AuthPage() {
             Logga in
           </button>
         </form>
-        <Navbar/>
+    
       </section>
     </>
   );
