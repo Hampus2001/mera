@@ -1,7 +1,8 @@
 "use client";
 
+import { HandleCalendarContext } from "@/context/CalendarContext";
 import next from "next";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 export default function Calendar() {
   //states
@@ -9,11 +10,9 @@ export default function Calendar() {
   const todaysMonth = todaysDate.getMonth();
   const todaysYear = todaysDate.getFullYear();
   const [calendar, setCalendar] = useState([]);
-  const [month, setMonth] = useState(todaysMonth);
-  const [year, setYear] = useState(todaysYear);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [monthString, setMonthString] = useState("");
+  const [selectedEvents, setSelectedEvents] = useState([]);
 
   //Get x and y coordinates for modal window
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -26,34 +25,29 @@ export default function Calendar() {
   };
 
   //Get "röda dagar"
-  const [redDays, setRedDays] = useState();
-  const [activeRedDays, setActiveRedDays] = useState([]);
-  async function getRedDays() {
-    const response = await fetch(
-      `https://date.nager.at/api/v3/PublicHolidays/${year}/SE`
-    );
-    const thisYear = await response.json();
+  const {
+    redDays,
+    setRedDays,
+    year,
+    setYear,
+    month,
+    setMonth,
+    monthString,
+    setMonthString,
+  } = useContext(HandleCalendarContext);
 
-    const response2 = await fetch(
-      `https://date.nager.at/api/v3/PublicHolidays/${year - 1}/SE`
-    );
-    const lastYear = await response2.json();
-
-    const response3 = await fetch(
-      `https://date.nager.at/api/v3/PublicHolidays/${year + 1}/SE`
-    );
-    const nextYear = await response3.json();
-
-    const allHolidays = [thisYear, lastYear, nextYear];
-    setRedDays(allHolidays.flat());
-  }
   useEffect(() => {
-    getRedDays();
-  }, []);
+    if (showModal == true) {
+      const selectedHoliday = redDays?.find(
+        (holiday) => holiday.date == selectedDate
+      );
+      if (selectedHoliday != undefined) {
+        setSelectedEvents(selectedHoliday.name);
+      }
+    }
+  }, [showModal]);
 
   function getDaysInCurrentMonth() {
-    convertMonthToString();
-
     const newCalendar = [];
 
     const currentDate = new Date();
@@ -76,8 +70,6 @@ export default function Calendar() {
     const lastDayOfCurrentMonth = new Date(currentYear, currentMonth + 1, 0);
     const daysInMonth = lastDayOfCurrentMonth.getDate();
 
-    //Get red days from that month
-    setActiveRedDays([]);
     //convert month 6 to 06 and leave dubble digit months
     let activeMonth = 0;
     if (currentMonth < 10) {
@@ -96,17 +88,23 @@ export default function Calendar() {
         <button
           onClick={(e) => {
             if (currentMonth == 0) {
-              setSelectedDate(`${currentYear}-${currentMonth}-${i}`);
+              setSelectedDate(`${currentYear - 1}-12-${i < 10 ? "0" + i : i}`);
+              setSelectedEvents([]);
               setShowModal(true);
               getCoordinates(e);
             } else {
-              setSelectedDate(`${currentYear}-${currentMonth}-${i}`);
+              setSelectedDate(
+                `${currentYear}-${
+                  currentMonth < 10 ? "0" + currentMonth : currentMonth
+                }-${i < 10 ? "0" + i : i}`
+              );
+              setSelectedEvents([]);
               setShowModal(true);
               getCoordinates(e);
             }
           }}
           key={`prev-${i}`}
-          className="flex hover:cursor-pointer items-center flex-col p-5 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-100 text-base-content "
+          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-100 text-base-content "
         >
           <p>{i}</p>
 
@@ -124,10 +122,8 @@ export default function Calendar() {
               return (
                 <p
                   key={i}
-                  className="flex w-5/6 rounded-lg p-1 bg-red-400 text-red-900 justify-center"
-                >
-                  {holiday.name}
-                </p>
+                  className="flex  rounded-lg p-1 bg-red-400 text-red-900 justify-center"
+                ></p>
               );
             }
           })}
@@ -144,12 +140,17 @@ export default function Calendar() {
       newCalendar.push(
         <button
           onClick={(e) => {
-            setSelectedDate(`${currentYear}-${currentMonth + 1}-${i}`);
+            setSelectedDate(
+              `${currentYear}-${
+                currentMonth + 1 < 10 ? "0" + (currentMonth + 1) : currentMonth
+              }-${i < 10 ? "0" + i : i}`
+            );
+            setSelectedEvents([]);
             setShowModal(true);
             getCoordinates(e);
           }}
           key={`current-${i}`}
-          className={`flex hover:cursor-pointer items-center flex-col p-5  border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square  ${currentDayStyle} text-base-content `}
+          className={`flex hover:cursor-pointer items-center flex-col p-2 lg:p-4  border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square  ${currentDayStyle} text-base-content `}
         >
           <p>{i}</p>
           {redDays?.map((holiday) => {
@@ -167,10 +168,8 @@ export default function Calendar() {
               return (
                 <p
                   key={i}
-                  className="flex w-5/6 rounded-lg p-1 bg-red-400 text-red-900 justify-center"
-                >
-                  {holiday.name}
-                </p>
+                  className="flex  rounded-lg p-1 bg-red-400 text-red-900 justify-center"
+                ></p>
               );
             }
           })}
@@ -187,17 +186,21 @@ export default function Calendar() {
         <button
           onClick={(e) => {
             if (currentMonth == 11) {
-              setSelectedDate(`${currentYear}-${currentMonth + 2}-${i}`);
+              setSelectedDate(`${currentYear + 1}-01-${i < 10 ? "0" + i : i}`);
+              setSelectedEvents([]);
               setShowModal(true);
               getCoordinates(e);
             } else {
-              setSelectedDate(`${currentYear}-${currentMonth + 2}-${i}`);
+              setSelectedDate(
+                `${currentYear}-${currentMonth + 2}-${i < 10 ? "0" + i : i}`
+              );
+              setSelectedEvents([]);
               setShowModal(true);
               getCoordinates(e);
             }
           }}
           key={`next-${i}`}
-          className="flex hover:cursor-pointer flex-col p-5 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-100 text-base-content"
+          className="flex hover:cursor-pointer flex-col p-2 lg:p-4 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-100 text-base-content"
         >
           <p>{i}</p>
 
@@ -215,10 +218,8 @@ export default function Calendar() {
               return (
                 <p
                   key={i}
-                  className="flex w-5/6 rounded-lg p-1 bg-red-400 text-red-900 justify-center"
-                >
-                  {holiday.name}
-                </p>
+                  className="flex rounded-lg p-1 bg-red-400 text-red-900 justify-center"
+                ></p>
               );
             }
           })}
@@ -227,34 +228,6 @@ export default function Calendar() {
     }
 
     setCalendar(newCalendar);
-  }
-
-  function convertMonthToString() {
-    if (month === 0) {
-      setMonthString("January");
-    } else if (month === 1) {
-      setMonthString("February");
-    } else if (month === 2) {
-      setMonthString("March");
-    } else if (month === 3) {
-      setMonthString("April");
-    } else if (month === 4) {
-      setMonthString("May");
-    } else if (month === 5) {
-      setMonthString("June");
-    } else if (month === 6) {
-      setMonthString("July");
-    } else if (month === 7) {
-      setMonthString("August");
-    } else if (month === 8) {
-      setMonthString("September");
-    } else if (month === 9) {
-      setMonthString("October");
-    } else if (month === 10) {
-      setMonthString("November");
-    } else if (month === 11) {
-      setMonthString("December");
-    }
   }
 
   useEffect(() => {
@@ -337,6 +310,8 @@ export default function Calendar() {
             Close
           </button>
           <p>{selectedDate}</p>
+          <hr></hr>
+          <h4>{selectedEvents ? selectedEvents : ""}</h4>
         </div>
       )}
     </>

@@ -1,6 +1,7 @@
 import "./globals.css";
 import localFont from "next/font/local";
 import WorkspaceContext from "@/context/WorkspaceContext";
+import CalendarContext from "@/context/CalendarContext";
 
 import { Instrument_Serif } from "next/font/google";
 import { Roboto } from "next/font/google";
@@ -63,11 +64,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <WorkspaceContext>
-        <body
-          className={`${fontAbsans.variable} ${fontMattone.variable} ${fontMattoneBold.variable} ${fontMattoneBlack.variable} ${fontInstrument.variable} ${fontRoboto.variable} ${fontDiatypeRegular.variable} ${fontDiatypeMedium.variable} ${fontDiatypeBold.variable}  antialiased`}
-        >
-          {children}
-        </body>
+        <CalendarContext>
+          <body
+            className={`${fontAbsans.variable} ${fontMattone.variable} ${fontMattoneBold.variable} ${fontMattoneBlack.variable} ${fontInstrument.variable} ${fontRoboto.variable} ${fontDiatypeRegular.variable} ${fontDiatypeMedium.variable} ${fontDiatypeBold.variable}  antialiased`}
+          >
+            {children}
+          </body>
+        </CalendarContext>
       </WorkspaceContext>
     </html>
   );
