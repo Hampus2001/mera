@@ -106,7 +106,7 @@ export default function LandingNav({ variant }) {
       {/* Mobile full-screen menu */}
       {open && !isAppMode && (
         <div className="fixed top-0 left-0 z-30 w-full h-full bg-neutral">
-        <div className="flex justify-between items-center w-full px-5 py-4 mb-30">
+          <div className="flex justify-between items-center w-full px-5 py-4 mb-30">
             <h2 className="text-primary text-5xl m-4">Menu</h2>
             <button onClick={() => setOpen(false)}>
               <Cross1Icon className="w-6 h-6 text-primary m-4" />
@@ -115,34 +115,37 @@ export default function LandingNav({ variant }) {
 
           {/* Navigation links */}
           <nav className="flex flex-col px-4 pt-8 bg-neutral text-primary space-y-4 w-[calc(100vw-2rem)] m-4">
-            <Link 
-            className="" onClick={handleMobileMenu} href="/">
+            <Link className="" onClick={handleMobileMenu} href="/">
               <h3 className="pb-2 uppercase border-b">Product</h3>
             </Link>
             <Link className="text-lg" onClick={handleMobileMenu} href="/">
               <h3 className="pb-2 uppercase border-b">Resources</h3>
             </Link>
             <Link className="text-lg" onClick={handleMobileMenu} href="/">
-            <h3 className="pb-2 uppercase border-b">Pricing</h3>
+              <h3 className="pb-2 uppercase border-b">Pricing</h3>
             </Link>
             <Link className="text-lg" onClick={handleMobileMenu} href="/">
-             <h3 className="pb-2 uppercase text-bold border-b">Contact</h3>
+              <h3 className="pb-2 uppercase text-bold border-b">Contact</h3>
             </Link>
 
             <div className="my-6 p-4"></div>
             <button className="btn btn-primary btn-xl">
-            <Link className="uppercase" onClick={handleMobileMenu} href="/logIn">
-             Get Started
-            </Link>
+              <Link
+                className="uppercase"
+                onClick={handleMobileMenu}
+                href="/logIn"
+              >
+                Get Started
+              </Link>
             </button>
             <button className="mt-2 btn btn-xl">
-            <Link
-              className="uppercase"
-              onClick={handleMobileMenu}
-              href="/createWorkspace"
-            >
-              Log In
-            </Link>
+              <Link
+                className="uppercase"
+                onClick={handleMobileMenu}
+                href="/createWorkspace"
+              >
+                Log In
+              </Link>
             </button>
           </nav>
         </div>
