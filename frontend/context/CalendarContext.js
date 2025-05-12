@@ -78,6 +78,9 @@ export default function CalendarContext({ children }) {
         setMonth,
         monthString,
         setMonthString,
+        todaysDate,
+        todaysYear,
+        todaysMonth,
       }}
     >
       {children}
