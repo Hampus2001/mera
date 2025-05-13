@@ -316,7 +316,7 @@ export default function Calendar() {
       </div>
       {showModal && (
         <div
-          className={`absolute bg-white w-1/6 p-4 gap-4 rounded-xl h-auto`}
+          className={`absolute bg-white w-auto p-4 gap-4 rounded-xl h-auto`}
           style={{ top: position.y, left: position.x }}
         >
           <button

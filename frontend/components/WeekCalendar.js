@@ -75,8 +75,12 @@ export default function WeekCalendar() {
           key={i}
           className={`grid w-full grid-rows-26 grid-cols-1 justify-start items-start min-h-screen border-b-2 border-l-2 border-gray-300 ${dayStyle}`}
         >
-          <p className="flex w-full lg:p-4 p-0 border-b border-gray-300 row-span-2 h-full">
-            {currentDayString} - {dayDate.getDate()}
+          <p className="flex w-full lg:p-4 p-0 border-b border-gray-300 row-span-1 h-full">
+            {currentDayString}
+          </p>
+
+          <p className="flex justify-center items-center w-full lg:p-4 p-0 border-b border-gray-300 row-span-1 h-full">
+            {dayDate.getDate()}
           </p>
 
           {redDays.map((holiday) => {
@@ -107,7 +111,7 @@ export default function WeekCalendar() {
                     setShowModal(true);
                   }}
                   key={dayDate.getDate()}
-                  className="flex w-full row-start-3 rounded-lg p-3 lg-p-1 bg-red-400 text-red-900 justify-center"
+                  className="flex w-full row-start-3 rounded-lg p-3 lg-p-1 bg-red-400 text-red-900 justify-center hover:cursor-pointer"
                 >
                   <p className="hidden lg:flex">{holiday.name}</p>
                 </button>
@@ -238,7 +242,7 @@ export default function WeekCalendar() {
       </div>
       {showModal && (
         <div
-          className={`absolute bg-white w-1/6 p-4 gap-4 rounded-xl h-auto`}
+          className={`absolute bg-white w-auto p-4 gap-4 rounded-xl h-auto`}
           style={{ top: position.y, left: position.x }}
         >
           <button
