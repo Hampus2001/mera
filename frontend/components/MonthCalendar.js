@@ -104,25 +104,33 @@ export default function Calendar() {
             }
           }}
           key={`prev-${i}`}
-          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-100 text-base-content "
+          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-200 text-base-content "
         >
           <p>{i}</p>
 
           {redDays?.map((holiday) => {
             let thisDayDate = "";
             if (currentMonth == 0) {
-              thisDayDate = currentYear - 1 + "-" + 12 + "-" + i;
+              thisDayDate =
+                currentYear - 1 + "-" + 12 + "-" + (i < 10 ? "0" + i : i);
             } else if (currentMonth > 0 && currentMonth < 10) {
-              thisDayDate = currentYear + "-" + "0" + currentMonth + "-" + i;
+              thisDayDate =
+                currentYear +
+                "-" +
+                "0" +
+                currentMonth +
+                "-" +
+                (i < 10 ? "0" + i : i);
             } else if (currentMonth > 0 && currentMonth > 9) {
-              thisDayDate = currentYear + "-" + currentMonth + "-" + i;
+              thisDayDate =
+                currentYear + "-" + currentMonth + "-" + (i < 10 ? "0" + i : i);
             }
 
             if (holiday.date == thisDayDate) {
               return (
                 <p
                   key={i}
-                  className="flex  rounded-lg p-1 bg-red-400 text-red-900 justify-center"
+                  className="flex  rounded-lg p-1 bg-red-400 text-red-900 justify-center animate-pulse"
                 ></p>
               );
             }
@@ -133,16 +141,18 @@ export default function Calendar() {
 
     // Fill in days of the current month
     for (let i = 1; i <= daysInMonth; i++) {
-      let currentDayStyle = " bg-base-200 ";
+      let currentDayStyle = " bg-base-100 ";
       if (i == currentDay && month == todaysMonth && year == todaysYear) {
-        currentDayStyle = " bg-base-300 ";
+        currentDayStyle = " bg-secondary ";
       }
       newCalendar.push(
         <button
           onClick={(e) => {
             setSelectedDate(
               `${currentYear}-${
-                currentMonth + 1 < 10 ? "0" + (currentMonth + 1) : currentMonth
+                currentMonth + 1 < 10
+                  ? "0" + (currentMonth + 1)
+                  : currentMonth + 1
               }-${i < 10 ? "0" + i : i}`
             );
             setSelectedEvents([]);
@@ -154,21 +164,15 @@ export default function Calendar() {
         >
           <p>{i}</p>
           {redDays?.map((holiday) => {
-            let thisDayDate = "";
-            if (currentMonth == 0) {
-              thisDayDate = currentYear + "-" + 1 + "-" + i;
-            } else if (currentMonth > 0 && currentMonth < 10) {
-              thisDayDate =
-                currentYear + "-" + "0" + (currentMonth + 1) + "-" + i;
-            } else if (currentMonth > 0 && currentMonth > 9) {
-              thisDayDate = currentYear + "-" + (currentMonth + 1) + "-" + i;
-            }
+            let thisDayDate = `${currentYear}-${(currentMonth + 1)
+              .toString()
+              .padStart(2, "0")}-${i.toString().padStart(2, "0")}`;
 
             if (holiday.date == thisDayDate) {
               return (
                 <p
                   key={i}
-                  className="flex  rounded-lg p-1 bg-red-400 text-red-900 justify-center"
+                  className="flex  rounded-lg p-1 bg-red-400 text-red-900 justify-center animate-pulse"
                 ></p>
               );
             }
@@ -192,7 +196,11 @@ export default function Calendar() {
               getCoordinates(e);
             } else {
               setSelectedDate(
-                `${currentYear}-${currentMonth + 2}-${i < 10 ? "0" + i : i}`
+                `${currentYear}-${
+                  currentMonth + 2 < 10
+                    ? "0" + (currentMonth + 2)
+                    : currentMonth + 2
+                }-${i < 10 ? "0" + i : i}`
               );
               setSelectedEvents([]);
               setShowModal(true);
@@ -200,25 +208,33 @@ export default function Calendar() {
             }
           }}
           key={`next-${i}`}
-          className="flex hover:cursor-pointer flex-col p-2 lg:p-4 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-100 text-base-content"
+          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-200 text-base-content "
         >
           <p>{i}</p>
 
           {redDays?.map((holiday) => {
             let thisDayDate = "";
             if (currentMonth == 11) {
-              thisDayDate = currentYear + 1 + "-" + 1 + "-" + i;
+              thisDayDate =
+                currentYear + 1 + "-" + "01" + "-" + (i < 10 ? "0" + i : i);
             } else if (currentMonth > 0 && currentMonth < 10) {
-              thisDayDate = currentYear + "-" + "0" + currentMonth + "-" + i;
+              thisDayDate =
+                currentYear +
+                "-" +
+                "0" +
+                currentMonth +
+                "-" +
+                (i < 10 ? "0" + i : i);
             } else if (currentMonth > 0 && currentMonth > 9) {
-              thisDayDate = currentYear + "-" + currentMonth + "-" + i;
+              thisDayDate =
+                currentYear + "-" + currentMonth + "-" + (i < 10 ? "0" + i : i);
             }
 
             if (holiday.date == thisDayDate) {
               return (
                 <p
                   key={i}
-                  className="flex rounded-lg p-1 bg-red-400 text-red-900 justify-center"
+                  className="flex  rounded-lg p-1 bg-red-400 text-red-900 justify-center animate-pulse"
                 ></p>
               );
             }
@@ -236,9 +252,9 @@ export default function Calendar() {
 
   return (
     <>
-      <div className="flex flex-col w-3/4 rounded-xl gap-4">
+      <div className="flex flex-col w-full rounded-xl gap-4">
         <div className="flex gap-4">
-          <h4 className="w-1/5">
+          <h4>
             {monthString} - {year}
           </h4>
           <button
