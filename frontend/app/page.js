@@ -7,6 +7,7 @@ export default function Home() {
   return (
     <>
       <LandingNav />
+
       <div className="w-screen overflow-x-hidden">
         <section className=" container-xl mx-auto flex flex-col items-center justify-center w-full h-screen  px-4 lg:px-86 gap-y-4 lg:gap-y-4">
           <h1 className=" text-center uppercase text-base-content">
@@ -18,7 +19,7 @@ export default function Home() {
           </h3>
           <div className="flex flex-row flex-wrap items-center justify-center gap-4 mt-0 lg:mt-4">
             <Link href="./createWorkspace">
-              <button className="btn btn-primary btn-landing   btn-xl    ">
+              <button className="btn btn-primary btn-landing btn-xl">
                 Get started
               </button>
             </Link>
