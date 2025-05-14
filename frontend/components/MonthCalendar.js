@@ -3,7 +3,7 @@
 import { HandleCalendarContext } from "@/context/CalendarContext";
 import next from "next";
 import { useContext, useEffect, useRef, useState } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaPlus } from "react-icons/fa";
 import { useWindowSize } from "@/hooks/useWindowSize";
 
 export default function Calendar() {
@@ -261,39 +261,44 @@ export default function Calendar() {
 
   return (
     <>
-      <div className="flex flex-col w-full rounded-xl gap-4">
-        <div className="lg:hidden flex w-full justify-center gap-4">
-          <button
-            className="btn btn-app btn-primary btn-sm md:btn-md lg:btn-lg"
-            onClick={() => {
-              if (month != 0) {
-                setMonth(month - 1);
-              } else if (month == 0) {
-                setYear(year - 1);
-                setMonth(11);
-              }
-            }}
-          >
-            <FaArrowLeft />
-          </button>
+      <div className="flex flex-col w-full rounded-xl">
+        <div className="lg:hidden flex justify-between items-center gap-4 p-4">
+          <div className="lg:hidden flex w-full justify-between items-center gap-4">
+            <button
+              className="btn btn-app btn-primary btn-sm md:btn-md lg:btn-lg"
+              onClick={() => {
+                if (month != 0) {
+                  setMonth(month - 1);
+                } else if (month == 0) {
+                  setYear(year - 1);
+                  setMonth(11);
+                }
+              }}
+            >
+              <FaArrowLeft />
+            </button>
 
-          <h4 className="flex justify-center items-center">
-            {monthString} - {year}
-          </h4>
+            <p className="flex justify-center items-center">
+              {monthString} - {year}
+            </p>
 
-          <button
-            className="btn btn-app btn-primary btn-sm md:btn-md lg:btn-lg"
-            onClick={() => {
-              if (month != 11) {
-                setMonth(month + 1);
-              } else if (month == 11) {
-                setYear(year + 1);
-                setMonth(0);
-              }
-            }}
-          >
-            <FaArrowRight />
-          </button>
+            <button
+              className="btn btn-app btn-primary btn-sm md:btn-md lg:btn-lg"
+              onClick={() => {
+                if (month != 11) {
+                  setMonth(month + 1);
+                } else if (month == 11) {
+                  setYear(year + 1);
+                  setMonth(0);
+                }
+              }}
+            >
+              <FaArrowRight />
+            </button>
+          </div>
+          <select className="select ui-app w-1/3">
+            <option>Filter</option>
+          </select>
         </div>
 
         <div>
@@ -350,6 +355,15 @@ export default function Calendar() {
           <h4>{selectedEvents ? selectedEvents : ""}</h4>
         </div>
       )}
+
+      <button
+        id="+"
+        className="fixed flex items-center hover:cursor-pointer justify-center rounded-full right-4 bottom-8 w-16 h-16 bg-primary-content"
+      >
+        <h4 className="text-primary text-3xl">
+          <FaPlus />
+        </h4>
+      </button>
     </>
   );
 }
