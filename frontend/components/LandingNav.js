@@ -149,14 +149,14 @@ export default function LandingNav({ variant }) {
               </div>
               <div className="flex items-center justify-between w-full">
                 <div className="flex items-center gap-x-4">
-                  <h2 className="text-[30px]">
+                  <h2 className="text-[40px]">
                     Make More Time. <br />
-                    Follow Us On Instagram
+                    Follow Us On Instagram.
                   </h2>
                 </div>
                 <div className="ml-4">
                   <svg
-                    width="144"
+                    width="134"
                     height="132"
                     viewBox="0 0 144 132"
                     fill="none"
