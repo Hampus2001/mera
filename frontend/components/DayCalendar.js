@@ -155,7 +155,7 @@ export default function DayCalendar() {
             <select
               value={month}
               onChange={(e) => {
-                setMonth(e.target.value);
+                setMonth(parseInt(e.target.value));
               }}
               className="select ui-app"
             >

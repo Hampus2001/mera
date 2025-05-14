@@ -5,6 +5,7 @@ import { createContext, useEffect, useState } from "react";
 export const HandleCalendarContext = createContext([]);
 
 export default function CalendarContext({ children }) {
+  //Give date with format YYYY-MM-DD get week in response
   function getISOWeekNumber(dateString) {
     const date = new Date(dateString);
 
@@ -26,6 +27,29 @@ export default function CalendarContext({ children }) {
     const weekNumber = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
 
     return weekNumber;
+  }
+
+  //Give week and year and get the date of the monday same week
+  function getDateOfISOWeek(week, year) {
+    // Jan 4 is always in the first ISO week
+    const simple = new Date(Date.UTC(year, 0, 4));
+
+    // Get the day of the week (Monday = 1, Sunday = 7)
+    const dayOfWeek = simple.getUTCDay() || 7;
+
+    // Calculate Monday of week 1
+    const isoWeek1Monday = new Date(simple);
+    isoWeek1Monday.setUTCDate(simple.getUTCDate() - dayOfWeek + 1);
+
+    // Get Monday of target week
+    const targetMonday = new Date(isoWeek1Monday);
+    targetMonday.setUTCDate(isoWeek1Monday.getUTCDate() + (week - 1) * 7);
+
+    return {
+      year: targetMonday.getUTCFullYear(),
+      month: targetMonday.getUTCMonth() + 1, // getUTCMonth() is zero-based
+      day: targetMonday.getUTCDate(),
+    };
   }
 
   const [redDays, setRedDays] = useState();
@@ -110,6 +134,7 @@ export default function CalendarContext({ children }) {
         activeCalendar,
         setActiveCalendar,
         getISOWeekNumber,
+        getDateOfISOWeek,
       }}
     >
       {children}

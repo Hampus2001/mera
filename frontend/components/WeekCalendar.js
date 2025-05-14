@@ -37,16 +37,19 @@ export default function WeekCalendar() {
     todaysMonth,
     activeCalendar,
     setActiveCalendar,
+    getISOWeekNumber,
+    getDateOfISOWeek,
   } = useContext(HandleCalendarContext);
 
   const [todaysState, setTodaysState] = useState(todaysDate.getDate());
+  const [displayedWeek, setDisplayedWeek] = useState(1);
 
   function getDaysInCurrentWeek() {
     const newCalendar = [];
 
     // Create a new date object based on `todaysState`
     const baseDate = new Date(year, month, todaysState);
-    console.log("base", baseDate);
+
     const currentDay = (baseDate.getDay() + 6) % 7; // Adjust so Monday = 0, ..., Sunday = 6
 
     for (let i = 0; i < 7; i++) {
@@ -70,6 +73,15 @@ export default function WeekCalendar() {
 
       const dayDate = new Date(baseDate);
       dayDate.setDate(baseDate.getDate() - currentDay + i); // Calculate each day in the week
+      if (i == 0) {
+        const currentWeek = `${year}-${
+          month + 1 < 10 && month + 1 != 1 ? "0" + (month + 1) : month + 1
+        }-${
+          dayDate.getDate() < 10 ? "0" + dayDate.getDate() : dayDate.getDate()
+        }`;
+
+        setDisplayedWeek(getISOWeekNumber(currentWeek));
+      }
 
       const dayStyle =
         dayDate.toDateString() === todaysDate.toDateString()
@@ -79,9 +91,9 @@ export default function WeekCalendar() {
       newCalendar.push(
         <div
           key={i}
-          className={`grid w-full grid-rows-26 grid-cols-1 justify-start items-start min-h-screen border-b-2 border-l-2 border-gray-300 ${dayStyle}`}
+          className={`grid w-full grid-rows-26 grid-cols-1 justify-start items-start min-h-screen ${dayStyle} border border-gray-300`}
         >
-          <p className="flex w-full justify-center lg:justify-start items-center lg:p-4 p-0 border-b border-gray-300 row-span-1 h-full">
+          <p className="flex w-full justify-center lg:justify-start items-center lg:p-4 p-0 border border-gray-300 row-span-1 h-full">
             {currentDayString}
           </p>
 
@@ -155,22 +167,22 @@ export default function WeekCalendar() {
             <select
               value={month}
               onChange={(e) => {
-                setMonth(e.target.value);
+                setMonth(parseInt(e.target.value));
               }}
               className="select ui-app"
             >
-              <option value="0">January</option>
-              <option value="1">February</option>
-              <option value="2">March</option>
-              <option value="3">April</option>
-              <option value="4">May</option>
-              <option value="5">June</option>
-              <option value="6">July</option>
-              <option value="7">August</option>
-              <option value="8">September</option>
-              <option value="9">October</option>
-              <option value="10">November</option>
-              <option value="11">December</option>
+              <option value={0}>January</option>
+              <option value={1}>February</option>
+              <option value={2}>March</option>
+              <option value={3}>April</option>
+              <option value={4}>May</option>
+              <option value={5}>June</option>
+              <option value={6}>July</option>
+              <option value={7}>August</option>
+              <option value={8}>September</option>
+              <option value={9}>October</option>
+              <option value={10}>November</option>
+              <option value={11}>December</option>
             </select>
             <select className="select ui-app">
               <option>Filter</option>
@@ -188,7 +200,34 @@ export default function WeekCalendar() {
               <option value="Day">Day Format</option>
             </select>
 
-            <select></select>
+            <select
+              value={+displayedWeek}
+              onChange={(e) => {
+                setDisplayedWeek(parseInt(e.target.value));
+                const mondayOfSelectedWeekDate = getDateOfISOWeek(
+                  parseInt(e.target.value),
+                  year
+                );
+                setYear(parseInt(mondayOfSelectedWeekDate.year));
+                setMonth(parseInt(mondayOfSelectedWeekDate.month - 1));
+                setTodaysState(parseInt(mondayOfSelectedWeekDate.day));
+              }}
+              className="select ui-app"
+            >
+              <option value={+displayedWeek - 6}>W{+displayedWeek - 6}</option>
+              <option value={+displayedWeek - 5}>W{+displayedWeek - 5}</option>
+              <option value={+displayedWeek - 4}>W{+displayedWeek - 4}</option>
+              <option value={+displayedWeek - 3}>W{+displayedWeek - 3}</option>
+              <option value={+displayedWeek - 2}>W{+displayedWeek - 2}</option>
+              <option value={+displayedWeek - 1}>W{+displayedWeek - 1}</option>
+              <option value={+displayedWeek}>W{+displayedWeek}</option>
+              <option value={+displayedWeek + 1}>W{+displayedWeek + 1}</option>
+              <option value={+displayedWeek + 2}>W{+displayedWeek + 2}</option>
+              <option value={+displayedWeek + 3}>W{+displayedWeek + 3}</option>
+              <option value={+displayedWeek + 4}>W{+displayedWeek + 4}</option>
+              <option value={+displayedWeek + 5}>W{+displayedWeek + 5}</option>
+              <option value={+displayedWeek + 6}>W{+displayedWeek + 6}</option>
+            </select>
           </div>
         </div>
 
@@ -197,7 +236,7 @@ export default function WeekCalendar() {
           {Array.from({ length: 24 }).map((_, index) => (
             <p
               key={index}
-              className={`flex text-xs lg:text-sm justify-center items-center lg:p-4 p-0 col-start-1 row-start-${
+              className={`flex text-xs lg:text-sm justify-center  items-center lg:p-4 p-0 col-start-1 row-start-${
                 index + 2
               }`}
             >
