@@ -101,10 +101,10 @@ export default function LandingNav({ variant }) {
       {/* Mobile full-screen menu */}
       {open && !isAppMode && (
         <div className="fixed z-30 top-0 left-0 w-full h-screen bg-neutral overflow-y-auto">
-          <div className="flex justify-between items-center w-full px-8 py-4">
-            <h2 className="text-primary text-5xl m-4">Menu</h2>
+          <div className="flex justify-between items-center w-full px-6 py-2">
+            <h2 className="text-primary text-4xl">Menu</h2>
             <button onClick={() => setOpen(false)}>
-              <Cross1Icon className="w-6 h-6 text-primary m-4" />
+              <Cross1Icon className="w-6 h-6 text-primary m-4"/>
             </button>
           </div>
 
