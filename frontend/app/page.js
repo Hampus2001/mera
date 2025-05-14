@@ -1,5 +1,6 @@
 import LandingNav from "@/components/LandingNav";
 import Link from "next/link";
+import Sidebar from "@/components/Sidebar";
 
 import MyCalendar from "@/components/BigCalendar";
 
@@ -165,6 +166,7 @@ export default function Home() {
             <BigCalendar />
           </div>
         </div> */}
+        <Sidebar></Sidebar>
       </div>
     </>
   );
