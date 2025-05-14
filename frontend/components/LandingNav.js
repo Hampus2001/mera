@@ -149,7 +149,7 @@ export default function LandingNav({ variant }) {
               </div>
               <div className="flex items-center justify-between w-full">
                 <div className="flex items-center gap-x-4">
-                  <h2>
+                  <h2 className="text-[30px]">
                     Make More Time. <br />
                     Follow Us On Instagram
                   </h2>
