@@ -15,11 +15,12 @@ export default function Calendar() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedEvents, setSelectedEvents] = useState([]);
+  const [firstWeekOfMonth, setFirstWeekOfMonth] = useState("");
 
   //Get x and y coordinates for modal window
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const { width, height } = useWindowSize();
-  console.log(width, height);
+
   const getCoordinates = (e) => {
     const rect = e.target.getBoundingClientRect();
     setPosition({
@@ -38,6 +39,9 @@ export default function Calendar() {
     setMonth,
     monthString,
     setMonthString,
+    activeCalendar,
+    setActiveCalendar,
+    getISOWeekNumber,
   } = useContext(HandleCalendarContext);
 
   useEffect(() => {
@@ -58,6 +62,13 @@ export default function Calendar() {
     const currentYear = parseInt(year);
     const currentMonth = parseInt(month); // 0-based (0 = January, 11 = December)
     const currentDay = currentDate.getDate();
+
+    const monthStartWeek = getISOWeekNumber(
+      `${currentYear}-${
+        currentMonth + 1 < 10 ? "0" + (currentMonth + 1) : currentMonth + 1
+      }-01`
+    );
+    setFirstWeekOfMonth(monthStartWeek);
 
     // Get the first day of the current month
     const firstDayOfCurrentMonth = new Date(currentYear, currentMonth, 1);
@@ -85,7 +96,7 @@ export default function Calendar() {
     // Fill in days from the previous month
     for (
       let i = daysInPreviousMonth - daysFromPreviousMonth + 1;
-      i <= daysInPreviousMonth;
+      i <= daysInPreviousMonth + 1;
       i++
     ) {
       newCalendar.push(
@@ -239,7 +250,6 @@ export default function Calendar() {
             }
 
             if (holiday.date == thisDayDate) {
-              console.log("hit", holiday.date, thisDayDate);
               return (
                 <p
                   key={i}
@@ -257,13 +267,70 @@ export default function Calendar() {
 
   useEffect(() => {
     getDaysInCurrentMonth();
-  }, [month, redDays]);
+  }, [month, year, redDays]);
 
   return (
     <>
-      <div className="flex flex-col w-full rounded-xl">
-        <div className="lg:hidden flex justify-between items-center gap-4 p-4">
-          <div className="lg:hidden flex w-full justify-between items-center gap-4">
+      <div className="flex flex-col w-full rounded-xl gap-4">
+        <div className="lg:hidden flex justify-between items-center gap-4">
+          <div
+            id="toggleDate"
+            className="flex flex-col w-full justify-between gap-4"
+          >
+            <div className="flex justify-between gap-4">
+              <select
+                value={year}
+                onChange={(e) => {
+                  setYear(e.target.value);
+                }}
+                className="select ui-app"
+              >
+                <option value={+year - 2}>{+year - 2}</option>
+                <option value={+year - 1}>{+year - 1}</option>
+                <option value={+year}>{+year}</option>
+                <option value={+year + 1}>{+year + 1}</option>
+                <option value={+year + 2}>{+year + 2}</option>
+              </select>
+              <select
+                value={month}
+                onChange={(e) => {
+                  setMonth(e.target.value);
+                }}
+                className="select ui-app"
+              >
+                <option value="0">January</option>
+                <option value="1">February</option>
+                <option value="2">March</option>
+                <option value="3">April</option>
+                <option value="4">May</option>
+                <option value="5">June</option>
+                <option value="6">July</option>
+                <option value="7">August</option>
+                <option value="8">September</option>
+                <option value="9">October</option>
+                <option value="10">November</option>
+                <option value="11">December</option>
+              </select>
+              <select className="select ui-app">
+                <option>Filter</option>
+              </select>
+            </div>
+
+            <select
+              value={activeCalendar}
+              onChange={(e) => setActiveCalendar(e.target.value)}
+              className="select ui-app w-full"
+            >
+              <option value="Month">Month Format</option>
+              <option value="Week">Week Format</option>
+              <option value="Day">Day Format</option>
+            </select>
+          </div>
+
+          <div
+            id="toggleMonth"
+            className="hidden lg:flex w-full justify-between items-center gap-4"
+          >
             <button
               className="btn btn-app btn-primary btn-sm md:btn-md lg:btn-lg"
               onClick={() => {
@@ -296,38 +363,50 @@ export default function Calendar() {
               <FaArrowRight />
             </button>
           </div>
-          <select className="select ui-app w-1/3">
+          <select className="hidden lg:flex select ui-app w-1/3">
             <option>Filter</option>
           </select>
         </div>
 
         <div>
-          <div className="grid grid-cols-7 grid-rows-1">
-            <p className="flex justify-center font-bold  text-base-content border-base-200 border-t border-l border-r">
-              mon
-            </p>
-            <p className="flex justify-center font-bold  text-base-content border-base-200 border-t border-l border-r">
-              tue
-            </p>
-            <p className="flex justify-center font-bold  text-base-content border-base-200 border-t border-l border-r">
-              wed
-            </p>
-            <p className="flex justify-center font-bold  text-base-content border-base-200 border-t border-l border-r">
-              thur
-            </p>
-            <p className="flex justify-center font-bold  text-base-content border-base-200 border-t border-l border-r">
-              fri
-            </p>
-            <p className="flex justify-center font-bold  text-base-content border-base-200 border-t border-l border-r">
-              sat
-            </p>
-            <p className="flex justify-center font-bold  text-base-content border-base-200 border-t border-l border-r">
-              sun
-            </p>
+          <div className="grid grid-cols-20 w-full">
+            <div className="col-span-1 flex justify-center items-center font-bold">
+              W
+            </div>
+            <div className="col-span-19 grid grid-cols-7">
+              <p className="flex justify-center items-center">Mon</p>
+              <p className="flex justify-center items-center">Tue</p>
+              <p className="flex justify-center items-center">Wed</p>
+              <p className="flex justify-center items-center">Thur</p>
+              <p className="flex justify-center items-center">Fri</p>
+              <p className="flex justify-center items-center">Sat</p>
+              <p className="flex justify-center items-center">Sun</p>
+            </div>
           </div>
-
-          <div className="flex lg:h-auto min-h-screen flex-wrap border-t-2 border-r-2 border-base-200">
-            {calendar}
+          <div className="flex">
+            <div className=" grid grid-cols-1 grid-rows-6 w-2/12">
+              <p className="text-xs flex row-start-1 items-center justify-center">
+                {firstWeekOfMonth}
+              </p>
+              <p className="text-xs flex row-start-2 items-center justify-center">
+                {firstWeekOfMonth + 1}
+              </p>
+              <p className="text-xs flex row-start-3 items-center justify-center">
+                {firstWeekOfMonth + 2}
+              </p>
+              <p className="text-xs flex row-start-4 items-center justify-center">
+                {firstWeekOfMonth + 3}
+              </p>
+              <p className="text-xs flex row-start-5 items-center justify-center">
+                {firstWeekOfMonth + 4}
+              </p>
+              <p className="text-xs flex row-start-6 items-center justify-center">
+                {firstWeekOfMonth + 5}
+              </p>
+            </div>
+            <div className="flex lg:h-auto min-h-screen flex-wrap border-t-2 border-r-2 border-base-200">
+              {calendar}
+            </div>
           </div>
         </div>
       </div>
@@ -358,7 +437,7 @@ export default function Calendar() {
 
       <button
         id="+"
-        className="fixed flex items-center hover:cursor-pointer justify-center rounded-full right-4 bottom-8 w-16 h-16 bg-primary-content"
+        className="fixed flex items-center hover:cursor-pointer justify-center rounded-full right-4 bottom-8 w-16 h-16 bg-neutral shadow-lg "
       >
         <h4 className="text-primary text-3xl">
           <FaPlus />

@@ -5,6 +5,29 @@ import { createContext, useEffect, useState } from "react";
 export const HandleCalendarContext = createContext([]);
 
 export default function CalendarContext({ children }) {
+  function getISOWeekNumber(dateString) {
+    const date = new Date(dateString);
+
+    // Create a new date in UTC to avoid timezone issues
+    const d = new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+    );
+
+    // Get the day of the week (Monday = 1, Sunday = 7)
+    const dayNum = d.getUTCDay() || 7;
+
+    // Move to Thursday in the current week (ISO weeks are based on Thursday)
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+
+    // Get the first day of the ISO year
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+
+    // Calculate week number
+    const weekNumber = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+
+    return weekNumber;
+  }
+
   const [redDays, setRedDays] = useState();
   async function getRedDays() {
     const response = await fetch(
@@ -34,6 +57,7 @@ export default function CalendarContext({ children }) {
   const todaysYear = todaysDate.getFullYear();
   const [month, setMonth] = useState(todaysMonth);
   const [year, setYear] = useState(todaysYear);
+  const [activeCalendar, setActiveCalendar] = useState("Month");
 
   const [monthString, setMonthString] = useState("");
   function convertMonthToString() {
@@ -63,6 +87,8 @@ export default function CalendarContext({ children }) {
       setMonthString("December");
     }
   }
+
+  console.log("getISOWeekNumber is available:", typeof getISOWeekNumber);
   useEffect(() => {
     convertMonthToString();
   }, [month]);
@@ -81,6 +107,9 @@ export default function CalendarContext({ children }) {
         todaysDate,
         todaysYear,
         todaysMonth,
+        activeCalendar,
+        setActiveCalendar,
+        getISOWeekNumber,
       }}
     >
       {children}

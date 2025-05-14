@@ -3,6 +3,7 @@
 import { HandleCalendarContext } from "@/context/CalendarContext";
 import { useContext, useEffect, useState } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { FaPlus } from "react-icons/fa";
 
 export default function WeekCalendar() {
   //Get x and y coordinates for modal window
@@ -34,6 +35,8 @@ export default function WeekCalendar() {
     todaysDate,
     todaysYear,
     todaysMonth,
+    activeCalendar,
+    setActiveCalendar,
   } = useContext(HandleCalendarContext);
 
   const [todaysState, setTodaysState] = useState(todaysDate.getDate());
@@ -81,10 +84,6 @@ export default function WeekCalendar() {
           <p className="flex w-full justify-center lg:justify-start items-center lg:p-4 p-0 border-b border-gray-300 row-span-1 h-full">
             {currentDayString}
           </p>
-
-          <h4 className="flex justify-start items-center font-bold w-full lg:p-4 p-0  row-span-1 h-full">
-            {dayDate.getDate()}
-          </h4>
 
           {redDays.map((holiday) => {
             if (
@@ -135,44 +134,71 @@ export default function WeekCalendar() {
   return (
     <>
       <div className="flex flex-col gap-4 lg:p-4 p-0 w-full">
-        <div className="flex lg:p-4 p-0 gap-4">
-          <h4>
-            {monthString} - {year}
-          </h4>
+        <div
+          id="toggleDate"
+          className="flex flex-col w-full justify-between gap-4"
+        >
+          <div className="flex justify-between gap-4">
+            <select
+              value={year}
+              onChange={(e) => {
+                setYear(e.target.value);
+              }}
+              className="select ui-app"
+            >
+              <option value={+year - 2}>{+year - 2}</option>
+              <option value={+year - 1}>{+year - 1}</option>
+              <option value={+year}>{+year}</option>
+              <option value={+year + 1}>{+year + 1}</option>
+              <option value={+year + 2}>{+year + 2}</option>
+            </select>
+            <select
+              value={month}
+              onChange={(e) => {
+                setMonth(e.target.value);
+              }}
+              className="select ui-app"
+            >
+              <option value="0">January</option>
+              <option value="1">February</option>
+              <option value="2">March</option>
+              <option value="3">April</option>
+              <option value="4">May</option>
+              <option value="5">June</option>
+              <option value="6">July</option>
+              <option value="7">August</option>
+              <option value="8">September</option>
+              <option value="9">October</option>
+              <option value="10">November</option>
+              <option value="11">December</option>
+            </select>
+            <select className="select ui-app">
+              <option>Filter</option>
+            </select>
+          </div>
 
-          <button
-            className="btn btn-app btn-secondary"
-            onClick={() => {
-              const newDate = new Date(year, month, todaysState - 7);
-              setTodaysState(newDate.getDate());
-              setMonth(newDate.getMonth());
-              setYear(newDate.getFullYear());
-            }}
-          >
-            Previous
-          </button>
-          <button
-            className="btn btn-app btn-secondary"
-            onClick={() => {
-              const newDate = new Date(year, month, todaysState + 7);
-              setTodaysState(newDate.getDate());
-              setMonth(newDate.getMonth());
-              setYear(newDate.getFullYear());
-            }}
-          >
-            Next
-          </button>
+          <div className="flex w-full justify-between gap-4">
+            <select
+              value={activeCalendar}
+              onChange={(e) => setActiveCalendar(e.target.value)}
+              className="select ui-app"
+            >
+              <option value="Month">Month Format</option>
+              <option value="Week">Week Format</option>
+              <option value="Day">Day Format</option>
+            </select>
+
+            <select></select>
+          </div>
         </div>
 
-        <div className="grid text-xs grid-cols-8 grid-rows-26 grid-auto-rows-[4rem] grid-auto-col w-full h-screen text-start border border-gray-300">
-          <p className="flex justify-center items-center border-b row-span-2 lg:p-4 p-0 border-gray-300 col-start-1 row-start-1 h-full">
-            Time
-          </p>
+        <div className="grid text-xs grid-cols-8 grid-rows-26 grid-auto-rows-[4rem] grid-auto-col w-full h-screen text-start ">
+          <p className="flex justify-center items-center  row-span-2 lg:p-4 p-0  col-start-1 row-start-1 h-full"></p>
           {Array.from({ length: 24 }).map((_, index) => (
             <p
               key={index}
-              className={`flex text-xs lg:text-sm justify-center items-center border-b lg:p-4 p-0 border-gray-300 col-start-1 row-start-${
-                index + 3
+              className={`flex text-xs lg:text-sm justify-center items-center lg:p-4 p-0 col-start-1 row-start-${
+                index + 2
               }`}
             >
               {index.toString().padStart(2, "0")}:00
@@ -195,7 +221,7 @@ export default function WeekCalendar() {
           }}
         >
           <button
-            className="btn btn-app btn-accent"
+            className="btn btn-app btn-neutral"
             onClick={() => setShowModal(false)}
           >
             Close
@@ -205,6 +231,15 @@ export default function WeekCalendar() {
           <h4>{selectedEvents ? selectedEvents : ""}</h4>
         </div>
       )}
+
+      <button
+        id="+"
+        className="fixed flex items-center hover:cursor-pointer justify-center rounded-full right-4 bottom-8 w-16 h-16 bg-neutral shadow-lg "
+      >
+        <h4 className="text-primary text-3xl">
+          <FaPlus />
+        </h4>
+      </button>
     </>
   );
 }
