@@ -175,7 +175,7 @@ export default function DayCalendar() {
             </p>
           ))}
 
-          <div className="flex col-span-7">{calendar}</div>
+          <div className="flex col-span-7 row-start-1">{calendar}</div>
         </div>
       </div>
       {showModal && (

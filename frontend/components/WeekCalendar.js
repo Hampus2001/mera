@@ -2,10 +2,13 @@
 
 import { HandleCalendarContext } from "@/context/CalendarContext";
 import { useContext, useEffect, useState } from "react";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 export default function WeekCalendar() {
   //Get x and y coordinates for modal window
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const { width, height } = useWindowSize();
+  console.log(width, height);
   const getCoordinates = (e) => {
     const rect = e.target.getBoundingClientRect();
     setPosition({
@@ -75,7 +78,7 @@ export default function WeekCalendar() {
           key={i}
           className={`grid w-full grid-rows-26 grid-cols-1 justify-start items-start min-h-screen border-b-2 border-l-2 border-gray-300 ${dayStyle}`}
         >
-          <p className="flex w-full lg:p-4 p-0 border-b border-gray-300 row-span-1 h-full">
+          <p className="flex w-full justify-center lg:justify-start items-center lg:p-4 p-0 border-b border-gray-300 row-span-1 h-full">
             {currentDayString}
           </p>
 
@@ -175,13 +178,21 @@ export default function WeekCalendar() {
               {index.toString().padStart(2, "0")}:00
             </p>
           ))}
-          <div className="flex col-span-7">{calendar}</div>
+          <div className="flex col-span-7 row-start-1">{calendar}</div>
         </div>
       </div>
       {showModal && (
         <div
           className={`absolute bg-white w-auto p-4 gap-4 rounded-xl h-auto`}
-          style={{ top: position.y, left: position.x }}
+          style={{
+            top: position.y > height - 50 ? position.y : position.y - 20,
+            left:
+              position.x > width - 200
+                ? width - 150
+                : position.x < 0
+                ? 0
+                : position.x,
+          }}
         >
           <button
             className="btn btn-app btn-accent"
