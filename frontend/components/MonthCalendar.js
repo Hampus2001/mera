@@ -3,6 +3,8 @@
 import { HandleCalendarContext } from "@/context/CalendarContext";
 import next from "next";
 import { useContext, useEffect, useRef, useState } from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 export default function Calendar() {
   //states
@@ -16,6 +18,8 @@ export default function Calendar() {
 
   //Get x and y coordinates for modal window
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const { width, height } = useWindowSize();
+  console.log(width, height);
   const getCoordinates = (e) => {
     const rect = e.target.getBoundingClientRect();
     setPosition({
@@ -104,7 +108,7 @@ export default function Calendar() {
             }
           }}
           key={`prev-${i}`}
-          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-200 text-base-content "
+          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 border-b-2 border-l-2 border-base-200 w-1/7 aspect-square bg-base-200 text-base-content "
         >
           <p>{i}</p>
 
@@ -160,7 +164,7 @@ export default function Calendar() {
             getCoordinates(e);
           }}
           key={`current-${i}`}
-          className={`flex hover:cursor-pointer items-center flex-col p-2 lg:p-4  border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square  ${currentDayStyle} text-base-content `}
+          className={`flex hover:cursor-pointer items-center flex-col p-2 lg:p-4  border-b-2 border-l-2 border-base-200 w-1/7 aspect-square  ${currentDayStyle} text-base-content `}
         >
           <p>{i}</p>
           {redDays?.map((holiday) => {
@@ -208,7 +212,7 @@ export default function Calendar() {
             }
           }}
           key={`next-${i}`}
-          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 border-b-2 border-l-2 border-gray-300 w-1/7 aspect-square bg-base-200 text-base-content "
+          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 border-b-2 border-l-2 border-base-200 w-1/7 aspect-auto lg:aspect-square bg-base-200 text-base-content "
         >
           <p>{i}</p>
 
@@ -222,15 +226,20 @@ export default function Calendar() {
                 currentYear +
                 "-" +
                 "0" +
-                currentMonth +
+                (currentMonth + 2) +
                 "-" +
                 (i < 10 ? "0" + i : i);
             } else if (currentMonth > 0 && currentMonth > 9) {
               thisDayDate =
-                currentYear + "-" + currentMonth + "-" + (i < 10 ? "0" + i : i);
+                currentYear +
+                "-" +
+                (currentMonth + 2) +
+                "-" +
+                (i < 10 ? "0" + i : i);
             }
 
             if (holiday.date == thisDayDate) {
+              console.log("hit", holiday.date, thisDayDate);
               return (
                 <p
                   key={i}
@@ -248,17 +257,14 @@ export default function Calendar() {
 
   useEffect(() => {
     getDaysInCurrentMonth();
-  }, [month]);
+  }, [month, redDays]);
 
   return (
     <>
       <div className="flex flex-col w-full rounded-xl gap-4">
-        <div className="flex gap-4">
-          <h4>
-            {monthString} - {year}
-          </h4>
+        <div className="lg:hidden flex w-full justify-center gap-4">
           <button
-            className="btn btn-app btn-secondary btn-sm md:btn-md lg:btn-lg"
+            className="btn btn-app btn-primary btn-sm md:btn-md lg:btn-lg"
             onClick={() => {
               if (month != 0) {
                 setMonth(month - 1);
@@ -268,11 +274,15 @@ export default function Calendar() {
               }
             }}
           >
-            Privious
+            <FaArrowLeft />
           </button>
 
+          <h4 className="flex justify-center items-center">
+            {monthString} - {year}
+          </h4>
+
           <button
-            className="btn btn-app btn-secondary btn-sm md:btn-md lg:btn-lg"
+            className="btn btn-app btn-primary btn-sm md:btn-md lg:btn-lg"
             onClick={() => {
               if (month != 11) {
                 setMonth(month + 1);
@@ -282,42 +292,52 @@ export default function Calendar() {
               }
             }}
           >
-            Next
+            <FaArrowRight />
           </button>
         </div>
 
-        <div className="grid grid-cols-7 grid-rows-1 gap-2">
-          <p className="flex justify-center font-bold  text-base-content">
-            mon
-          </p>
-          <p className="flex justify-center font-bold  text-base-content">
-            tue
-          </p>
-          <p className="flex justify-center font-bold  text-base-content">
-            wed
-          </p>
-          <p className="flex justify-center font-bold  text-base-content">
-            thur
-          </p>
-          <p className="flex justify-center font-bold  text-base-content">
-            fri
-          </p>
-          <p className="flex justify-center font-bold  text-base-content">
-            sat
-          </p>
-          <p className="flex justify-center font-bold  text-base-content">
-            sun
-          </p>
-        </div>
+        <div>
+          <div className="grid grid-cols-7 grid-rows-1">
+            <p className="flex justify-center font-bold  text-base-content border-base-200 border-t border-l border-r">
+              mon
+            </p>
+            <p className="flex justify-center font-bold  text-base-content border-base-200 border-t border-l border-r">
+              tue
+            </p>
+            <p className="flex justify-center font-bold  text-base-content border-base-200 border-t border-l border-r">
+              wed
+            </p>
+            <p className="flex justify-center font-bold  text-base-content border-base-200 border-t border-l border-r">
+              thur
+            </p>
+            <p className="flex justify-center font-bold  text-base-content border-base-200 border-t border-l border-r">
+              fri
+            </p>
+            <p className="flex justify-center font-bold  text-base-content border-base-200 border-t border-l border-r">
+              sat
+            </p>
+            <p className="flex justify-center font-bold  text-base-content border-base-200 border-t border-l border-r">
+              sun
+            </p>
+          </div>
 
-        <div className="flex flex-wrap border-t-2 border-r-2 border-gray-300">
-          {calendar}
+          <div className="flex lg:h-auto min-h-screen flex-wrap border-t-2 border-r-2 border-base-200">
+            {calendar}
+          </div>
         </div>
       </div>
       {showModal && (
         <div
           className={`absolute bg-white w-auto p-4 gap-4 rounded-xl h-auto`}
-          style={{ top: position.y, left: position.x }}
+          style={{
+            top: position.y > height - 50 ? position.y : position.y - 20,
+            left:
+              position.x > width - 200
+                ? width - 150
+                : position.x < 0
+                ? 0
+                : position.x,
+          }}
         >
           <button
             className="btn btn-app btn-accent"
