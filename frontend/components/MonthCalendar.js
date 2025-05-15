@@ -294,7 +294,7 @@ export default function Calendar() {
               <select
                 value={month}
                 onChange={(e) => {
-                  setMonth(e.target.value);
+                  setMonth(parseInt(e.target.value));
                 }}
                 className="select ui-app"
               >
