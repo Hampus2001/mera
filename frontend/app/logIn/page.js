@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 import LogInSingInBar from "@/components/LoginSignInNavBar";
-
+import AppNavBar from "@/components/AppNavBar";
 export default function AuthPage() {
   const router = useRouter();
   const [company, setCompany] = useState("");
@@ -138,6 +138,7 @@ export default function AuthPage() {
           </form>
         </div>
       </section>
+      <AppNavBar></AppNavBar>
     </>
   );
 }

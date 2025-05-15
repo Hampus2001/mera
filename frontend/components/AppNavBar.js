@@ -1,0 +1,74 @@
+"use client";
+import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
+
+
+export default function AppNavBar() {
+  return (
+    <div className="flex h-16 items-center justify-between rounded-full bg-base-100 text-primary px-4">
+    {/* Logo */}
+    <div className="flex items-center">
+      <svg
+        className="h-6 w-auto text-base-content"
+        viewBox="0 0 605 99"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M524.4 8.88794V0.439941H558.96V8.88794H546.8V33.3359H536.432V8.88794H524.4ZM563.568 33.3359V0.439941H574.576L584.176 22.3279L593.648 0.439941H604.912V33.3359H595.568V15.5439L588.528 33.3359H579.952L572.912 16.0559V33.3359H563.568Z" />
+        <path d="M0.42395 98.9999V2.99994H50.856L69.9279 53.9439L88.8719 2.99994H139.432V98.9999H101.032V45.7519L81.8319 98.9999H58.024L38.824 46.0079V98.9999H0.42395Z" />
+        <path d="M154.549 98.9999V2.99994H257.333V27.3199H194.229V39.6079H251.829V60.8559H194.229V73.3999H258.357V98.9999H154.549Z" />
+        <path d="M270.549 98.9999V2.99994H355.797C375.381 2.99994 387.925 15.9279 387.925 36.1519C387.925 55.3519 374.357 64.0559 355.797 65.4639L390.613 98.9999H342.485L312.149 65.7199H310.229V98.9999H270.549ZM334.037 44.7279C342.485 44.7279 346.965 42.6799 346.965 36.4079C346.965 29.8799 342.357 28.0879 333.141 28.0879H310.229V44.7279H334.037Z" />
+        <path d="M434.91 98.9999H391.518L438.11 2.99994H489.182L536.158 98.9999H489.694L482.398 81.3359H442.206L434.91 98.9999ZM450.526 61.4959H474.078L462.302 33.2079L450.526 61.4959Z" />
+      </svg>
+    </div>
+  
+    {/* Selects (centrados) */}
+    <div className="flex space-x-4">
+      <select defaultValue="Month" className="select select-neutral rounded-xl text-base-content w-40">
+        <option disabled>Month</option>
+        <option>January</option>
+        <option>February</option>
+        <option>March</option>
+        <option>April</option>
+        <option>May</option>
+        <option>June</option>
+        <option>July</option>
+        <option>August</option>
+        <option>September</option>
+        <option>October</option>
+        <option>November</option>
+        <option>December</option>
+      </select>
+  
+      <select defaultValue="Year" className="select select-neutral rounded-xl text-base-content w-32">
+        <option disabled>Year</option>
+        <option>2024</option>
+        <option>2025</option>
+        <option>2026</option>
+      </select>
+  
+      <select defaultValue="View" className="select select-neutral rounded-xl text-base-content w-36">
+        <option disabled>View</option>
+        <option>Monthly</option>
+        <option>Weekly</option>
+        <option>Daily</option>
+      </select>
+  
+      <select defaultValue="Filter all" className="select select-neutral rounded-xl text-base-content w-40">
+        <option disabled>Filter all</option>
+        <option>All</option>
+        <option>Available</option>
+        <option>Unavailable</option>
+      </select>
+    </div>
+  
+    {/* Botones (a la derecha) */}
+    <div className="flex items-center space-x-2">
+      <button className="btn bg-base-100 border">Settings</button>
+      <button className="btn btn-primary">Share</button>
+      <button className="btn bg-base-100"><ArrowLeftIcon></ArrowLeftIcon></button>
+      <button className="btn bg-base-100"><ArrowRightIcon></ArrowRightIcon></button>
+    </div>
+  </div>
+  )
+}
+  
