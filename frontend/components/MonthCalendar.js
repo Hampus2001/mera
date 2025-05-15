@@ -6,7 +6,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { FaArrowLeft, FaArrowRight, FaPlus } from "react-icons/fa";
 import { useWindowSize } from "@/hooks/useWindowSize";
 
-export default function Calendar() {
+export default function Calendar({ openDrawer }) {
   //states
   const todaysDate = new Date();
   const todaysMonth = todaysDate.getMonth();
@@ -436,6 +436,7 @@ export default function Calendar() {
       )}
 
       <button
+        onClick={openDrawer}
         id="+"
         className="fixed flex items-center hover:cursor-pointer justify-center rounded-full right-4 bottom-8 w-16 h-16 bg-neutral shadow-lg "
       >
