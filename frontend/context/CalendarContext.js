@@ -112,7 +112,6 @@ export default function CalendarContext({ children }) {
     }
   }
 
-  console.log("getISOWeekNumber is available:", typeof getISOWeekNumber);
   useEffect(() => {
     convertMonthToString();
   }, [month]);
