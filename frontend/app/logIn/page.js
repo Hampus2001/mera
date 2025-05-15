@@ -2,8 +2,8 @@
 import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
-// import LogInSingInBar from "@/components/LoginSignInNavBar";
-import MobilAppNavBar from "@/components/MobilAppNavBar";
+import LogInSingInBar from "@/components/LoginSignInNavBar";
+
 
 export default function AuthPage() {
   const router = useRouter();
@@ -57,8 +57,8 @@ export default function AuthPage() {
   return (
     <>
       <div className="absolute top-0 left-0 w-full z-50">
-        {/* <LogInSingInBar></LogInSingInBar> */}
-        <MobilAppNavBar></MobilAppNavBar>
+        <LogInSingInBar></LogInSingInBar>
+       
       </div>
       <section className="bg-base-100 flex flex-col items-center justify-center min-h-screen px-6 lg:px-40 gap-y-6 pt-24">
         <div className="border-2 border-black rounded-xl p-4 m-4 gap-4 w-full max-w-xl">
