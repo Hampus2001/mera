@@ -2,6 +2,7 @@ import LandingNav from "@/components/LandingNav";
 import Link from "next/link";
 
 
+
 import MyCalendar from "@/components/BigCalendar";
 
 export default function Home() {
@@ -157,6 +158,8 @@ export default function Home() {
         <MyCalendar variant="flex" />
         <MyCalendar variant="admin" />
         <MyCalendar />
+       
+
 
         {/* <div className=" w-full  grid grid-cols-6 p-16 bg-success ">
           <div className="col-span-5 h-32 bg-accent rounded-3xl mb-2"></div>

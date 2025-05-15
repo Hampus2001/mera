@@ -8,6 +8,7 @@ import NavAppMobile from "@/components/NavAppMobile";
 import { HandleCalendarContext } from "@/context/CalendarContext";
 import AdminDrawer from "@/components/AdminDrawer";
 
+
 export default function SchedulePage() {
   const { activeCalendar, setActiveCalendar } = useContext(
     HandleCalendarContext
@@ -25,6 +26,7 @@ export default function SchedulePage() {
         {activeCalendar == "Day" && <DayCalendar />}
       </div>
       <AdminDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
+       
     </>
   );
 }

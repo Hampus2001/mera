@@ -5,7 +5,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
 export default function AppNavBar() {
   return (
     <div className="flex h-16 items-center justify-between rounded-full bg-base-100 text-primary px-4">
-    {/* Logo */}
+   
     <div className="flex items-center">
       <svg
         className="h-6 w-auto text-base-content"
@@ -21,7 +21,6 @@ export default function AppNavBar() {
       </svg>
     </div>
   
-    {/* Selects (centrados) */}
     <div className="flex space-x-4">
       <select defaultValue="Month" className="select select-neutral rounded-xl text-base-content w-40">
         <option disabled>Month</option>
@@ -61,7 +60,7 @@ export default function AppNavBar() {
       </select>
     </div>
   
-    {/* Botones (a la derecha) */}
+    
     <div className="flex items-center space-x-2">
       <button className="btn bg-base-100 border">Settings</button>
       <button className="btn btn-primary">Share</button>
