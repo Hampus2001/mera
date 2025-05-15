@@ -4,7 +4,7 @@ import MonthCalendar from "@/components/MonthCalendar";
 import WeekCalendar from "@/components/WeekCalendar";
 import DayCalendar from "@/components/DayCalendar";
 import { useContext, useState } from "react";
-import NavAppMobile from "@/components/NavAppMobile";
+
 import { HandleCalendarContext } from "@/context/CalendarContext";
 import AdminDrawer from "@/components/AdminDrawer";
 
@@ -16,8 +16,7 @@ export default function SchedulePage() {
 
   return (
     <>
-      <NavAppMobile className="flex lg:hidden" />
-      <div className="flex flex-col items-center gap-5 lg:gap-10 p-4  lg:m-20 font-instrument">
+      <div className="flex flex-col items-center gap-5 lg:gap-10 p-4  font-instrument">
         {activeCalendar == "Month" && (
           <MonthCalendar openDrawer={() => setDrawerOpen(true)} />
         )}

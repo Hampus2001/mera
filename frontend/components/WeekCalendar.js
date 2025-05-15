@@ -3,9 +3,9 @@
 import { HandleCalendarContext } from "@/context/CalendarContext";
 import { useContext, useEffect, useState } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
-import { FaPlus } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaPlus, FaBars } from "react-icons/fa";
 
-export default function WeekCalendar() {
+export default function WeekCalendar({ openDrawer }) {
   //Get x and y coordinates for modal window
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const { width, height } = useWindowSize();
@@ -86,17 +86,14 @@ export default function WeekCalendar() {
       const dayStyle =
         dayDate.toDateString() === todaysDate.toDateString()
           ? "bg-secondary text-secondary-content"
-          : "bg-base-100";
+          : "";
 
       newCalendar.push(
         <div
           key={i}
-          className={`grid w-full grid-rows-26 grid-cols-1 justify-start items-start min-h-screen ${dayStyle} border border-gray-300`}
+          className={`flex flex-col w-full justify-start items-start min-h-screen ${dayStyle} `}
         >
-          <p className="flex w-full justify-center lg:justify-start items-center lg:p-4 p-0 border border-gray-300 row-span-1 h-full">
-            {currentDayString}
-          </p>
-
+          <p className="text-white">{dayDate.getDate()}</p>
           {redDays.map((holiday) => {
             if (
               holiday.date ==
@@ -125,7 +122,7 @@ export default function WeekCalendar() {
                     setShowModal(true);
                   }}
                   key={dayDate.getDate()}
-                  className="flex w-full row-start-3 rounded-lg p-3 lg-p-1 bg-red-400 text-red-900 justify-center hover:cursor-pointer"
+                  className="flex w-full rounded-lg p-3 lg-p-1 bg-red-400 text-red-900 justify-center hover:cursor-pointer"
                 >
                   <p className="hidden lg:flex">{holiday.name}</p>
                 </button>
@@ -144,11 +141,131 @@ export default function WeekCalendar() {
   }, [todaysState, month, year, redDays]);
 
   return (
-    <>
+    <div className="flex flex-col w-full">
+      <div
+        id="desktopView"
+        className="flex w-full h-20 px-6 rounded-full items-center justify-between bg-base-100 text-neutral"
+      >
+        <h1 className="text-[32px]">MERA</h1>
+
+        <div className="hidden lg:flex gap-4">
+          <select
+            value={year}
+            onChange={(e) => {
+              setYear(e.target.value);
+            }}
+            className="select ui-app w-fit"
+          >
+            <option value={+year - 2}>{+year - 2}</option>
+            <option value={+year - 1}>{+year - 1}</option>
+            <option value={+year}>{+year}</option>
+            <option value={+year + 1}>{+year + 1}</option>
+            <option value={+year + 2}>{+year + 2}</option>
+          </select>
+          <select
+            value={month}
+            onChange={(e) => {
+              setMonth(parseInt(e.target.value));
+            }}
+            className="select ui-app w-fit"
+          >
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">August</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
+          </select>
+          <select
+            value={+displayedWeek}
+            onChange={(e) => {
+              setDisplayedWeek(parseInt(e.target.value));
+              const mondayOfSelectedWeekDate = getDateOfISOWeek(
+                parseInt(e.target.value),
+                year
+              );
+              setYear(parseInt(mondayOfSelectedWeekDate.year));
+              setMonth(parseInt(mondayOfSelectedWeekDate.month - 1));
+              setTodaysState(parseInt(mondayOfSelectedWeekDate.day));
+            }}
+            className="select ui-app"
+          >
+            {Array.from({ length: 52 }).map((_, index) => (
+              <option value={index + 1} key={index + 1}>
+                W{index + 1}
+              </option>
+            ))}
+          </select>
+          <select
+            value={activeCalendar}
+            onChange={(e) => setActiveCalendar(e.target.value)}
+            className="select ui-app w-fit"
+          >
+            <option value="Month">View month</option>
+            <option value="Week">View week</option>
+            <option value="Day">View day</option>
+          </select>
+          <select className="select ui-app w-fit">
+            <option>Filter</option>
+          </select>
+        </div>
+
+        <div className="hidden lg:flex w-fit justify-between items-center gap-4">
+          <button className="btn btn-app bg-base-100 border-neutral btn-md">
+            Settings
+          </button>
+          <button className="btn btn-app btn-primary btn-md">Share</button>
+
+          <button
+            className="btn btn-app bg-base-100 border-neutral btn-md"
+            onClick={() => {
+              if (displayedWeek > 1) {
+                const newWeek = displayedWeek - 1;
+                setDisplayedWeek(newWeek);
+                const mondayOfSelectedWeekDate = getDateOfISOWeek(
+                  newWeek,
+                  year
+                );
+                setYear(mondayOfSelectedWeekDate.year);
+                setMonth(mondayOfSelectedWeekDate.month - 1);
+                setTodaysState(mondayOfSelectedWeekDate.day);
+              }
+            }}
+          >
+            <FaArrowLeft />
+          </button>
+
+          <button
+            className="btn btn-app bg-base-100 border-neutral btn-md"
+            onClick={() => {
+              if (displayedWeek < 52) {
+                const newWeek = displayedWeek + 1;
+                setDisplayedWeek(newWeek);
+                const mondayOfSelectedWeekDate = getDateOfISOWeek(
+                  newWeek,
+                  year
+                );
+                setYear(mondayOfSelectedWeekDate.year);
+                setMonth(mondayOfSelectedWeekDate.month - 1);
+                setTodaysState(mondayOfSelectedWeekDate.day);
+              }
+            }}
+          >
+            <FaArrowRight />
+          </button>
+        </div>
+        <FaBars className="flex lg:hidden text-[32px]" />
+      </div>
       <div className="flex flex-col gap-4 lg:p-4 p-0 w-full">
         <div
           id="toggleDate"
-          className="flex flex-col w-full justify-between gap-4"
+          className="lg:hidden flex flex-col w-full justify-between gap-4"
         >
           <div className="flex justify-between gap-4">
             <select
@@ -214,36 +331,53 @@ export default function WeekCalendar() {
               }}
               className="select ui-app"
             >
-              <option value={+displayedWeek - 6}>W{+displayedWeek - 6}</option>
-              <option value={+displayedWeek - 5}>W{+displayedWeek - 5}</option>
-              <option value={+displayedWeek - 4}>W{+displayedWeek - 4}</option>
-              <option value={+displayedWeek - 3}>W{+displayedWeek - 3}</option>
-              <option value={+displayedWeek - 2}>W{+displayedWeek - 2}</option>
-              <option value={+displayedWeek - 1}>W{+displayedWeek - 1}</option>
-              <option value={+displayedWeek}>W{+displayedWeek}</option>
-              <option value={+displayedWeek + 1}>W{+displayedWeek + 1}</option>
-              <option value={+displayedWeek + 2}>W{+displayedWeek + 2}</option>
-              <option value={+displayedWeek + 3}>W{+displayedWeek + 3}</option>
-              <option value={+displayedWeek + 4}>W{+displayedWeek + 4}</option>
-              <option value={+displayedWeek + 5}>W{+displayedWeek + 5}</option>
-              <option value={+displayedWeek + 6}>W{+displayedWeek + 6}</option>
+              {Array.from({ length: 52 }).map((_, index) => (
+                <option value={index + 1} key={index + 1}>
+                  W{index + 1}
+                </option>
+              ))}
             </select>
           </div>
         </div>
 
-        <div className="grid text-xs grid-cols-8 grid-rows-26 grid-auto-rows-[4rem] grid-auto-col w-full h-screen text-start ">
-          <p className="flex justify-center items-center  row-span-2 lg:p-4 p-0  col-start-1 row-start-1 h-full"></p>
-          {Array.from({ length: 24 }).map((_, index) => (
-            <p
-              key={index}
-              className={`flex text-xs lg:text-sm justify-center  items-center lg:p-4 p-0 col-start-1 row-start-${
-                index + 2
+        <div className="flex text-xs w-full h-screen gap-1 text-start bg-base-100">
+          <div className="flex flex-col w-fit mt-6 h-screen justify-between items-center bg-base-100 row-span-2">
+            {Array.from({ length: 24 }).map((_, index) => (
+              <p
+                key={index}
+                className={`flex text-xs lg:text-sm justify-center bg-base-100 items-center border border-base-100
               }`}
-            >
-              {index.toString().padStart(2, "0")}:00
-            </p>
-          ))}
-          <div className="flex col-span-7 row-start-1">{calendar}</div>
+              >
+                {index.toString().padStart(2, "0")}:00
+              </p>
+            ))}
+          </div>
+          <div className="flex flex-col w-full">
+            <div className="flex justify-between">
+              <p className="flex w-full justify-center items-center bg-base-100">
+                Mon
+              </p>
+              <p className="flex w-full justify-center items-center bg-base-100">
+                Tue
+              </p>
+              <p className="flex w-full justify-center items-center bg-base-100">
+                Wed
+              </p>
+              <p className="flex w-full justify-center items-center bg-base-100">
+                Thur
+              </p>
+              <p className="flex w-full justify-center items-center bg-base-100">
+                Fri
+              </p>
+              <p className="flex w-full justify-center items-center bg-base-100">
+                Sat
+              </p>
+              <p className="flex w-full justify-center items-center bg-base-100">
+                Sun
+              </p>
+            </div>
+            <div className="flex w-full bg-neutral">{calendar}</div>
+          </div>
         </div>
       </div>
       {showModal && (
@@ -272,13 +406,14 @@ export default function WeekCalendar() {
       )}
 
       <button
+        onClick={openDrawer}
         id="+"
-        className="fixed flex items-center hover:cursor-pointer justify-center rounded-full right-4 bottom-8 w-16 h-16 bg-neutral shadow-lg "
+        className="fixed flex items-center hover:cursor-pointer justify-center rounded-full right-10 bottom-8 w-16 h-16 bg-base-100 border-2 border-neutral shadow-lg "
       >
-        <h4 className="text-primary text-3xl">
+        <h4 className="text-neutral text-3xl">
           <FaPlus />
         </h4>
       </button>
-    </>
+    </div>
   );
 }

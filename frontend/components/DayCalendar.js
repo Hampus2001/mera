@@ -4,7 +4,7 @@ import { HandleCalendarContext } from "@/context/CalendarContext";
 import { useContext, useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
-export default function DayCalendar() {
+export default function DayCalendar({ openDrawer }) {
   //Get x and y coordinates for modal window
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const getCoordinates = (e) => {
@@ -37,6 +37,7 @@ export default function DayCalendar() {
   } = useContext(HandleCalendarContext);
 
   const [todaysState, setTodaysState] = useState(todaysDate.getDate());
+  const [currentDayString, setCurrentDayString] = useState("");
 
   function getDaysInCurrentWeek() {
     const newCalendar = [];
@@ -46,46 +47,34 @@ export default function DayCalendar() {
     console.log("base", baseDate);
     const currentDay = baseDate.getDay(); // Sunday = 0, Monday = 1, ..., Saturday = 6
 
-    let currentDayString = "";
-
     if (currentDay == 0) {
-      currentDayString = "Sunday";
+      setCurrentDayString("Sunday");
     } else if (currentDay == 1) {
-      currentDayString = "Monday";
+      setCurrentDayString("Monday");
     } else if (currentDay == 2) {
-      currentDayString = "Tuesday";
+      setCurrentDayString("Tuesday");
     } else if (currentDay == 3) {
-      currentDayString = "Wednesday";
+      setCurrentDayString("Wednesday");
     } else if (currentDay == 4) {
-      currentDayString = "Thursday";
+      setCurrentDayString("Thursday");
     } else if (currentDay == 5) {
-      currentDayString = "Friday";
+      setCurrentDayString("Friday");
     } else if (currentDay == 6) {
-      currentDayString = "Saturday";
+      setCurrentDayString("Saturday");
     }
 
     const dayDate = new Date(baseDate);
 
     const dayStyle =
       dayDate.toDateString() === todaysDate.toDateString()
-        ? "bg-secondary"
+        ? "bg-neutral"
         : "bg-base-100";
 
     newCalendar.push(
       <div
         key={dayDate}
-        className={`grid w-full grid-rows-25 grid-cols-1 justify-start items-start min-h-screen border-b border-l border-gray-300 ${dayStyle}`}
+        className={`flex flex-col w-full justify-start items-start min-h-screen border-b border-l border-gray-300 ${dayStyle}`}
       >
-        <p
-          className={`flex ${
-            dayDate.toDateString() === todaysDate.toDateString()
-              ? "bg-secondary border-secondary-content text-secondary-content"
-              : "bg-base-100 border-gray-300"
-          } px-4 items-center font-bold justify-start w-full lg:p-4 p-0 border-b-2 row-span-1 h-full`}
-        >
-          {currentDayString} - {dayDate.getDate()}
-        </p>
-
         {redDays.map((holiday) => {
           if (
             holiday.date ==
@@ -114,7 +103,7 @@ export default function DayCalendar() {
                   setShowModal(true);
                 }}
                 key={dayDate.getDate()}
-                className="flex w-full row-start-2 rounded-lg p-3 lg-p-1 bg-red-400 text-red-900 justify-center hover:cursor-pointer"
+                className="flex w-full rounded-lg p-3 lg-p-1 bg-red-400 text-red-900 justify-center hover:cursor-pointer"
               >
                 <p className="">{holiday.name}</p>
               </button>
@@ -211,20 +200,26 @@ export default function DayCalendar() {
           </div>
         </div>
 
-        <div className="grid text-xs grid-cols-8 grid-rows-26 grid-auto-rows-[4rem] grid-auto-col w-full h-screen text-start ">
-          <p className="flex items-center justify-center  row-span-2 lg:p-4 p-0  col-start-1 row-start-1 h-full"></p>
-          {Array.from({ length: 24 }).map((_, index) => (
-            <p
-              key={index}
-              className={`flex text-xs lg:text-sm justify-center items-center  lg:p-4 p-0  col-start-1 row-start-${
-                index + 2
+        <div className="flex text-xs w-full h-screen gap-1 text-start bg-base-100">
+          <div className="flex flex-col w-fit mt-6 h-screen justify-between items-center bg-base-100">
+            {Array.from({ length: 24 }).map((_, index) => (
+              <p
+                key={index}
+                className={`flex text-xs lg:text-sm justify-center bg-base-100 items-center
               }`}
-            >
-              {index.toString().padStart(2, "0")}:00
-            </p>
-          ))}
-
-          <div className="flex col-span-7 row-start-1">{calendar}</div>
+              >
+                {index.toString().padStart(2, "0")}:00
+              </p>
+            ))}
+          </div>
+          <div className="flex flex-col w-full">
+            <div className="flex justify-center items-center">
+              <p>
+                {currentDayString} - {todaysState}
+              </p>
+            </div>
+            <div className="flex w-full h-screen">{calendar}</div>
+          </div>
         </div>
       </div>
       {showModal && (
@@ -244,10 +239,11 @@ export default function DayCalendar() {
         </div>
       )}
       <button
+        onClick={openDrawer}
         id="+"
-        className="fixed flex items-center hover:cursor-pointer justify-center rounded-full right-4 bottom-8 w-16 h-16 bg-neutral shadow-lg "
+        className="fixed flex items-center hover:cursor-pointer justify-center rounded-full right-10 bottom-8 w-16 h-16 bg-base-100 border-2 border-neutral shadow-lg "
       >
-        <h4 className="text-primary text-3xl">
+        <h4 className="text-neutral text-3xl">
           <FaPlus />
         </h4>
       </button>
