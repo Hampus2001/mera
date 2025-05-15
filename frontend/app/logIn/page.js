@@ -138,7 +138,7 @@ export default function AuthPage() {
           </form>
         </div>
       </section>
-      <AppNavBar></AppNavBar>
+     
     </>
   );
 }
