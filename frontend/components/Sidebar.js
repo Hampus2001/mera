@@ -19,7 +19,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 h-screen w-[4rem] bg-neutral z-40 flex flex-col items-center justify-center">
+      <div className="hidden md:fixed md:top-0 md:left-0 md:h-screen md:w-[4rem] md:bg-neutral md:z-40 md:flex md:flex-col md:items-center md:justify-center">
         <li className="fixed top-5 menu menu-vertical gap-y-6">
           <Link href="/" className="flex items-center justify-center">
             <svg

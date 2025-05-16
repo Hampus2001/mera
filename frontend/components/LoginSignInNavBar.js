@@ -2,9 +2,9 @@
 
 export default function LogInSingInBar() {
   return (
-    <div className="flex h-16 items-center justify-between bg-neutral text-primary">
+    <div className="flex h-16 items-center justify-between bg-base-content ">
       <svg
-        className="h-6 pl-30 w-auto text-primary"
+        className="h-6 pl-30 w-auto text-base-100"
         viewBox="0 0 605 99"
         fill="currentColor"
         xmlns="http://www.w3.org/2000/svg"

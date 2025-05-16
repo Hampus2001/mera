@@ -4,7 +4,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
 
 export default function AppNavBar() {
   return (
-    <div className="flex h-16 pl-24 items-center justify-between rounded-full bg-base-100 text-primary px-4">
+    <div className="flex h-16 pl-30 items-center justify-between rounded-full bg-base-100 text-primary px-4">
    
     <div className="flex items-center">
       <svg
