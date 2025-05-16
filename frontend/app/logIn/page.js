@@ -16,7 +16,7 @@ export default function AuthPage() {
   const [role, setRole] = useState("");
   const [isAdmin, setIsAdmin] = useState("");
 
-  const { contextId, setContextId } = useContext(HandleWorkspaceContext);
+  const { setContextId, setActiveUser } = useContext(HandleWorkspaceContext);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -44,8 +44,11 @@ export default function AuthPage() {
 
       const data = await res.json();
       console.log("Inloggad företag:", data.response.company_id);
+
       setContextId(data.response.company_id);
       router.push("/schedulePage");
+      setActiveUser(user);  
+
     } catch (err) {
       console.error("Fel vid inloggning:", err);
     }
