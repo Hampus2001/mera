@@ -7,7 +7,6 @@ import MobilAppNavBar from "@/components/MobilAppNavBar";
 import Sidebar from "@/components/Sidebar";
 import AppNavBar from "@/components/AppNavBar";
 
-
 export default function AuthPage() {
   const router = useRouter();
   const [company, setCompany] = useState("");
@@ -45,7 +44,7 @@ export default function AuthPage() {
       const data = await res.json();
       console.log("Inloggad företag:", data.response.company_id);
       setContextId(data.response.company_id);
-      router.push("/createprojects");
+      router.push("/schedulePage");
     } catch (err) {
       console.error("Fel vid inloggning:", err);
     }
@@ -61,9 +60,9 @@ export default function AuthPage() {
     <>
       <div className="absolute top-0 left-0 w-full z-50">
         {/* <LogInSingInBar></LogInSingInBar> */}
-      {/* <MobilAppNavBar></MobilAppNavBar>  */}
-      <Sidebar></Sidebar>
-      <AppNavBar></AppNavBar>
+        {/* <MobilAppNavBar></MobilAppNavBar>  */}
+        <Sidebar></Sidebar>
+        <AppNavBar></AppNavBar>
       </div>
       <section className="bg-base-100 flex flex-col items-center justify-center min-h-screen px-6 lg:px-40 gap-y-6 pt-24">
         <div className="border-2 border-black rounded-xl p-4 m-4 gap-4 w-full max-w-xl">
