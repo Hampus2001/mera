@@ -270,7 +270,7 @@ export default function Calendar({ openDrawer }) {
   }, [month, year, redDays]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col ml-16">
       <div
         id="desktopView"
         className="flex w-full h-20 px-6 rounded-full items-center justify-between bg-base-100 text-neutral"

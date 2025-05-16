@@ -451,7 +451,7 @@ export default function CreateWorkspace() {
           {toggleSlide == 2 && (
             <div className="flex">
               <Link
-                href="/schedulePage"
+                href="/createprojects"
                 onClick={() => {
                   workspaceData();
                 }}
