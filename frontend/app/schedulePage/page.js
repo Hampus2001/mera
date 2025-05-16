@@ -8,7 +8,6 @@ import { useContext, useState } from "react";
 import { HandleCalendarContext } from "@/context/CalendarContext";
 import AdminDrawer from "@/components/AdminDrawer";
 
-
 export default function SchedulePage() {
   const { activeCalendar, setActiveCalendar } = useContext(
     HandleCalendarContext
@@ -17,7 +16,7 @@ export default function SchedulePage() {
 
   return (
     <>
-      <div className="flex flex-col items-center gap-5 lg:gap-10 p-4  font-instrument">
+      <div className="flex flex-col items-center gap-5 lg:gap-10 p-4 h-screen font-instrument">
         {activeCalendar == "Month" && (
           <MonthCalendar openDrawer={() => setDrawerOpen(true)} />
         )}
@@ -25,7 +24,6 @@ export default function SchedulePage() {
         {activeCalendar == "Day" && <DayCalendar />}
       </div>
       <AdminDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
-       
     </>
   );
 }

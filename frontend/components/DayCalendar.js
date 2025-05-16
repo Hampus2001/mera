@@ -2,7 +2,8 @@
 
 import { HandleCalendarContext } from "@/context/CalendarContext";
 import { useContext, useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa";
+
+import { FaArrowLeft, FaArrowRight, FaPlus, FaBars } from "react-icons/fa";
 
 export default function DayCalendar({ openDrawer }) {
   //Get x and y coordinates for modal window
@@ -67,13 +68,13 @@ export default function DayCalendar({ openDrawer }) {
 
     const dayStyle =
       dayDate.toDateString() === todaysDate.toDateString()
-        ? "bg-neutral"
+        ? "bg-success"
         : "bg-base-100";
 
     newCalendar.push(
       <div
         key={dayDate}
-        className={`flex flex-col w-full justify-start items-start min-h-screen border-b border-l border-gray-300 ${dayStyle}`}
+        className={`flex flex-col w-full justify-start items-start h-full border-b border-l border-gray-300 ${dayStyle}`}
       >
         {redDays.map((holiday) => {
           if (
@@ -122,10 +123,93 @@ export default function DayCalendar({ openDrawer }) {
 
   return (
     <>
-      <div className="flex flex-col gap-4 lg:p-4 p-0 w-full">
+      <div className="flex flex-col gap-4 lg:p-4 p-0 w-full h-screen">
+        <div
+          id="desktopView"
+          className="flex w-full h-20 px-6 rounded-full items-center justify-between bg-base-100 text-neutral"
+        >
+          <h1 className="text-[32px]">MERA</h1>
+
+          <div className="hidden lg:flex gap-4">
+            <select
+              value={year}
+              onChange={(e) => {
+                setYear(e.target.value);
+              }}
+              className="select ui-app w-fit"
+            >
+              <option value={+year - 2}>{+year - 2}</option>
+              <option value={+year - 1}>{+year - 1}</option>
+              <option value={+year}>{+year}</option>
+              <option value={+year + 1}>{+year + 1}</option>
+              <option value={+year + 2}>{+year + 2}</option>
+            </select>
+            <select
+              value={month}
+              onChange={(e) => {
+                setMonth(parseInt(e.target.value));
+              }}
+              className="select ui-app w-fit"
+            >
+              <option value="0">January</option>
+              <option value="1">February</option>
+              <option value="2">March</option>
+              <option value="3">April</option>
+              <option value="4">May</option>
+              <option value="5">June</option>
+              <option value="6">July</option>
+              <option value="7">August</option>
+              <option value="8">September</option>
+              <option value="9">October</option>
+              <option value="10">November</option>
+              <option value="11">December</option>
+            </select>
+            <select
+              value={(new Date(year, month, todaysState).getDay() + 6) % 7} // Dynamically calculate the day index (Monday = 0, ..., Sunday = 6)
+              onChange={(e) => {
+                const selectedDay = parseInt(e.target.value); // Get the selected day index (0 = Monday, ..., 6 = Sunday)
+                const baseDate = new Date(year, month, todaysState); // Current date
+                const currentDay = (baseDate.getDay() + 6) % 7; // Adjust so Monday = 0, ..., Sunday = 6
+                const newDate = new Date(baseDate);
+                newDate.setDate(baseDate.getDate() - currentDay + selectedDay); // Calculate the new date for the selected day
+                setTodaysState(newDate.getDate()); // Update todaysState to the new date
+              }}
+              className="select ui-app"
+            >
+              <option value="0">Monday</option>
+              <option value="1">Tuesday</option>
+              <option value="2">Wednesday</option>
+              <option value="3">Thursday</option>
+              <option value="4">Friday</option>
+              <option value="5">Saturday</option>
+              <option value="6">Sunday</option>
+            </select>
+
+            <select
+              value={activeCalendar}
+              onChange={(e) => setActiveCalendar(e.target.value)}
+              className="select ui-app w-fit"
+            >
+              <option value="Month">View month</option>
+              <option value="Week">View week</option>
+              <option value="Day">View day</option>
+            </select>
+            <select className="select ui-app w-fit">
+              <option>Filter</option>
+            </select>
+          </div>
+
+          <div className="hidden lg:flex w-fit justify-between items-center gap-4">
+            <button className="btn btn-app bg-base-100 border-neutral btn-md">
+              Settings
+            </button>
+            <button className="btn btn-app btn-primary btn-md">Share</button>
+          </div>
+          <FaBars className="flex lg:hidden text-[32px]" />
+        </div>
         <div
           id="toggleDate"
-          className="flex flex-col w-full justify-between gap-4"
+          className="flex lg:hidden flex-col w-full justify-between gap-4"
         >
           <div className="flex justify-between gap-4">
             <select
@@ -200,8 +284,8 @@ export default function DayCalendar({ openDrawer }) {
           </div>
         </div>
 
-        <div className="flex text-xs w-full h-screen gap-1 text-start bg-base-100">
-          <div className="flex flex-col w-fit mt-6 h-screen justify-between items-center bg-base-100">
+        <div className="flex flex-grow text-xs w-full gap-1 text-start bg-base-100">
+          <div className="flex flex-col w-fit mt-6  justify-between items-center bg-base-100">
             {Array.from({ length: 24 }).map((_, index) => (
               <p
                 key={index}
@@ -212,13 +296,13 @@ export default function DayCalendar({ openDrawer }) {
               </p>
             ))}
           </div>
-          <div className="flex flex-col w-full">
-            <div className="flex justify-center items-center">
+          <div className="flex flex-col w-full border devide-x devide-y devide-neutral">
+            <div className="flex justify-center items-center border-b border-neutral h-6">
               <p>
                 {currentDayString} - {todaysState}
               </p>
             </div>
-            <div className="flex w-full h-screen">{calendar}</div>
+            <div className="flex w-full h-full">{calendar}</div>
           </div>
         </div>
       </div>

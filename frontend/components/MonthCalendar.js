@@ -119,10 +119,8 @@ export default function Calendar({ openDrawer }) {
             }
           }}
           key={`prev-${i}`}
-          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4  w-1/7 aspect-square bg-neutral text-base-100 "
+          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4  w-1/7 min-h-32 aspect-square bg-base-100 text-base-100 "
         >
-          <p>{i}</p>
-
           {redDays?.map((holiday) => {
             let thisDayDate = "";
             if (currentMonth == 0) {
@@ -158,7 +156,7 @@ export default function Calendar({ openDrawer }) {
     for (let i = 1; i <= daysInMonth; i++) {
       let currentDayStyle = " bg-base-100 text-base-content";
       if (i == currentDay && month == todaysMonth && year == todaysYear) {
-        currentDayStyle = " bg-primary text-primary-content ";
+        currentDayStyle = " bg-success text-base-100 ";
       }
       newCalendar.push(
         <button
@@ -175,7 +173,7 @@ export default function Calendar({ openDrawer }) {
             getCoordinates(e);
           }}
           key={`current-${i}`}
-          className={`flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 w-1/7 aspect-square  ${currentDayStyle} `}
+          className={`flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 w-1/7 min-h-32 aspect-square  ${currentDayStyle} `}
         >
           <p>{i}</p>
           {redDays?.map((holiday) => {
@@ -223,10 +221,8 @@ export default function Calendar({ openDrawer }) {
             }
           }}
           key={`next-${i}`}
-          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 w-1/7 aspect-auto lg:aspect-square bg-neutral text-base-100 "
+          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 w-1/7 min-h-32 aspect-square bg-base-100 text-base-100 "
         >
-          <p>{i}</p>
-
           {redDays?.map((holiday) => {
             let thisDayDate = "";
             if (currentMonth == 11) {
@@ -270,7 +266,7 @@ export default function Calendar({ openDrawer }) {
   }, [month, year, redDays]);
 
   return (
-    <div className="flex flex-col ml-16">
+    <div className="flex flex-col lg:ml-16 ">
       <div
         id="desktopView"
         className="flex w-full h-20 px-6 rounded-full items-center justify-between bg-base-100 text-neutral"
@@ -470,7 +466,7 @@ export default function Calendar({ openDrawer }) {
                 Sun
               </p>
             </div>
-            <div className="flex lg:h-auto min-h-screen flex-wrap bg-neutral border divide-x divide-y divide-neutral">
+            <div className="flex flex-wrap h-max bg-neutral border divide-x divide-y divide-neutral">
               {calendar}
             </div>
           </div>

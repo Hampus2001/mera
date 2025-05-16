@@ -85,15 +85,14 @@ export default function WeekCalendar({ openDrawer }) {
 
       const dayStyle =
         dayDate.toDateString() === todaysDate.toDateString()
-          ? "bg-secondary text-secondary-content"
-          : "";
+          ? "bg-success text-base-100"
+          : "bg-base-100 text-base-content";
 
       newCalendar.push(
         <div
           key={i}
-          className={`flex flex-col w-full justify-start items-start min-h-screen ${dayStyle} `}
+          className={`flex flex-col w-full justify-start items-start h-full  ${dayStyle} `}
         >
-          <p className="text-white">{dayDate.getDate()}</p>
           {redDays.map((holiday) => {
             if (
               holiday.date ==
@@ -141,7 +140,7 @@ export default function WeekCalendar({ openDrawer }) {
   }, [todaysState, month, year, redDays]);
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full h-screen">
       <div
         id="desktopView"
         className="flex w-full h-20 px-6 rounded-full items-center justify-between bg-base-100 text-neutral"
@@ -262,7 +261,7 @@ export default function WeekCalendar({ openDrawer }) {
         </div>
         <FaBars className="flex lg:hidden text-[32px]" />
       </div>
-      <div className="flex flex-col gap-4 lg:p-4 p-0 w-full">
+      <div className="flex flex-col gap-4 lg:p-4 p-0 w-full h-full">
         <div
           id="toggleDate"
           className="lg:hidden flex flex-col w-full justify-between gap-4"
@@ -340,8 +339,8 @@ export default function WeekCalendar({ openDrawer }) {
           </div>
         </div>
 
-        <div className="flex text-xs w-full h-screen gap-1 text-start bg-base-100">
-          <div className="flex flex-col w-fit mt-6 h-screen justify-between items-center bg-base-100 row-span-2">
+        <div className="flex flex-grow text-xs w-full gap-1 text-start bg-base-100">
+          <div className="flex flex-col w-fit mt-6 justify-between items-center bg-base-100">
             {Array.from({ length: 24 }).map((_, index) => (
               <p
                 key={index}
@@ -354,29 +353,31 @@ export default function WeekCalendar({ openDrawer }) {
           </div>
           <div className="flex flex-col w-full">
             <div className="flex justify-between">
-              <p className="flex w-full justify-center items-center bg-base-100">
+              <p className="flex w-full justify-center items-center bg-base-100 border devide-x devide-neutral">
                 Mon
               </p>
-              <p className="flex w-full justify-center items-center bg-base-100">
+              <p className="flex w-full justify-center items-center bg-base-100 border devide-x devide-neutral">
                 Tue
               </p>
-              <p className="flex w-full justify-center items-center bg-base-100">
+              <p className="flex w-full justify-center items-center bg-base-100 border devide-x devide-neutral">
                 Wed
               </p>
-              <p className="flex w-full justify-center items-center bg-base-100">
+              <p className="flex w-full justify-center items-center bg-base-100 border devide-x devide-neutral">
                 Thur
               </p>
-              <p className="flex w-full justify-center items-center bg-base-100">
+              <p className="flex w-full justify-center items-center bg-base-100 border devide-x devide-neutral">
                 Fri
               </p>
-              <p className="flex w-full justify-center items-center bg-base-100">
+              <p className="flex w-full justify-center items-center bg-base-100 border devide-x devide-neutral">
                 Sat
               </p>
-              <p className="flex w-full justify-center items-center bg-base-100">
+              <p className="flex w-full justify-center items-center bg-base-100 border devide-x devide-neutral">
                 Sun
               </p>
             </div>
-            <div className="flex w-full bg-neutral">{calendar}</div>
+            <div className="flex w-full h-full bg-neutral border divide-x divide-y divide-neutral">
+              {calendar}
+            </div>
           </div>
         </div>
       </div>
