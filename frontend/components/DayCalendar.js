@@ -39,9 +39,18 @@ export default function DayCalendar({ openDrawer }) {
 
   const [todaysState, setTodaysState] = useState(todaysDate.getDate());
   const [currentDayString, setCurrentDayString] = useState("");
+  const [lastDayOfCurrentMonth, setLastDayOfCurrentMonth] = useState(
+    new Date(year, month + 1, 0)
+  );
+  const [daysInMonth, setDaysInMonth] = useState(
+    lastDayOfCurrentMonth.getDate()
+  );
 
   function getDaysInCurrentWeek() {
     const newCalendar = [];
+
+    const lastDayOfMonth = new Date(year, month + 1, 0);
+    setDaysInMonth(lastDayOfMonth.getDate());
 
     // Create a new date object based on `todaysState`
     const baseDate = new Date(year, month, todaysState);
@@ -164,25 +173,17 @@ export default function DayCalendar({ openDrawer }) {
               <option value="10">November</option>
               <option value="11">December</option>
             </select>
+
             <select
-              value={(new Date(year, month, todaysState).getDay() + 6) % 7} // Dynamically calculate the day index (Monday = 0, ..., Sunday = 6)
-              onChange={(e) => {
-                const selectedDay = parseInt(e.target.value); // Get the selected day index (0 = Monday, ..., 6 = Sunday)
-                const baseDate = new Date(year, month, todaysState); // Current date
-                const currentDay = (baseDate.getDay() + 6) % 7; // Adjust so Monday = 0, ..., Sunday = 6
-                const newDate = new Date(baseDate);
-                newDate.setDate(baseDate.getDate() - currentDay + selectedDay); // Calculate the new date for the selected day
-                setTodaysState(newDate.getDate()); // Update todaysState to the new date
-              }}
               className="select ui-app"
+              value={todaysState}
+              onChange={(e) => setTodaysState(parseInt(e.target.value))}
             >
-              <option value="0">Monday</option>
-              <option value="1">Tuesday</option>
-              <option value="2">Wednesday</option>
-              <option value="3">Thursday</option>
-              <option value="4">Friday</option>
-              <option value="5">Saturday</option>
-              <option value="6">Sunday</option>
+              {Array.from({ length: daysInMonth }).map((_, index) => (
+                <option value={index + 1} key={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
             </select>
 
             <select
@@ -260,26 +261,17 @@ export default function DayCalendar({ openDrawer }) {
               <option value="Week">Week Format</option>
               <option value="Day">Day Format</option>
             </select>
-
             <select
-              value={(new Date(year, month, todaysState).getDay() + 6) % 7} // Dynamically calculate the day index (Monday = 0, ..., Sunday = 6)
-              onChange={(e) => {
-                const selectedDay = parseInt(e.target.value); // Get the selected day index (0 = Monday, ..., 6 = Sunday)
-                const baseDate = new Date(year, month, todaysState); // Current date
-                const currentDay = (baseDate.getDay() + 6) % 7; // Adjust so Monday = 0, ..., Sunday = 6
-                const newDate = new Date(baseDate);
-                newDate.setDate(baseDate.getDate() - currentDay + selectedDay); // Calculate the new date for the selected day
-                setTodaysState(newDate.getDate()); // Update todaysState to the new date
-              }}
               className="select ui-app"
+              value={todaysState}
+              onChange={(e) => setTodaysState(parseInt(e.target.value))}
             >
-              <option value="0">Monday</option>
-              <option value="1">Tuesday</option>
-              <option value="2">Wednesday</option>
-              <option value="3">Thursday</option>
-              <option value="4">Friday</option>
-              <option value="5">Saturday</option>
-              <option value="6">Sunday</option>
+              {Array.from({ length: daysInMonth }).map((_, index) => (
+                <option value={index + 1} key={index + 1}>
+                  {year}-{month + 1 < 10 ? "0" + (month + 1) : month + 1}-
+                  {index + 1 < 10 ? "0" + (index + 1) : index + 1}
+                </option>
+              ))}
             </select>
           </div>
         </div>
