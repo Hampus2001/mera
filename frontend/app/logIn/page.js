@@ -46,8 +46,9 @@ export default function AuthPage() {
       console.log("Inloggad företag:", data.response.company_id);
 
       setContextId(data.response.company_id);
+      setActiveUser(data.response); 
       router.push("/schedulePage");
-      setActiveUser(user);  
+      
 
     } catch (err) {
       console.error("Fel vid inloggning:", err);
