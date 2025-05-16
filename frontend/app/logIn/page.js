@@ -3,6 +3,9 @@ import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 import LogInSingInBar from "@/components/LoginSignInNavBar";
+import MobilAppNavBar from "@/components/MobilAppNavBar";
+import Sidebar from "@/components/Sidebar";
+import AppNavBar from "@/components/AppNavBar";
 
 
 export default function AuthPage() {
@@ -57,8 +60,10 @@ export default function AuthPage() {
   return (
     <>
       <div className="absolute top-0 left-0 w-full z-50">
-        <LogInSingInBar></LogInSingInBar>
-       
+        {/* <LogInSingInBar></LogInSingInBar> */}
+      {/* <MobilAppNavBar></MobilAppNavBar>  */}
+      <Sidebar></Sidebar>
+      <AppNavBar></AppNavBar>
       </div>
       <section className="bg-base-100 flex flex-col items-center justify-center min-h-screen px-6 lg:px-40 gap-y-6 pt-24">
         <div className="border-2 border-black rounded-xl p-4 m-4 gap-4 w-full max-w-xl">
@@ -106,7 +111,7 @@ export default function AuthPage() {
               maxLength="30"
               title="Only letters, numbers or dash"
             />
-            <select
+            {/* <select
               className="select validator col-span-1"
               required
               value={role}
@@ -129,7 +134,7 @@ export default function AuthPage() {
               </option>
               <option>Yes</option>
               <option>No</option>
-            </select>
+            </select> */}
 
             <button
               className="btn btn-secondary w-full col-span-2 mt-2"

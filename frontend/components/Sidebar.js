@@ -19,7 +19,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 h-screen w-[4.5rem] bg-neutral z-40 flex flex-col items-center justify-center">
+      <div className="fixed top-0 left-0 h-screen w-[4rem] bg-neutral z-40 flex flex-col items-center justify-center">
         <li className="fixed top-5 menu menu-vertical gap-y-6">
           <Link href="/" className="flex items-center justify-center">
             <svg
@@ -41,30 +41,30 @@ export default function Sidebar() {
             className="flex flex-col items-center justify-center space-y-1 text-primary  hover:opacity-80"
           >
             <PlusIcon className="text-primary w-8 h-8" />
-            <span className="text-[12px]">Add</span>
+            <span className="text-[10px]">Add</span>
           </Link>
           <Link
             href="/schedulePage"
             className="flex flex-col items-center justify-center space-y-1 text-primary hover:opacity-80"
           >
             <CalendarIcon className="text-primary w-8 h-8" />
-            <span className="text-[12px] whitespace-nowrap">My schedule</span>
+            <span className="text-[10px] whitespace-nowrap">My schedule</span>
           </Link>
 
-          <div className="fixed mt-70 left-0 h-screen w-[4.5rem] bg-neutral z-40 flex flex-col items-center justify-center gap-6">
+          <div className="fixed mt-70 left-0 h-screen w-[4rem] bg-neutral z-40 flex flex-col items-center justify-center gap-6">
             <Link
               href="/"
               className="flex flex-col items-center justify-center space-y-1 text-primary hover:opacity-80"
             >
               <BellIcon className="text-primary w-8 h-8" />
-              <span className="text-[12px]">Notifications</span>
+              <span className="text-[10px]">Notifications</span>
             </Link>
             <Link
               href="/"
               className="flex flex-col items-center justify-center space-y-1 text-primary hover:opacity-80"
             >
               <MdOutlineSettings className="text-primary w-8 h-8" />
-              <span className="text-[12px]">Settings</span>
+              <span className="text-[10px]">Settings</span>
             </Link>
 
             <Link
