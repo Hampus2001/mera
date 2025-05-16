@@ -119,7 +119,7 @@ export default function Calendar({ openDrawer }) {
             }
           }}
           key={`prev-${i}`}
-          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4  w-1/7 min-h-32 aspect-square bg-base-100 text-base-100 "
+          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4  w-1/7 min-h-32  aspect-square bg-base-100 text-base-100 "
         >
           {redDays?.map((holiday) => {
             let thisDayDate = "";
@@ -173,7 +173,7 @@ export default function Calendar({ openDrawer }) {
             getCoordinates(e);
           }}
           key={`current-${i}`}
-          className={`flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 w-1/7 min-h-32 aspect-square  ${currentDayStyle} `}
+          className={`flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 w-1/7 min-h-32  aspect-square  ${currentDayStyle} `}
         >
           <p>{i}</p>
           {redDays?.map((holiday) => {
@@ -221,7 +221,7 @@ export default function Calendar({ openDrawer }) {
             }
           }}
           key={`next-${i}`}
-          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 w-1/7 min-h-32 aspect-square bg-base-100 text-base-100 "
+          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 w-1/7 min-h-32  aspect-square bg-base-100 text-base-100 "
         >
           {redDays?.map((holiday) => {
             let thisDayDate = "";
@@ -442,31 +442,31 @@ export default function Calendar({ openDrawer }) {
               {firstWeekOfMonth + 5}
             </p>
           </div>
-          <div className="flex flex-col w-full ">
-            <div className="flex w-full justify-between bg-neutral border divide-x divide-neutral">
-              <p className="flex flex-1  justify-center items-center bg-base-100">
+          <div className="flex flex-col w-full border">
+            <div className="flex w-full justify-between border-b bg-neutral divide-x devide-y divide-neutral">
+              <p className="flex w-1/7  justify-center items-center bg-base-100">
                 Mon
               </p>
-              <p className="flex flex-1  justify-center items-center bg-base-100">
+              <p className="flex w-1/7  justify-center items-center bg-base-100">
                 Tue
               </p>
-              <p className="flex flex-1  justify-center items-center bg-base-100">
+              <p className="flex  w-1/7 justify-center items-center bg-base-100">
                 Wed
               </p>
-              <p className="flex flex-1  justify-center items-center bg-base-100">
+              <p className="flex w-1/7  justify-center items-center bg-base-100">
                 Thur
               </p>
-              <p className="flex flex-1  justify-center items-center bg-base-100">
+              <p className="flex w-1/7  justify-center items-center bg-base-100">
                 Fri
               </p>
-              <p className="flex flex-1 justify-center items-center bg-base-100">
+              <p className="flex w-1/7 justify-center items-center bg-base-100">
                 Sat
               </p>
-              <p className="flex flex-1  justify-center items-center bg-base-100">
+              <p className="flex w-1/7  justify-center items-center bg-base-100">
                 Sun
               </p>
             </div>
-            <div className="flex flex-wrap h-max bg-neutral border divide-x divide-y divide-neutral">
+            <div className="flex flex-wrap h-max  divide-y divide-x divide-neutral">
               {calendar}
             </div>
           </div>

@@ -77,7 +77,7 @@ export default function DayCalendar({ openDrawer }) {
 
     const dayStyle =
       dayDate.toDateString() === todaysDate.toDateString()
-        ? "bg-success"
+        ? "bg-base-100" //Change bgColor of todays date.
         : "bg-base-100";
 
     newCalendar.push(
@@ -181,7 +181,8 @@ export default function DayCalendar({ openDrawer }) {
             >
               {Array.from({ length: daysInMonth }).map((_, index) => (
                 <option value={index + 1} key={index + 1}>
-                  {index + 1}
+                  {year}-{month + 1 < 10 ? "0" + (month + 1) : month + 1}-
+                  {index + 1 < 10 ? "0" + (index + 1) : index + 1}
                 </option>
               ))}
             </select>
