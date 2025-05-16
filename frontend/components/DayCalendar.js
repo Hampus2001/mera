@@ -247,8 +247,17 @@ export default function DayCalendar({ openDrawer }) {
               <option value="10">November</option>
               <option value="11">December</option>
             </select>
-            <select className="select ui-app">
-              <option>Filter</option>
+            <select
+              className="select ui-app"
+              value={todaysState}
+              onChange={(e) => setTodaysState(parseInt(e.target.value))}
+            >
+              {Array.from({ length: daysInMonth }).map((_, index) => (
+                <option value={index + 1} key={index + 1}>
+                  {year}-{month + 1 < 10 ? "0" + (month + 1) : month + 1}-
+                  {index + 1 < 10 ? "0" + (index + 1) : index + 1}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -262,17 +271,9 @@ export default function DayCalendar({ openDrawer }) {
               <option value="Week">Week Format</option>
               <option value="Day">Day Format</option>
             </select>
-            <select
-              className="select ui-app"
-              value={todaysState}
-              onChange={(e) => setTodaysState(parseInt(e.target.value))}
-            >
-              {Array.from({ length: daysInMonth }).map((_, index) => (
-                <option value={index + 1} key={index + 1}>
-                  {year}-{month + 1 < 10 ? "0" + (month + 1) : month + 1}-
-                  {index + 1 < 10 ? "0" + (index + 1) : index + 1}
-                </option>
-              ))}
+
+            <select className="select ui-app">
+              <option>Filter</option>
             </select>
           </div>
         </div>
