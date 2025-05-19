@@ -132,7 +132,7 @@ export default function DayCalendar({ openDrawer }) {
 
   return (
     <>
-      <div className="flex flex-col gap-4 lg:p-4 p-0 w-full h-screen">
+      <div className="flex flex-col gap-4  w-full h-screen">
         <div
           id="desktopView"
           className="flex w-full h-20 px-6 rounded-full items-center justify-between bg-base-100 text-neutral"
