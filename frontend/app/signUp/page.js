@@ -3,16 +3,14 @@ import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 import LogInSingInBar from "@/components/LoginSignInNavBar";
-import MobilAppNavBar from "@/components/MobilAppNavBar";
-import Sidebar from "@/components/Sidebar";
+
 import Link from "next/link";
 
 export default function AuthPage() {
   const router = useRouter();
-
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
- 
 
   const { setContextId, setActiveUser } = useContext(HandleWorkspaceContext);
 
@@ -20,9 +18,9 @@ export default function AuthPage() {
     e.preventDefault();
 
     const payload = {
-      email,
+      username,
       password,
-      
+      email,
     };
 
     try {
@@ -48,31 +46,29 @@ export default function AuthPage() {
       console.error("Fel vid inloggning:", err);
     }
 
-    setEmail("");
+    setUsername("");
     setPassword("");
-   
+    setEmail("");
   }
 
   return (
     <>
       <div className="absolute top-0 left-0 w-full z-50">
         <LogInSingInBar></LogInSingInBar>
-        {/* <MobilAppNavBar></MobilAppNavBar>  */}
-        {/* <Sidebar></Sidebar> */}
       </div>
       <section className="bg-white flex justify-center items-center min-h-screen">
-        <div className="bg-base-100 border-2 border-black rounded-xl shadow-md w-[500px] h-[604px] p-16">
+        <div className="bg-base-100 border-2 border-black rounded-xl shadow-md w-[500px] h-[816px] p-16 mt-16">
           <h2 className="text-center mb-16 text-[40px]">
-            Welcome back to Mera!
+            We've been expecting you...
           </h2>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input
+            <input
               type="text"
               required
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="input validator w-[372px] h-12 rounded-lg"
             />
 
@@ -84,28 +80,56 @@ export default function AuthPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="input validator w-[372px] h-12 rounded-lg"
             />
-           
-            <div className="flex items-baseline gap-4">
-              <button
-                type="submit"
-                className="btn btn-primary mt-6 w-[185px] gap-2 h-12"
-              >
-                Log in
-              </button>
-              <p> Forgot your password?</p>
+            <input
+              type="text"
+              required
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="input validator w-[372px] h-12 rounded-lg"
+            />
+            <div className="flex flex-col gap-6 mt-14">
+              <label className="inline-flex items-center gap-6 ml-6">
+                <input
+                  type="checkbox"
+                  className="checkbox checked:bg-black checked:text-white" 
+                  defaultChecked 
+                />
+                <span className="select-none">I agree to the terms and conditions</span>{" "}
+              </label>
+              <label className="inline-flex items-center gap-6 ml-6">
+                <input
+                  type="checkbox"
+                  className="checkbox checked:bg-black checked:text-white"
+                  defaultChecked
+                />
+                <span className="select-none">
+                    I have read the privacy policy
+                </span>
+              </label>
+              <label className="inline-flex items-center gap-6 ml-6">
+                <input
+                  type="checkbox"
+                  className="checkbox checked:bg-black checked:text-white"
+                  defaultChecked
+                />
+                <span className="select-none">Send me ocasionally tips and updates</span>
+              </label>
             </div>
             <div className="flex items-center">
+            <Link href="/createWorkspace">
               <button
                 type="button"
-                className="btn btn-lg ui-app mt-12 w-[372px] h-12 gap-2"
+                className="btn btn-lg btn-primary mt-12 w-[372px] gap-2"
               >
-                Log in with Google
+                Sing Up
               </button>
+              </Link>
             </div>
-            <div className="flex justify-between px-8 text-sm text-gray-700">
+            <div className="flex justify-between px-12 text-sm text-gray-700">
               <span>Don't have an account yet?</span>
-              <Link href="/signUp">
-                <span>Sing Up Now</span>
+              <Link href="/createWorkspace">
+                Sing Up Now!
               </Link>
             </div>
           </form>
