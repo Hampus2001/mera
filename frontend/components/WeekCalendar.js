@@ -39,10 +39,13 @@ export default function WeekCalendar({ openDrawer }) {
     setActiveCalendar,
     getISOWeekNumber,
     getDateOfISOWeek,
+    displayedWeek,
+    setDisplayedWeek,
+    todaysState,
+    setTodaysState,
+    baseDate,
+    currentDay,
   } = useContext(HandleCalendarContext);
-
-  const [todaysState, setTodaysState] = useState(todaysDate.getDate());
-  const [displayedWeek, setDisplayedWeek] = useState(1);
 
   function getDaysInCurrentWeek() {
     const newCalendar = [];
@@ -85,7 +88,7 @@ export default function WeekCalendar({ openDrawer }) {
 
       const dayStyle =
         dayDate.toDateString() === todaysDate.toDateString()
-          ? "bg-success text-base-100"
+          ? "bg-primary text-primary-content"
           : "bg-base-100 text-base-content";
 
       newCalendar.push(
@@ -121,7 +124,7 @@ export default function WeekCalendar({ openDrawer }) {
                     setShowModal(true);
                   }}
                   key={dayDate.getDate()}
-                  className="flex w-full rounded-lg p-3 lg-p-1 bg-red-400 text-red-900 justify-center hover:cursor-pointer"
+                  className="flex w-full rounded-lg p-3 lg-p-1 bg-info text-info-content justify-center hover:cursor-pointer"
                 >
                   <p className="hidden lg:flex">{holiday.name}</p>
                 </button>
@@ -339,43 +342,43 @@ export default function WeekCalendar({ openDrawer }) {
           </div>
         </div>
 
-        <div className="flex flex-grow text-xs w-full gap-1 text-start bg-base-100">
-          <div className="flex flex-col w-fit mt-6 justify-between items-center bg-base-100">
+        <div className="flex flex-grow text-xs w-full bg-base-100">
+          <div className="flex flex-col w-16 mt-6 justify-between items-center gap-y-4 pt-4">
             {Array.from({ length: 24 }).map((_, index) => (
-              <p
+              <h6
                 key={index}
-                className={`flex text-xs lg:text-sm justify-center bg-base-100 items-center border border-base-100
+                className={`flex justify-center  items-center
               }`}
               >
                 {index.toString().padStart(2, "0")}:00
-              </p>
+              </h6>
             ))}
           </div>
-          <div className="flex flex-col w-full">
-            <div className="flex justify-between">
-              <p className="flex w-full justify-center items-center bg-base-100 border devide-x devide-neutral">
-                Mon
-              </p>
-              <p className="flex w-full justify-center items-center bg-base-100 border devide-x devide-neutral">
-                Tue
-              </p>
-              <p className="flex w-full justify-center items-center bg-base-100 border devide-x devide-neutral">
-                Wed
-              </p>
-              <p className="flex w-full justify-center items-center bg-base-100 border devide-x devide-neutral">
-                Thur
-              </p>
-              <p className="flex w-full justify-center items-center bg-base-100 border devide-x devide-neutral">
-                Fri
-              </p>
-              <p className="flex w-full justify-center items-center bg-base-100 border devide-x devide-neutral">
-                Sat
-              </p>
-              <p className="flex w-full justify-center items-center bg-base-100 border devide-x devide-neutral">
-                Sun
-              </p>
+          <div className="border-[0.025rem] flex flex-col w-full">
+            <div className="flex justify-between w-full h-6 bg-base-100 divide-x-[0.025rem] divide-y-[0.025rem]">
+              <h6 className="flex w-full h-full justify-center items-center">
+                M
+              </h6>
+              <h6 className="flex w-full h-full justify-center items-center">
+                T
+              </h6>
+              <h6 className="flex w-full h-full justify-center items-center">
+                W
+              </h6>
+              <h6 className="flex w-full h-full justify-center items-center">
+                T
+              </h6>
+              <h6 className="flex w-full h-full justify-center items-center">
+                F
+              </h6>
+              <h6 className="flex w-full h-full justify-center items-center ">
+                S
+              </h6>
+              <h6 className="flex w-full h-full justify-center items-center border-b-[0.025rem]">
+                S
+              </h6>
             </div>
-            <div className="flex w-full h-full bg-neutral border divide-x divide-y divide-neutral">
+            <div className="flex w-full h-full  divide-x divide-y">
               {calendar}
             </div>
           </div>
