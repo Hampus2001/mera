@@ -35,9 +35,9 @@ export default function DayCalendar({ openDrawer }) {
     todaysMonth,
     activeCalendar,
     setActiveCalendar,
+    todaysState,
   } = useContext(HandleCalendarContext);
 
-  const [todaysState, setTodaysState] = useState(todaysDate.getDate());
   const [currentDayString, setCurrentDayString] = useState("");
   const [lastDayOfCurrentMonth, setLastDayOfCurrentMonth] = useState(
     new Date(year, month + 1, 0)
@@ -133,151 +133,6 @@ export default function DayCalendar({ openDrawer }) {
   return (
     <>
       <div className="flex flex-col gap-4  w-full h-screen">
-        <div
-          id="desktopView"
-          className="flex w-full h-20 px-6 rounded-full items-center justify-between bg-base-100 text-neutral"
-        >
-          <h1 className="text-[32px]">MERA</h1>
-
-          <div className="hidden lg:flex gap-4">
-            <select
-              value={year}
-              onChange={(e) => {
-                setYear(e.target.value);
-              }}
-              className="select ui-app w-fit"
-            >
-              <option value={+year - 2}>{+year - 2}</option>
-              <option value={+year - 1}>{+year - 1}</option>
-              <option value={+year}>{+year}</option>
-              <option value={+year + 1}>{+year + 1}</option>
-              <option value={+year + 2}>{+year + 2}</option>
-            </select>
-            <select
-              value={month}
-              onChange={(e) => {
-                setMonth(parseInt(e.target.value));
-              }}
-              className="select ui-app w-fit"
-            >
-              <option value="0">January</option>
-              <option value="1">February</option>
-              <option value="2">March</option>
-              <option value="3">April</option>
-              <option value="4">May</option>
-              <option value="5">June</option>
-              <option value="6">July</option>
-              <option value="7">August</option>
-              <option value="8">September</option>
-              <option value="9">October</option>
-              <option value="10">November</option>
-              <option value="11">December</option>
-            </select>
-
-            <select
-              className="select ui-app"
-              value={todaysState}
-              onChange={(e) => setTodaysState(parseInt(e.target.value))}
-            >
-              {Array.from({ length: daysInMonth }).map((_, index) => (
-                <option value={index + 1} key={index + 1}>
-                  {year}-{month + 1 < 10 ? "0" + (month + 1) : month + 1}-
-                  {index + 1 < 10 ? "0" + (index + 1) : index + 1}
-                </option>
-              ))}
-            </select>
-
-            <select
-              value={activeCalendar}
-              onChange={(e) => setActiveCalendar(e.target.value)}
-              className="select ui-app w-fit"
-            >
-              <option value="Month">View month</option>
-              <option value="Week">View week</option>
-              <option value="Day">View day</option>
-            </select>
-            <select className="select ui-app w-fit">
-              <option>Filter</option>
-            </select>
-          </div>
-
-          <div className="hidden lg:flex w-fit justify-between items-center gap-4">
-            <button className="btn btn-app bg-base-100 border-neutral btn-md">
-              Settings
-            </button>
-            <button className="btn btn-app btn-primary btn-md">Share</button>
-          </div>
-          <FaBars className="flex lg:hidden text-[32px]" />
-        </div>
-        <div
-          id="toggleDate"
-          className="flex lg:hidden flex-col w-full justify-between gap-4"
-        >
-          <div className="flex justify-between gap-4">
-            <select
-              value={year}
-              onChange={(e) => {
-                setYear(e.target.value);
-              }}
-              className="select ui-app"
-            >
-              <option value={+year - 2}>{+year - 2}</option>
-              <option value={+year - 1}>{+year - 1}</option>
-              <option value={+year}>{+year}</option>
-              <option value={+year + 1}>{+year + 1}</option>
-              <option value={+year + 2}>{+year + 2}</option>
-            </select>
-            <select
-              value={month}
-              onChange={(e) => {
-                setMonth(parseInt(e.target.value));
-              }}
-              className="select ui-app"
-            >
-              <option value="0">January</option>
-              <option value="1">February</option>
-              <option value="2">March</option>
-              <option value="3">April</option>
-              <option value="4">May</option>
-              <option value="5">June</option>
-              <option value="6">July</option>
-              <option value="7">August</option>
-              <option value="8">September</option>
-              <option value="9">October</option>
-              <option value="10">November</option>
-              <option value="11">December</option>
-            </select>
-            <select
-              className="select ui-app"
-              value={todaysState}
-              onChange={(e) => setTodaysState(parseInt(e.target.value))}
-            >
-              {Array.from({ length: daysInMonth }).map((_, index) => (
-                <option value={index + 1} key={index + 1}>
-                  {year}-{month + 1 < 10 ? "0" + (month + 1) : month + 1}-
-                  {index + 1 < 10 ? "0" + (index + 1) : index + 1}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="flex justify-between gap-4">
-            <select
-              value={activeCalendar}
-              onChange={(e) => setActiveCalendar(e.target.value)}
-              className="select ui-app"
-            >
-              <option value="Month">Month Format</option>
-              <option value="Week">Week Format</option>
-              <option value="Day">Day Format</option>
-            </select>
-
-            <select className="select ui-app">
-              <option>Filter</option>
-            </select>
-          </div>
-        </div>
-
         <div className="flex flex-grow text-xs w-full gap-1 text-start bg-base-100">
           <div className="flex flex-col w-fit mt-6  justify-between items-center bg-base-100">
             {Array.from({ length: 24 }).map((_, index) => (
