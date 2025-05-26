@@ -48,8 +48,6 @@ export default function AuthPage() {
       console.error("Fel vid inloggning:", err);
     }
 
- 
-
     setRoles("");
     setMeraTheme("");
     setMonthView("");
@@ -61,25 +59,28 @@ export default function AuthPage() {
         <LogInSingInBar></LogInSingInBar>
       </div>
 
-      <section className="bg-white flex flex-col justify-center items-center min-h-screen mt-16 mb-16">
-        <ul className="steps steps-vertical lg:steps-horizontal w-[800px] mb-10">
-          <li className="step step-neutral">Account Details</li>
-          <li className="step step-neutral">Create Schedule</li>
-          <li className="step">Add Users</li>
+      <section className="flex flex-col justify-center items-center w-full min-h-screen overflow-hidden pt-8 lg:pt-12 gap-y-6">
+        <ul className=" pt-16 steps steps-xs lg:steps-sm w-md lg:w-4xl steps-horizontal">
+          <li className="step steps-xs lg:steps-sm steps-vertical step-neutral text-sm"></li>
+          <li className="step steps-xs lg:steps-sm step-neutral text-sm"></li>
+          <li className="step steps-xs lg:steps-sm step-neutral-content"></li>
         </ul>
 
-        <div className="bg-base-100 border-2 border-black rounded-3xl shadow-md w-[1176px] h-[588px] p-8">
-          <h2 className="text-left m-12 mb-5 text-[40px]">
-            Customize your schedule
-          </h2>
+        <div className=" border-none card bg-base-100 flex flex-col gap-y-8 lg:gap-y-6 lg:border-[0.025rem] shadow-none lg:shadow-lg p-8 lg:p-12 w-full lg:max-w-4xl">
+          <form
+            onSubmit={handleSubmit}
+            className="grid grid-cols-1 lg:grid-cols-2 items-start justify-start gap-6 w-full"
+          >
+            <h2 className="col-span-1 text-3xl leading-loose w-full ">
+              Customize your schedule
+            </h2>
 
-          <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-12">
-            <div className="col-span-1 flex flex-col space-y-6 ml-12 ">
-              <div className="flex gap-8 ">
-                <div className="flex flex-col">
+            <div className="col-start-1 col-span-1 flex flex-col gap-y-8 lg:gap-y-6 w-full ">
+              <div className="flex gap-x-8 lg:gap-x-6 w-full">
+                <div className="flex flex-col w-full">
                   <label
                     htmlFor="monthView"
-                    className="text-sm font-medium mt-4 mb-2"
+                    className="text-xs leading-relaxed ui-app pl-3"
                   >
                     Company
                   </label>
@@ -89,13 +90,13 @@ export default function AuthPage() {
                     placeholder="Company's name"
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
-                    className="input w-[230px] h-[48px] rounded-lg border-black"
+                    className="input validator w-full  "
                   />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col w-full">
                   <label
                     htmlFor="monthView"
-                    className="text-sm font-medium mt-4 mb-2"
+                    className="text-xs leading-relaxed ui-app pl-3"
                   >
                     Role
                   </label>
@@ -105,57 +106,58 @@ export default function AuthPage() {
                     placeholder="Role name"
                     value={roles}
                     onChange={(e) => setRoles(e.target.value)}
-                    className="input w-[230px] h-[48px] rounded-lg  border-black"
+                    className="input validator "
                   />
                 </div>
               </div>
 
               <textarea
                 placeholder="My Bio description"
-                className="textarea w-[492px] h-[244px] rounded-lg resize-none mb-20  border-black"
+                className="textarea w-full  rounded-lg resize-none h-full "
               />
             </div>
 
-            <div className="mt-4 mb-2 ml-12">
-              <div className="flex flex-col ">
-                <label htmlFor="theme" className="text-sm font-medium mb-2">
-                  Theme default
+            <div className="col-start-1 lg:col-start-2 flex flex-col gap-8 lg:gap-6 w-full items-start justify-start">
+              <div className="flex flex-col w-full">
+                <label
+                  htmlFor="theme"
+                  className="text-xs leading-relaxed ui-app pl-3"
+                >
+                  Default Theme
                 </label>
-                <input
+                <select
                   id="theme"
                   type="text"
                   value={meraTheme}
                   required
                   placeholder="Mera Themes"
                   onChange={(e) => setMeraTheme(e.target.value)}
-                  className="input validator w-[400px] h-12 rounded-lg  border-black"
-                />
+                  className="select w-full"
+                ></select>
               </div>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col w-full items-start justify-start">
                 <label
                   htmlFor="monthView"
-                  className="text-sm font-medium mt-6 mb-2"
+                  className="pl-3 text-xs leading-relaxed ui-app"
                 >
                   Month view default
                 </label>
-                <input
+                <select
                   id="monthView"
                   type="text"
                   value={monthView}
                   required
                   placeholder="Month View"
                   onChange={(e) => setMonthView(e.target.value)}
-                  className="input validator w-[400px] h-12 rounded-lg border-black"
-                />
+                  className="select w-full"
+                ></select>
               </div>
-              <Link href="/createWorkspace">
-              <button
-                type="submit"
-                className="btn btn-primary w-[400px] gap-2 h-12 mr-12 mt-[120px]"
-              >
-                Next
-              </button>
+
+              <Link className="w-full" href="/schedulePage">
+                <button type="submit" className="btn btn-primary gap-2 w-full">
+                  Next
+                </button>
               </Link>
             </div>
           </form>
