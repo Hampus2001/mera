@@ -56,20 +56,20 @@ export default function AuthPage() {
       <div className="absolute top-0 left-0 w-full z-50">
         <LogInSingInBar></LogInSingInBar>
       </div>
-      <section className="bg-white flex justify-center items-center min-h-screen">
-        <div className="bg-base-100 border-2 border-black rounded-xl shadow-md w-[500px] h-[816px] p-16 mt-16">
-          <h2 className="text-center mb-16 text-[40px]">
+      <section className="flex justify-center items-center min-h-screen overflow-hidden pt-8 lg:pt-12">
+        <div className="card bg-base-100 flex flex-col gap-y-8 lg:gap-y-6 border-none lg:border-[0.025rem] shadow-none lg:shadow-lg p-8 lg:p-12 w-full lg:max-w-md">
+          <h2 className="text-3xl leading-loose">
             We've been expecting you...
           </h2>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4 ">
             <input
               type="text"
               required
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="input validator w-[372px] h-12 rounded-lg"
+              className="input validator w-full"
             />
 
             <input
@@ -78,7 +78,7 @@ export default function AuthPage() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="input validator w-[372px] h-12 rounded-lg"
+              className="input validator w-full"
             />
             <input
               type="text"
@@ -86,53 +86,54 @@ export default function AuthPage() {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="input validator w-[372px] h-12 rounded-lg"
+              className="input validator w-full"
             />
-            <div className="flex flex-col gap-6 mt-14">
-              <label className="inline-flex items-center gap-6 ml-6">
-                <input
-                  type="checkbox"
-                  className="checkbox checked:bg-black checked:text-white" 
-                  defaultChecked 
-                />
-                <span className="select-none">I agree to the terms and conditions</span>{" "}
-              </label>
-              <label className="inline-flex items-center gap-6 ml-6">
-                <input
-                  type="checkbox"
-                  className="checkbox checked:bg-black checked:text-white"
-                  defaultChecked
-                />
-                <span className="select-none">
-                    I have read the privacy policy
-                </span>
-              </label>
-              <label className="inline-flex items-center gap-6 ml-6">
-                <input
-                  type="checkbox"
-                  className="checkbox checked:bg-black checked:text-white"
-                  defaultChecked
-                />
-                <span className="select-none">Send me ocasionally tips and updates</span>
-              </label>
-            </div>
-            <div className="flex items-center">
-            <Link href="/createWorkspace">
-              <button
-                type="button"
-                className="btn btn-lg btn-primary mt-12 w-[372px] gap-2"
-              >
-                Sing Up
-              </button>
-              </Link>
-            </div>
-            <div className="flex justify-between px-12 text-sm text-gray-700">
-              <span>Don't have an account yet?</span>
-              <Link href="/createWorkspace">
-                Sing Up Now!
-              </Link>
-            </div>
           </form>
+          <div className="w-full flex flex-col gap-y-4">
+            <label className="w-full flex justify-start items-center gap-4 lg:gap-4 ">
+              <input
+                type="checkbox"
+                className="checkbox checkbox-sm checked:bg-neutral checked:text-neutral-content"
+                defaultChecked
+              />
+              <span className="select-none">
+                I agree to the terms and conditions
+              </span>
+            </label>
+            <label className="w-full flex justify-start items-center gap-4 lg:gap-4   ">
+              <input
+                type="checkbox"
+                className="checkbox checkbox-sm checked:bg-neutral checked:text-neutral-content"
+                defaultChecked
+              />
+              <span className="select-none">
+                I have read the privacy policy
+              </span>
+            </label>
+            <label className="w-full flex justify-start items-center gap-4 lg:gap-4  ">
+              <input
+                type="checkbox"
+                className="checkbox checkbox-sm checked:bg-neutral checked:text-neutral-content"
+                defaultChecked
+              />
+              <span className="select-none">
+                Send me occasional tips and updates
+              </span>
+            </label>
+          </div>
+
+          <div className="flex border-b-[0.025rem] w-full items-center justify-start pb-8 lg:pb-12">
+            <Link className="w-full" href="/createWorkspace">
+              <button className="btn ui-app btn-primary w-full">Next</button>
+            </Link>
+          </div>
+
+          <div className="flex flex-row lg:flex-col items-center justify-center ">
+            <p>Already have an account? </p>
+            <Link href="/logIn">
+              <p className="ml-2">Yes, go to log in</p>
+            </Link>
+          </div>
         </div>
       </section>
     </>

@@ -58,8 +58,8 @@ export default function AuthPage() {
         {/* <Sidebar></Sidebar> */}
       </div>
       <section className="flex justify-center items-center min-h-screen overflow-hidden pt-0 lg:pt-12">
-        <div className="card bg-base-100 flex flex-col gap-y-6 border-none lg:border-[0.025rem] shadow-none lg:shadow-lg p-8 lg:p-12 w-full lg:max-w-md">
-          <h2 className="text-3xl leading-loose pb-6">Welcome back to Mera!</h2>
+        <div className="card bg-base-100 flex flex-col gap-y-8 lg:gap-y-6 border-none lg:border-[0.025rem] shadow-none lg:shadow-lg p-8 lg:p-12 w-full lg:max-w-md">
+          <h2 className="text-3xl leading-loose">Welcome back to Mera!</h2>
 
           <form
             onSubmit={handleSubmit}
