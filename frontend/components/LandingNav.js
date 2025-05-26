@@ -87,7 +87,7 @@ export default function LandingNav({ variant }) {
               <Link
                 className="btn ui-app btn-primary"
                 onClick={handleMobileMenu}
-                href="/createWorkspace"
+                href="/signUp"
               >
                 Sign Up
               </Link>
@@ -149,11 +149,7 @@ export default function LandingNav({ variant }) {
           </nav>
           <span className="flex flex-col gap-4">
             <button className="btn  btn-accent w-full ui-app uppercase">
-              <Link
-                onClick={handleMobileMenu}
-                href="/createWorkspace"
-                className=""
-              >
+              <Link onClick={handleMobileMenu} href="/signUp" className="">
                 Get Started
               </Link>
             </button>

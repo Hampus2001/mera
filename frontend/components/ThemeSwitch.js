@@ -15,16 +15,16 @@ export default function ThemeSwitch({ text, hideText }) {
   };
 
   // Initialize theme-change when the component is mounted
-  useEffect(() => {
-    themeChange(false);
+  // useEffect(() => {
+  //   themeChange(false);
 
-    const hour = getStockholmHour();
-    const shouldUseDark = hour < 8 || hour >= 18;
-    const newTheme = shouldUseDark ? "mera-dark" : "mera";
+  //   const hour = getStockholmHour();
+  //   const shouldUseDark = hour < 8 || hour >= 18;
+  //   const newTheme = shouldUseDark ? "mera-dark" : "mera";
 
-    document.documentElement.setAttribute("data-theme", newTheme);
-    setIsDark(shouldUseDark);
-  }, []);
+  //   document.documentElement.setAttribute("data-theme", newTheme);
+  //   setIsDark(shouldUseDark);
+  // }, []);
 
   const toggleTheme = () => {
     const newTheme = isDark ? "mera" : "mera-dark";
