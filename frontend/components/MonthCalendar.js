@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
+import { useRouter } from "next/navigation";
 
 export default function Calendar({ openDrawer }) {
   //states
@@ -30,7 +31,10 @@ export default function Calendar({ openDrawer }) {
     activeCalendar,
     setActiveCalendar,
     getISOWeekNumber,
+    setTodaysState,
   } = useContext(HandleCalendarContext);
+
+  const router = useRouter();
 
   //Get x and y coordinates for modal window
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -43,6 +47,27 @@ export default function Calendar({ openDrawer }) {
       y: rect.top + window.scrollY,
     });
   };
+
+  function handleDayClick(year, month, day, e) {
+    setYear(year);
+    setMonth(month);
+    setTodaysState(day);
+    setSelectedDate(
+      `${year}-${(month + 1).toString().padStart(2, "0")}-${day
+        .toString()
+        .padStart(2, "0")}`
+    );
+    setSelectedEvents([]);
+    setShowModal(true);
+    getCoordinates(e);
+
+    if (width < 1024) {
+      setActiveCalendar("Day");
+      console.log("width success", width);
+    } else {
+      console.log("width fail", width);
+    }
+  }
 
   useEffect(() => {
     if (showModal == true) {
@@ -96,7 +121,7 @@ export default function Calendar({ openDrawer }) {
     // Fill in days from the previous month
     for (
       let i = daysInPreviousMonth - daysFromPreviousMonth + 1;
-      i <= daysInPreviousMonth + 1;
+      i <= daysInPreviousMonth;
       i++
     ) {
       newCalendar.push(
@@ -107,6 +132,7 @@ export default function Calendar({ openDrawer }) {
               setSelectedEvents([]);
               setShowModal(true);
               getCoordinates(e);
+              handleDayClick(currentYear - 1, currentMonth - 1, i, e);
             } else {
               setSelectedDate(
                 `${currentYear}-${
@@ -116,6 +142,7 @@ export default function Calendar({ openDrawer }) {
               setSelectedEvents([]);
               setShowModal(true);
               getCoordinates(e);
+              handleDayClick(currentYear, currentMonth - 1, i, e);
             }
           }}
           key={`prev-${i}`}
@@ -162,6 +189,7 @@ export default function Calendar({ openDrawer }) {
       newCalendar.push(
         <button
           onClick={(e) => {
+            handleDayClick(currentYear, currentMonth, i, e);
             setSelectedDate(
               `${currentYear}-${
                 currentMonth + 1 < 10
@@ -208,6 +236,7 @@ export default function Calendar({ openDrawer }) {
               setSelectedEvents([]);
               setShowModal(true);
               getCoordinates(e);
+              handleDayClick(currentYear + 1, currentMonth + 1, i, e);
             } else {
               setSelectedDate(
                 `${currentYear}-${
@@ -219,6 +248,7 @@ export default function Calendar({ openDrawer }) {
               setSelectedEvents([]);
               setShowModal(true);
               getCoordinates(e);
+              handleDayClick(currentYear, currentMonth + 1, i, e);
             }
           }}
           key={`next-${i}`}
@@ -315,8 +345,8 @@ export default function Calendar({ openDrawer }) {
           style={{
             top: position.y > height - 50 ? position.y : position.y - 20,
             left:
-              position.x > width - 200
-                ? width - 150
+              position.x > width - 256
+                ? width - 256
                 : position.x < 0
                 ? 0
                 : position.x,

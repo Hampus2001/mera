@@ -315,20 +315,60 @@ export default function ScheduleNav() {
                 <option value="10">November</option>
                 <option value="11">December</option>
               </select>
+              {weekMode && (
+                <select
+                  value={+displayedWeek}
+                  onChange={(e) => {
+                    setDisplayedWeek(parseInt(e.target.value));
+                    const mondayOfSelectedWeekDate = getDateOfISOWeek(
+                      parseInt(e.target.value),
+                      year
+                    );
+                    setYear(parseInt(mondayOfSelectedWeekDate.year));
+                    setMonth(parseInt(mondayOfSelectedWeekDate.month - 1));
+                    setTodaysState(parseInt(mondayOfSelectedWeekDate.day));
+                  }}
+                  className="select select-sm ui-app bg-base-200 border-none"
+                >
+                  {Array.from({ length: 52 }).map((_, index) => (
+                    <option value={index + 1} key={index + 1}>
+                      Week {index + 1}
+                    </option>
+                  ))}
+                </select>
+              )}
+
+              {dayMode && (
+                <>
+                  <select
+                    className=" select select-sm ui-app bg-base-200 border-none"
+                    value={todaysState}
+                    onChange={(e) => setTodaysState(parseInt(e.target.value))}
+                  >
+                    {Array.from({ length: daysInMonth }).map((_, index) => (
+                      <option value={index + 1} key={index + 1}>
+                        {year}-{month + 1 < 10 ? "0" + (month + 1) : month + 1}-
+                        {index + 1 < 10 ? "0" + (index + 1) : index + 1}
+                      </option>
+                    ))}
+                  </select>
+                </>
+              )}
+            </div>
+            <div className="flex gap-4">
+              <select
+                value={activeCalendar}
+                onChange={(e) => setActiveCalendar(e.target.value)}
+                className="select select-sm ui-app bg-base-200 border-none"
+              >
+                <option value="Month">View month</option>
+                <option value="Week">View week</option>
+                <option value="Day">View day</option>
+              </select>
               <select className="select select-sm ui-app bg-base-200 border-none">
                 <option>Filter</option>
               </select>
             </div>
-
-            <select
-              value={activeCalendar}
-              onChange={(e) => setActiveCalendar(e.target.value)}
-              className="select select-sm ui-app w-full bg-base-200 border-none"
-            >
-              <option value="Month">View month</option>
-              <option value="Week">View week</option>
-              <option value="Day">View day</option>
-            </select>
           </div>
         </div>
       </div>

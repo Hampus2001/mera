@@ -1,26 +1,21 @@
 import { useEffect, useState } from "react";
 
 export function useWindowSize() {
-  const [width, setWidth] = useState();
-  const [height, setHeight] = useState();
+  const getSize = () => ({
+    width: typeof window !== "undefined" ? window.innerWidth : 0,
+    height: typeof window !== "undefined" ? window.innerHeight : 0,
+  });
 
-  const [isDesktop, setIsDesktop] = useState();
+  const [{ width, height }, setSize] = useState(getSize());
 
   useEffect(() => {
-    setWidth(window.innerWidth);
-    setHeight(window.innerHeight);
-
     function handleResize() {
-      setWidth(window.innerWidth);
-      setHeight(window.innerHeight);
-
-      setIsDesktop(window.innerWidth > 768);
+      setSize(getSize());
     }
     window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    // Set initial size in case it changed before mount
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return { width, height };
