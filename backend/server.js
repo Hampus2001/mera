@@ -11,30 +11,11 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const pool = mysql.createPool({
-  host: "ec2-13-48-30-37.eu-north-1.compute.amazonaws.com",   // Change this to your EC2 public IP if remote
+  host: "ec2-13-48-30-37.eu-north-1.compute.amazonaws.com", // Change this to your EC2 public IP if remote
   user: "admin",
   password: "admin",
   database: "mera-db",
-  port: 3307,          // inside container MySQL port, mapped to 3307 locally, so keep 3306 here
-});
-
-app.get("/dbtest", async (req, res) => {
-  try {
-    const [rows] = await pool.query("SELECT NOW() AS currentTime");
-    res.json({ currentTime: rows[0].currentTime });
-  } catch (err) {
-    console.error("DB query error:", err);
-    res.status(500).json({ error: "DB connection failed", details: err.message });
-  }
-});
-
-app.get("/dbtest2", async (req, res) => {
-  try {
-    res.json({message:"hej"});
-  } catch (err) {
-    console.error("DB query error:", err);
-    res.status(500).json({ error: "DB connection failed", details: err.message });
-  }
+  port: 3307, // inside container MySQL port, mapped to 3307 locally, so keep 3306 here
 });
 
 app.post("/createCompanyAccount", async (req, res) => {
@@ -48,12 +29,13 @@ app.post("/createCompanyAccount", async (req, res) => {
     const company = Array.isArray(companies) ? companies[0] : companies;
 
     const [companyResult] = await connection.query(
-      `INSERT INTO companies (name, design_setting) VALUES (?, ?)`,
+      `INSERT INTO companies ( name, design_setting) VALUES (?, ?)`,
       [company.name, company.design_setting]
     );
-    const companyId = companyResult.insertId;
+    let companyId = companyResult.insertId;
+    companyId = parseInt(companyId + Math.floor(Math.random() * 10000000));
 
-    // 2. Insert roles 
+    // 2. Insert roles
     for (const role of roles) {
       await connection.query(
         `INSERT INTO roles (company_id, role_name) VALUES (?, ?)`,
@@ -64,24 +46,16 @@ app.post("/createCompanyAccount", async (req, res) => {
     // 3. Insert users and their time data
     const userInsertPromises = users.map(async (user) => {
       const [userResult] = await connection.query(
-        `INSERT INTO users (company_id, email, username, password, role, admin)
-         VALUES (?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO users (company_id, userId, email, username, password, role, admin)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
         [
           companyId,
           user.email,
           user.username,
           user.password, // Hash before prod use
           user.role,
-          user.admin === "Yes" || user.admin === true ? 1 : 0 // Convert to boolean
+          user.admin === "Yes" || user.admin === true ? 1 : 0, // Convert to boolean
         ]
-      );
-
-      const userId = userResult.insertId;
-
-      await connection.query(
-        `INSERT INTO time (id, week_1, week_2, week_3, week_4, break_left, absence, availability)
-         VALUES (?, 0, 0, 0, 0, 0, 0, ?)`,
-        [userId, user.hours || 0]
       );
     });
 
@@ -132,7 +106,6 @@ app.post("/session", async (req, res) => {
 
     // 3. Send the user back
     res.json({ response: userRows[0] });
-
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ error: "Server error during login" });
@@ -167,13 +140,22 @@ app.post("/sendShift", async (req, res) => {
       start,
       end,
       break_duration,
-      description
+      description,
     } = newShift;
 
     await pool.query(
       `INSERT INTO shifts (company_id, schedule_name, user_id, date, start, end, break_duration, description)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [company_id, schedule_name, user_id, date, start, end, break_duration, description]
+      [
+        company_id,
+        schedule_name,
+        user_id,
+        date,
+        start,
+        end,
+        break_duration,
+        description,
+      ]
     );
 
     // Return all shifts for this company

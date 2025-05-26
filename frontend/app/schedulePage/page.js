@@ -20,7 +20,7 @@ export default function SchedulePage() {
     <>
       <Sidebar />
 
-      <div className="w-screen h-screen overflow-hidden">
+      <div className="w-screen overflow-hidden">
         <ScheduleNav />
         <div className="lg:pl-16 w-full h-full">
           {activeCalendar == "Month" && (
