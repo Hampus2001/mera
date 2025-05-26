@@ -1,182 +1,262 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
-import { CaretDownIcon, Cross1Icon } from "@radix-ui/react-icons";
-import { FaInstagram, FaFacebook } from "react-icons/fa";
+import { useContext, useState, useEffect } from "react";
 import ThemeSwitch from "./ThemeSwitch";
-import { useScroll, useMotionValueEvent } from "framer-motion";
-import * as motion from "motion/react-client";
 
-export default function LandingNav({ variant }) {
-  const [open, setOpen] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const [scrolled, setScrolled] = useState(false);
-  const isAppMode = variant === "appMode";
+import Link from "next/link";
+import { HandleCalendarContext } from "@/context/CalendarContext";
 
-  function handleMobileMenu() {
-    setOpen((prev) => !prev);
-  }
+import {
+  HamburgerMenuIcon,
+  Cross1Icon,
+  PlusIcon,
+  CalendarIcon,
+  BellIcon,
+  GearIcon,
+  PersonIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+} from "@radix-ui/react-icons";
 
-  useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    setScrolled(progress);
-  });
+export default function ScheduleNav() {
+  const [isOpen, setOpen] = useState(false);
+  const [monthMode, setMonthMode] = useState(true);
+  const [weekMode, setWeekMode] = useState(false);
+  const [dayMode, setDayMode] = useState(false);
+  const {
+    redDays,
+    setRedDays,
+    week,
+    year,
+    setYear,
+    month,
+    setMonth,
+    activeCalendar,
+    setActiveCalendar,
+    displayedWeek,
+    setDisplayedWeek,
+    todaysState,
+    setTodaysState,
+    baseDate,
+    currentDay,
+    getDateOfISOWeek,
+    daysInMonth,
+    setDaysInMonth,
+  } = useContext(HandleCalendarContext);
+
+  useEffect(() => {
+    setMonthMode(activeCalendar === "Month");
+    setWeekMode(activeCalendar === "Week");
+    setDayMode(activeCalendar === "Day");
+  }, [activeCalendar]);
 
   return (
-    <header className="fixed z-20 top-0 left-0 px-6 pt-6 lg:pt-8 lg:px-16 w-screen">
-      <div
-        className={` card flex flex-row items-center justify-between lg:justify-start pl-8 transition-all duration-300 ${
-          scrolled ? "shadow-lg backdrop-blur-lg" : "bg-transparent"
-        } ${
-          isAppMode ? "lg:pl-36" : "pr-6 lg:pl-11 lg:pr-9"
-        } h-16 lg:h-20 lg:gap-x-16`}
-      >
-        <div className="flex items-center justify-between w-full lg:w-auto">
-          {!open && (
-            <Link href="/">
-              <div className="text-3xl cursor-pointer font-mattone-black tracking-tight">
-                MERA
-              </div>
-            </Link>
-          )}
+    <div className="overflow-hidden w-full pt-6 lg:pt-0 pl-8 pr-8 lg:pl-15 lg:pr-0 bg-base-100 shadow-lg z-20">
+      <div className="w-full flex flex-row items-center justify-between pr-4 lg:pr-6 h-16 border-b-[0.025rem] lg:border-none">
+        <div className="w-full">
+          <Link href="/">
+            <h1 className="text-4xl tracking-tight pl-4 lg:pl-6">MERA</h1>
+          </Link>
         </div>
+        <div className="hidden lg:flex flex-row items-center justify-between gap-4 w-full">
+          <select
+            value={year}
+            onChange={(e) => {
+              setYear(e.target.value);
+            }}
+            className="select select-sm ui-app bg-base-200 border-none"
+          >
+            <option value={+year - 2}>{+year - 2}</option>
+            <option value={+year - 1}>{+year - 1}</option>
+            <option value={+year}>{+year}</option>
+            <option value={+year + 1}>{+year + 1}</option>
+            <option value={+year + 2}>{+year + 2}</option>
+          </select>
 
-        {!isAppMode && (
-          <>
-            {/* Desktop nav */}
-            <nav className=" hidden lg:flex space-x-8 items-center font-diatype-medium w-full">
-              <Link className="cursor-pointer" href="/">
-                Examples
-              </Link>
-              <Link className="cursor-pointer" href="/">
-                Solutions
-              </Link>
-              <Link className="cursor-pointer" href="/">
-                Resources
-              </Link>
-              <Link className="cursor-pointer" href="/">
-                Pricing
-              </Link>
-            </nav>
+          <select
+            value={month}
+            onChange={(e) => {
+              setMonth(parseInt(e.target.value));
+            }}
+            className="select select-sm ui-app bg-base-200 border-none "
+          >
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">August</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
+          </select>
 
-            {/* Desktop buttons */}
-            <div className="hidden lg:flex justify-end items-center space-x-4 w-full">
-              <div className="dropdown">
-                <button
-                  type="button"
-                  className="btn ui-app"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Theme <CaretDownIcon />
-                </button>
-                <ul className="menu dropdown-content mt-4 bg-base-200 rounded-box z-20 w-auto shadow-lg">
-                  <li className="p-2 ">
-                    <ThemeSwitch />
-                  </li>
-                </ul>
-              </div>
+          <select
+            value={activeCalendar}
+            onChange={(e) => setActiveCalendar(e.target.value)}
+            className="select select-sm ui-app bg-base-200 border-none"
+          >
+            <option value="Month">View month</option>
+            <option value="Week">View week</option>
+            <option value="Day">View day</option>
+          </select>
 
-              <Link
-                className="btn ui-app"
-                onClick={handleMobileMenu}
-                href="/logIn"
+          {weekMode && (
+            <select
+              value={+displayedWeek}
+              onChange={(e) => {
+                setDisplayedWeek(parseInt(e.target.value));
+                const mondayOfSelectedWeekDate = getDateOfISOWeek(
+                  parseInt(e.target.value),
+                  year
+                );
+                setYear(parseInt(mondayOfSelectedWeekDate.year));
+                setMonth(parseInt(mondayOfSelectedWeekDate.month - 1));
+                setTodaysState(parseInt(mondayOfSelectedWeekDate.day));
+              }}
+              className="select select-sm ui-app bg-base-200 border-none"
+            >
+              {Array.from({ length: 52 }).map((_, index) => (
+                <option value={index + 1} key={index + 1}>
+                  Week {index + 1}
+                </option>
+              ))}
+            </select>
+          )}
+
+          {dayMode && (
+            <>
+              <select
+                className=" select select-sm ui-app bg-base-200 border-none"
+                value={todaysState}
+                onChange={(e) => setTodaysState(parseInt(e.target.value))}
               >
-                Log In
-              </Link>
-              <Link
-                className="btn ui-app btn-primary"
-                onClick={handleMobileMenu}
-                href="/createWorkspace"
-              >
-                Sign Up
-              </Link>
-            </div>
+                {Array.from({ length: daysInMonth }).map((_, index) => (
+                  <option value={index + 1} key={index + 1}>
+                    {year}-{month + 1 < 10 ? "0" + (month + 1) : month + 1}-
+                    {index + 1 < 10 ? "0" + (index + 1) : index + 1}
+                  </option>
+                ))}
+              </select>
+            </>
+          )}
+          <select className="select select-sm ui-app bg-base-200 border-none">
+            <option>Filter</option>
+          </select>
+        </div>
+        <div className="flex items-center justify-end  w-full">
+          <span className="hidden lg:flex gap-4 w-full justify-end">
+            <button className="btn btn-sm ui-app ">Settings</button>
+            <button className="btn btn-sm ui-app btn-primary">Share</button>
 
-            {/* Mobile menu button */}
-            <div className="lg:hidden">
-              <button
-                className="p-2"
-                onClick={handleMobileMenu}
-                aria-label={open ? "Close menu" : "Open menu"}
-              >
-                {!open && (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  </svg>
-                )}
-              </button>
-            </div>
-          </>
-        )}
+            <button
+              className="btn btn-sm ui-app"
+              onClick={() => {
+                if (month != 0) {
+                  setMonth(month - 1);
+                } else if (month == 0) {
+                  setYear(year - 1);
+                  setMonth(11);
+                }
+              }}
+            >
+              <ArrowLeftIcon />
+            </button>
+
+            <button
+              className="btn btn-sm ui-app"
+              onClick={() => {
+                if (month != 11) {
+                  setMonth(month + 1);
+                } else if (month == 11) {
+                  setYear(year + 1);
+                  setMonth(0);
+                }
+              }}
+            >
+              <ArrowRightIcon />
+            </button>
+          </span>
+          <div className="lg:hidden">
+            <HamburgerMenuIcon
+              className=""
+              onClick={() => setOpen(true)}
+              width={24}
+              height={24}
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Mobile full-screen menu */}
-      {open && !isAppMode && (
+      {isOpen && (
         <div className="fixed flex flex-col justify-between z-30 top-0 left-0 w-full min-h-screen px-8 pt-6 pb-8 overflow-hidden bg-primary-content text-primary">
-          <div className="flex justify-between items-center w-full px-8 h-16 border-b-[0.025rem]">
-            <h2 className="text-3xl">Menu</h2>
-            <button className=" cursor-pointer" onClick={() => setOpen(false)}>
+          <div className=" flex justify-between items-center w-full px-4 border-b-[0.025rem] h-16">
+            <h2 className="text-3xl leading-tight">Menu</h2>
+            <button onClick={() => setOpen(false)} className="cursor-pointer">
               <Cross1Icon className="w-5 h-5" />
             </button>
           </div>
 
           {/* Navigation links */}
           <nav className="flex flex-col space-y-2">
-            <Link onClick={handleMobileMenu} href="/">
-              <p className=" leading-loose  border-b-[0.025rem]">Product</p>
+            <Link
+              className="flex justify-between items-center border-b-[0.025rem]"
+              href="/"
+            >
+              <p className=" leading-loose  ">Add new</p>
+              <PlusIcon />
             </Link>
-            <Link onClick={handleMobileMenu} href="/">
-              <p className=" leading-loose border-b-[0.025rem]">Resources</p>
+            <Link
+              className="flex justify-between items-center border-b-[0.025rem]"
+              href="/"
+            >
+              <p className=" leading-loose ">My Schedule</p>
+              <CalendarIcon />
             </Link>
-            <Link onClick={handleMobileMenu} href="/">
-              <p className=" leading-loose border-b-[0.025rem]">Pricing</p>
+            <Link
+              href="/"
+              className="flex justify-between items-center border-b-[0.025rem]"
+            >
+              <p className=" leading-loose ">Notifications</p>
+              <BellIcon />
             </Link>
-            <Link onClick={handleMobileMenu} href="/">
-              <p className=" leading-loose border-b-[0.025rem]">Contact</p>
+            <Link
+              href="/"
+              className="flex justify-between items-center border-b-[0.025rem]"
+            >
+              <p className=" leading-loose ">Settings</p>
+              <GearIcon />
+            </Link>
+            <Link
+              href="/"
+              className="flex justify-between items-center border-b-[0.025rem]"
+            >
+              <p className=" leading-loose ">My Profile</p>
+              <PersonIcon />
+            </Link>
+            <Link href="/">
+              <p className=" leading-loose">Back to Home</p>
             </Link>
           </nav>
           <span className="flex flex-col gap-4">
             <button className="btn  btn-accent w-full ui-app uppercase">
-              <Link
-                onClick={handleMobileMenu}
-                href="/createWorkspace"
-                className=""
-              >
-                Get Started
+              <Link href="/createWorkspace" className="">
+                Sign out
               </Link>
             </button>
             <button className="btn ui-app w-full uppercase">
-              <Link onClick={handleMobileMenu} href="/logIn" className="">
-                Log In
+              <Link href="/logIn" className="">
+                Log out / Switch account
               </Link>
             </button>
 
             <ThemeSwitch />
           </span>
 
-          <div className="flex flex-row justify-between items-end w-full">
-            <div className="flex flex-col gap-4 w-1/2">
-              <div className="flex gap-2">
-                <FaInstagram className="w-4 h-4" aria-label="Instagram" />
-                <FaFacebook className="w-4 h-4" aria-label="Facebook" />
-              </div>
-              <h6 className="font-instrument text-xl leading-snug">
-                Make More Time. <br />
-                Follow Us On Instagram.
-              </h6>
-            </div>
+          <div className="flex flex-row justify-end items-end w-full">
             <div>
               <svg
                 className="w-16 h-[3.7rem] text-primary fill-current"
@@ -189,6 +269,68 @@ export default function LandingNav({ variant }) {
           </div>
         </div>
       )}
-    </header>
+
+      <div className="flex flex-col w-full rounded-xl gap-4 ">
+        <div
+          id="mobileView"
+          className="lg:hidden w-full flex justify-between items-center gap-4 pt-8 pb-8"
+        >
+          <div
+            id="toggleDate"
+            className="flex flex-col w-full justify-between gap-4"
+          >
+            <div className="flex justify-between gap-4">
+              <select
+                value={year}
+                onChange={(e) => {
+                  setYear(e.target.value);
+                }}
+                className="select select-sm ui-app bg-base-200 border-none"
+              >
+                <option value={+year - 2}>{+year - 2}</option>
+                <option value={+year - 1}>{+year - 1}</option>
+                <option value={+year}>{+year}</option>
+                <option value={+year + 1}>{+year + 1}</option>
+                <option value={+year + 2}>{+year + 2}</option>
+              </select>
+
+              <select
+                value={month}
+                onChange={(e) => {
+                  setMonth(parseInt(e.target.value));
+                }}
+                className="select select-sm ui-app bg-base-200 border-none"
+              >
+                <option value="0">January</option>
+                <option value="1">February</option>
+                <option value="2">March</option>
+                <option value="3">April</option>
+                <option value="4">May</option>
+                <option value="5">June</option>
+                <option value="6">July</option>
+                <option value="7">August</option>
+                <option value="8">September</option>
+                <option value="9">October</option>
+                <option value="10">November</option>
+                <option value="11">December</option>
+              </select>
+              <select className="select select-sm ui-app bg-base-200 border-none">
+                <option>Filter</option>
+              </select>
+            </div>
+
+            <select
+              value={activeCalendar}
+              onChange={(e) => setActiveCalendar(e.target.value)}
+              className="select select-sm ui-app w-full bg-base-200 border-none"
+            >
+              <option value="Month">View month</option>
+              <option value="Week">View week</option>
+              <option value="Day">View day</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -82,6 +82,25 @@ export default function CalendarContext({ children }) {
   const [month, setMonth] = useState(todaysMonth);
   const [year, setYear] = useState(todaysYear);
   const [activeCalendar, setActiveCalendar] = useState("Month");
+  const [todaysState, setTodaysState] = useState(todaysDate.getDate());
+  const [displayedWeek, setDisplayedWeek] = useState(1);
+  const [lastDayOfCurrentMonth, setLastDayOfCurrentMonth] = useState(
+    new Date(year, month + 1, 0)
+  );
+  const [daysInMonth, setDaysInMonth] = useState(
+    lastDayOfCurrentMonth.getDate()
+  );
+
+  useEffect(() => {
+    setLastDayOfCurrentMonth(new Date(year, month + 1, 0));
+    setDaysInMonth(lastDayOfCurrentMonth.getDate());
+    console.log("days in month", daysInMonth);
+  }, [month, year]);
+
+  // Create a new date object based on `todaysState`
+  const baseDate = new Date(year, month, todaysState);
+
+  const currentDay = (baseDate.getDay() + 6) % 7; // Adjust so Monday = 0, ..., Sunday = 6
 
   const [monthString, setMonthString] = useState("");
   function convertMonthToString() {
@@ -134,6 +153,14 @@ export default function CalendarContext({ children }) {
         setActiveCalendar,
         getISOWeekNumber,
         getDateOfISOWeek,
+        displayedWeek,
+        setDisplayedWeek,
+        todaysState,
+        setTodaysState,
+        baseDate,
+        currentDay,
+        daysInMonth,
+        setDaysInMonth,
       }}
     >
       {children}

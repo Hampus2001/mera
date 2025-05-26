@@ -1,10 +1,11 @@
 "use client";
 
 import { HandleCalendarContext } from "@/context/CalendarContext";
-import next from "next";
-import { useContext, useEffect, useRef, useState } from "react";
-import { FaArrowLeft, FaArrowRight, FaPlus, FaBars } from "react-icons/fa";
+
+import { useContext, useEffect, useState } from "react";
+import { FaPlus } from "react-icons/fa";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 
 export default function Calendar({ openDrawer }) {
   //states
@@ -17,19 +18,6 @@ export default function Calendar({ openDrawer }) {
   const [selectedEvents, setSelectedEvents] = useState([]);
   const [firstWeekOfMonth, setFirstWeekOfMonth] = useState("");
 
-  //Get x and y coordinates for modal window
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const { width, height } = useWindowSize();
-
-  const getCoordinates = (e) => {
-    const rect = e.target.getBoundingClientRect();
-    setPosition({
-      x: rect.left + window.scrollX,
-      y: rect.top + window.scrollY,
-    });
-  };
-
-  //Get "röda dagar"
   const {
     redDays,
     setRedDays,
@@ -43,6 +31,18 @@ export default function Calendar({ openDrawer }) {
     setActiveCalendar,
     getISOWeekNumber,
   } = useContext(HandleCalendarContext);
+
+  //Get x and y coordinates for modal window
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const { width, height } = useWindowSize();
+
+  const getCoordinates = (e) => {
+    const rect = e.target.getBoundingClientRect();
+    setPosition({
+      x: rect.left + window.scrollX,
+      y: rect.top + window.scrollY,
+    });
+  };
 
   useEffect(() => {
     if (showModal == true) {
@@ -100,7 +100,7 @@ export default function Calendar({ openDrawer }) {
       i++
     ) {
       newCalendar.push(
-        <button
+        <div
           onClick={(e) => {
             if (currentMonth == 0) {
               setSelectedDate(`${currentYear - 1}-12-${i < 10 ? "0" + i : i}`);
@@ -119,7 +119,7 @@ export default function Calendar({ openDrawer }) {
             }
           }}
           key={`prev-${i}`}
-          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4  w-1/7 min-h-32  aspect-square bg-base-100 text-base-100 "
+          className=" col-span-1 bg-base-100 row-span-1 flex hover:cursor-pointer hover:bg-base-200 items-center flex-col p-2"
         >
           {redDays?.map((holiday) => {
             let thisDayDate = "";
@@ -141,22 +141,23 @@ export default function Calendar({ openDrawer }) {
 
             if (holiday.date == thisDayDate) {
               return (
-                <p
+                <h6
                   key={i}
-                  className="flex rounded-lg p-1 bg-red-400 text-red-900 justify-center animate-pulse"
-                ></p>
+                  className="flex p-2 bg-base-300 text-base-content justify-center animate-pulse rounded-3xl "
+                ></h6>
               );
             }
           })}
-        </button>
+        </div>
       );
     }
 
     // Fill in days of the current month
     for (let i = 1; i <= daysInMonth; i++) {
-      let currentDayStyle = " bg-base-100 text-base-content";
+      let currentDayStyle = "  bg-base-100 hover:bg-base-200 text-base-content";
       if (i == currentDay && month == todaysMonth && year == todaysYear) {
-        currentDayStyle = " bg-success text-base-100 ";
+        currentDayStyle =
+          "bg-primary text-primary-content hover:bg-secondary hover:text-secondary-content ";
       }
       newCalendar.push(
         <button
@@ -173,9 +174,9 @@ export default function Calendar({ openDrawer }) {
             getCoordinates(e);
           }}
           key={`current-${i}`}
-          className={`flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 w-1/7 min-h-32  aspect-square  ${currentDayStyle} `}
+          className={`bg-base-100 col-span-1 row-span-1 flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 font-diatype-medium text-xs lg:text-base    ${currentDayStyle} `}
         >
-          <p>{i}</p>
+          <h6>{i}</h6>
           {redDays?.map((holiday) => {
             let thisDayDate = `${currentYear}-${(currentMonth + 1)
               .toString()
@@ -183,10 +184,10 @@ export default function Calendar({ openDrawer }) {
 
             if (holiday.date == thisDayDate) {
               return (
-                <p
+                <h6
                   key={i}
-                  className="flex  rounded-lg p-1 bg-red-400 text-red-900 justify-center animate-pulse"
-                ></p>
+                  className="flex p-2 bg-base-300 text-base-content justify-center animate-pulse rounded-3xl"
+                ></h6>
               );
             }
           })}
@@ -221,7 +222,7 @@ export default function Calendar({ openDrawer }) {
             }
           }}
           key={`next-${i}`}
-          className="flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 w-1/7 min-h-32  aspect-square bg-base-100 text-base-100 "
+          className="col-span-1 row-span-1 bg-base-100 flex hover:cursor-pointer hover:bg-base-300 items-center flex-col p-2 font-diatype-medium text-xs lg:text-base"
         >
           {redDays?.map((holiday) => {
             let thisDayDate = "";
@@ -249,7 +250,7 @@ export default function Calendar({ openDrawer }) {
               return (
                 <p
                   key={i}
-                  className="flex  rounded-lg p-1 bg-red-400 text-red-900 justify-center animate-pulse"
+                  className="flex rounded-3xl p-2 bg-base-300 text-base-content justify-center animate-pulse "
                 ></p>
               );
             }
@@ -266,215 +267,51 @@ export default function Calendar({ openDrawer }) {
   }, [month, year, redDays]);
 
   return (
-    <div className="flex flex-col  ">
-      <div
-        id="desktopView"
-        className="flex w-full h-20 px-6 rounded-full items-center justify-between bg-base-100 text-neutral"
-      >
-        <h1 className="text-[32px]">MERA</h1>
-
-        <div className="hidden lg:flex gap-4">
-          <select
-            value={year}
-            onChange={(e) => {
-              setYear(e.target.value);
-            }}
-            className="select ui-app w-fit"
-          >
-            <option value={+year - 2}>{+year - 2}</option>
-            <option value={+year - 1}>{+year - 1}</option>
-            <option value={+year}>{+year}</option>
-            <option value={+year + 1}>{+year + 1}</option>
-            <option value={+year + 2}>{+year + 2}</option>
-          </select>
-          <select
-            value={month}
-            onChange={(e) => {
-              setMonth(parseInt(e.target.value));
-            }}
-            className="select ui-app w-fit"
-          >
-            <option value="0">January</option>
-            <option value="1">February</option>
-            <option value="2">March</option>
-            <option value="3">April</option>
-            <option value="4">May</option>
-            <option value="5">June</option>
-            <option value="6">July</option>
-            <option value="7">August</option>
-            <option value="8">September</option>
-            <option value="9">October</option>
-            <option value="10">November</option>
-            <option value="11">December</option>
-          </select>
-          <select
-            value={activeCalendar}
-            onChange={(e) => setActiveCalendar(e.target.value)}
-            className="select ui-app w-fit"
-          >
-            <option value="Month">View month</option>
-            <option value="Week">View week</option>
-            <option value="Day">View day</option>
-          </select>
-          <select className="select ui-app w-fit">
-            <option>Filter</option>
-          </select>
-        </div>
-
-        <div className="hidden lg:flex w-fit justify-between items-center gap-4">
-          <button className="btn btn-app bg-base-100 border-neutral btn-md">
-            Settings
-          </button>
-          <button className="btn btn-app btn-primary btn-md">Share</button>
-
-          <button
-            className="btn btn-app bg-base-100 border-neutral btn-md"
-            onClick={() => {
-              if (month != 0) {
-                setMonth(month - 1);
-              } else if (month == 0) {
-                setYear(year - 1);
-                setMonth(11);
-              }
-            }}
-          >
-            <FaArrowLeft />
-          </button>
-
-          <button
-            className="btn btn-app bg-base-100 border-neutral btn-md"
-            onClick={() => {
-              if (month != 11) {
-                setMonth(month + 1);
-              } else if (month == 11) {
-                setYear(year + 1);
-                setMonth(0);
-              }
-            }}
-          >
-            <FaArrowRight />
-          </button>
-        </div>
-        <FaBars className="flex lg:hidden text-[32px]" />
-      </div>
-      <div className="flex flex-col w-full rounded-xl gap-4">
-        <div
-          id="mobileView"
-          className="lg:hidden flex px-6 justify-between items-center gap-4"
-        >
-          <div
-            id="toggleDate"
-            className="flex flex-col w-full justify-between gap-4"
-          >
-            <div className="flex justify-between gap-4">
-              <select
-                value={year}
-                onChange={(e) => {
-                  setYear(e.target.value);
-                }}
-                className="select ui-app"
-              >
-                <option value={+year - 2}>{+year - 2}</option>
-                <option value={+year - 1}>{+year - 1}</option>
-                <option value={+year}>{+year}</option>
-                <option value={+year + 1}>{+year + 1}</option>
-                <option value={+year + 2}>{+year + 2}</option>
-              </select>
-              <select
-                value={month}
-                onChange={(e) => {
-                  setMonth(parseInt(e.target.value));
-                }}
-                className="select ui-app"
-              >
-                <option value="0">January</option>
-                <option value="1">February</option>
-                <option value="2">March</option>
-                <option value="3">April</option>
-                <option value="4">May</option>
-                <option value="5">June</option>
-                <option value="6">July</option>
-                <option value="7">August</option>
-                <option value="8">September</option>
-                <option value="9">October</option>
-                <option value="10">November</option>
-                <option value="11">December</option>
-              </select>
-              <select className="select ui-app">
-                <option>Filter</option>
-              </select>
-            </div>
-
-            <select
-              value={activeCalendar}
-              onChange={(e) => setActiveCalendar(e.target.value)}
-              className="select ui-app w-full"
-            >
-              <option value="Month">View month</option>
-              <option value="Week">View week</option>
-              <option value="Day">View day</option>
-            </select>
+    <>
+      <div className="overflow-hidden bg-base-100 ">
+        <div className="flex w-full h-8 lg:h-6 divide-y-[0.025rem] border-t-[0.025rem] border-b-[0.025rem]   ">
+          <div className="w-8 h-8 lg:w-6 lg:h-6   border-r-[0.025rem] border-b-[0.025rem] "></div>
+          <div className=" grid grid-cols-7 w-full items-center justify-start h-full   divide-x-[0.025rem] ">
+            <h6 className=" flex justify-center items-center h-full">M</h6>
+            <h6 className=" flex justify-center items-center h-full">T</h6>
+            <h6 className=" flex  justify-center items-center h-full">W</h6>
+            <h6 className=" flex  justify-center items-center h-full">T</h6>
+            <h6 className="flex  justify-center items-center h-full">F</h6>
+            <h6 className=" flex justify-center items-center h-full">S</h6>
+            <h6 className=" flex  justify-center items-center h-full">S</h6>
           </div>
-
-          <select className="hidden lg:flex select ui-app w-1/3">
-            <option>Filter</option>
-          </select>
         </div>
 
-        <div className="flex w-full pr-6">
-          <div className="flex flex-col justify-between w-6 mt-6">
-            <p className="text-xs flex h-1/6 w-full  items-center justify-start">
+        <div className="flex w-full bg-base-content divide-x-[0.025rem] ">
+          <div className=" grid grid-cols-1 grid-rows-6 w-8 lg:w-6  divide-y-[0.025rem] bg-base-100 ">
+            <h6 className="tracking-tight flex p-2 lg:p-0 items-start lg:items-center justify-center">
               {firstWeekOfMonth}
-            </p>
-            <p className="text-xs flex h-1/6 items-center justify-start">
+            </h6>
+            <h6 className="tracking-tight flex p-2 lg:p-0 items-start lg:items-center justify-center">
               {firstWeekOfMonth + 1}
-            </p>
-            <p className="text-xs flex h-1/6 items-center justify-start">
+            </h6>
+            <h6 className="tracking-tight flex p-2 lg:p-0 items-start lg:items-center justify-center">
               {firstWeekOfMonth + 2}
-            </p>
-            <p className="text-xs flex h-1/6 items-center justify-start">
+            </h6>
+            <h6 className="tracking-tight flex p-2 lg:p-0 items-start lg:items-center justify-center">
               {firstWeekOfMonth + 3}
-            </p>
-            <p className="text-xs flex h-1/6 items-center justify-start">
+            </h6>
+            <h6 className="tracking-tight flex p-2 lg:p-0 items-start lg:items-center justify-center">
               {firstWeekOfMonth + 4}
-            </p>
-            <p className="text-xs flex h-1/6 items-center justify-start">
+            </h6>
+            <h6 className="tracking-tight flex p-2 lg:p-0 items-start lg:items-center justify-center">
               {firstWeekOfMonth + 5}
-            </p>
+            </h6>
           </div>
-          <div className="flex flex-col w-full border">
-            <div className="flex w-full justify-between border-b bg-neutral divide-x devide-y divide-neutral">
-              <p className="flex w-1/7  justify-center items-center bg-base-100">
-                Mon
-              </p>
-              <p className="flex w-1/7  justify-center items-center bg-base-100">
-                Tue
-              </p>
-              <p className="flex  w-1/7 justify-center items-center bg-base-100">
-                Wed
-              </p>
-              <p className="flex w-1/7  justify-center items-center bg-base-100">
-                Thur
-              </p>
-              <p className="flex w-1/7  justify-center items-center bg-base-100">
-                Fri
-              </p>
-              <p className="flex w-1/7 justify-center items-center bg-base-100">
-                Sat
-              </p>
-              <p className="flex w-1/7  justify-center items-center bg-base-100">
-                Sun
-              </p>
-            </div>
-            <div className="flex flex-wrap h-max  divide-y divide-x divide-neutral">
-              {calendar}
-            </div>
+
+          <div className="h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] grid grid-cols-7 grid-rows-6 w-full bg-base-100 divide-x-[0.025rem] divide-y-[0.025rem] text-xs lg:text-base">
+            {calendar}
           </div>
         </div>
       </div>
       {showModal && (
         <div
-          className={`absolute bg-white w-auto p-4 gap-4 rounded-xl h-auto`}
+          className={`absolute bg-info text-info-content min-w-64 rounded-2xl h-auto p-6`}
           style={{
             top: position.y > height - 50 ? position.y : position.y - 20,
             left:
@@ -485,27 +322,32 @@ export default function Calendar({ openDrawer }) {
                 : position.x,
           }}
         >
-          <button
-            className="btn btn-app btn-accent"
-            onClick={() => setShowModal(false)}
-          >
-            Close
-          </button>
-          <p>{selectedDate}</p>
-          <hr></hr>
-          <h4>{selectedEvents ? selectedEvents : ""}</h4>
+          <div className="flex flex-col items-start justify-center gap-4">
+            <div className="flex justify-between items-center  w-full">
+              <p>{selectedDate}</p>
+
+              <button
+                className="btn btn-sm btn-info ui-app btn-circle "
+                onClick={() => setShowModal(false)}
+              >
+                <Cross1Icon width={16} height={16} />
+              </button>
+            </div>
+
+            <p className="">{selectedEvents ? selectedEvents : ""}</p>
+          </div>
         </div>
       )}
 
       <button
         onClick={openDrawer}
         id="+"
-        className="fixed flex items-center hover:cursor-pointer justify-center rounded-full right-10 bottom-8 w-16 h-16 bg-base-100 border-2 border-neutral shadow-lg "
+        className="fixed lg:hidden flex items-center hover:cursor-pointer justify-center rounded-full right-10 bottom-12 w-16 h-16 bg-base-200 shadow-lg "
       >
-        <h4 className="text-neutral text-3xl">
-          <FaPlus />
+        <h4 className="text-neutral  text-3xl">
+          <PlusIcon width={24} height={24} />
         </h4>
       </button>
-    </div>
+    </>
   );
 }
