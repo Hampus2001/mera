@@ -132,7 +132,7 @@ export default function DayCalendar({ openDrawer }) {
 
   return (
     <>
-      <div className="flex flex-col gap-4  w-full h-screen">
+      <div className="flex flex-col gap-4  w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)]">
         <div className="flex flex-grow text-xs w-full gap-1 text-start bg-base-100">
           <div className="flex flex-col w-fit mt-6  justify-between items-center bg-base-100">
             {Array.from({ length: 24 }).map((_, index) => (
