@@ -4,9 +4,6 @@ import LandingNav from "@/components/LandingNav";
 import Link from "next/link";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 import * as motion from "motion/react-client";
-import { ArrowBigDownDash, ArrowDown, ArrowDown10 } from "lucide-react";
-import { CaretDownIcon } from "@radix-ui/react-icons";
-import MyCalendar from "@/components/BigCalendar";
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
@@ -36,19 +33,19 @@ export default function Home() {
               do best!
             </h3>
             <div className="flex flex-row flex-wrap items-center justify-center gap-4 mt-0 lg:mt-4">
-              <Link href="./createWorkspace">
+              <Link href="./signUp">
                 <button className="btn btn-primary ui-app btn-lg dark:btn-secondary">
                   Get Started
                 </button>
               </Link>
-              <Link href="./createWorkspace">
+              <Link href="./logIn">
                 <button className="btn ui-app btn-lg">Log In</button>
               </Link>
             </div>
           </div>
         </section>
         <section className=" container-xl mx-auto flex flex-col items-center justify-center w-full h-screen  px-8 lg:px-32 gap-y-4 lg:gap-y-2">
-          <MyCalendar />
+          {/* <MyCalendar />
           <div className=" flex flex-row flex-wrap items-center justify-center gap-4 px-4 lg:px-32">
             <Link href="./createWorkspace">
               <button className="btn ui-landing btn-lg ">BUTTON</button>
@@ -89,7 +86,7 @@ export default function Home() {
                 SUCCESS
               </button>
             </Link>
-          </div>
+          </div> */}
         </section>
         <section className="card flex flex-col    p-4 ">
           <div className=" w-full aspect-square lg:aspect-video flex flex-col lg:flex-row items-center justify-start bg-base-300  rounded-3xl">
