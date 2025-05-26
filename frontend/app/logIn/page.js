@@ -12,7 +12,6 @@ export default function AuthPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
- 
 
   const { setContextId, setActiveUser } = useContext(HandleWorkspaceContext);
 
@@ -22,7 +21,6 @@ export default function AuthPage() {
     const payload = {
       email,
       password,
-      
     };
 
     try {
@@ -50,7 +48,6 @@ export default function AuthPage() {
 
     setEmail("");
     setPassword("");
-   
   }
 
   return (
@@ -60,20 +57,21 @@ export default function AuthPage() {
         {/* <MobilAppNavBar></MobilAppNavBar>  */}
         {/* <Sidebar></Sidebar> */}
       </div>
-      <section className="bg-white flex justify-center items-center min-h-screen">
-        <div className="bg-base-100 border-2 border-black rounded-xl shadow-md w-[500px] h-[604px] p-16">
-          <h2 className="text-center mb-16 text-[40px]">
-            Welcome back to Mera!
-          </h2>
+      <section className="flex justify-center items-center min-h-screen overflow-hidden pt-0 lg:pt-12">
+        <div className="card bg-base-100 flex flex-col gap-y-6 border-none lg:border-[0.025rem] shadow-none lg:shadow-lg p-8 lg:p-12 w-full lg:max-w-md">
+          <h2 className="text-3xl leading-loose pb-6">Welcome back to Mera!</h2>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input
+          <form
+            onSubmit={handleSubmit}
+            className="w-full flex flex-col gap-4 pb-12 border-b-[0.025rem]"
+          >
+            <input
               type="text"
               required
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="input validator w-[372px] h-12 rounded-lg"
+              className="input validator w-full"
             />
 
             <input
@@ -82,33 +80,29 @@ export default function AuthPage() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="input validator w-[372px] h-12 rounded-lg"
+              className="input validator w-full"
             />
-           
-            <div className="flex items-baseline gap-4">
+
+            <div className="w-full flex justify-start items-center gap-8 lg:gap-6 ">
               <button
                 type="submit"
-                className="btn btn-primary mt-6 w-[185px] gap-2 h-12"
+                className="btn btn-primary ui-app gap-2 w-1/3"
               >
                 Log in
               </button>
-              <p> Forgot your password?</p>
+              <p className="link-hover pr-4 "> Forgot your password?</p>
             </div>
-            <div className="flex items-center">
-              <button
-                type="button"
-                className="btn btn-lg ui-app mt-12 w-[372px] h-12 gap-2"
-              >
-                Log in with Google
-              </button>
-            </div>
-            <div className="flex justify-between px-8 text-sm text-gray-700">
-              <span>Don't have an account yet?</span>
-              <Link href="/signUp">
-                <span>Sing Up Now</span>
-              </Link>
-            </div>
+
+            <button type="button" className="btn ui-app gap-2 w-full">
+              Log in with Google
+            </button>
           </form>
+          <div className="flex flex-row lg:flex-col items-center justify-center">
+            <p>Don't have an account yet? </p>
+            <Link href="/signUp">
+              <p className="ml-2">Sign up now!</p>
+            </Link>
+          </div>
         </div>
       </section>
     </>
