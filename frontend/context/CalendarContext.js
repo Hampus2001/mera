@@ -92,8 +92,8 @@ export default function CalendarContext({ children }) {
   );
 
   useEffect(() => {
-    setLastDayOfCurrentMonth(new Date(year, month + 1, 0));
-    setDaysInMonth(lastDayOfCurrentMonth.getDate());
+    const lastDayOfMonth = new Date(year, month + 1, 0);
+    setDaysInMonth(lastDayOfMonth.getDate());
     console.log("days in month", daysInMonth);
   }, [month, year]);
 

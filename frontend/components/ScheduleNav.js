@@ -94,16 +94,6 @@ export default function ScheduleNav() {
             <option value="11">December</option>
           </select>
 
-          <select
-            value={activeCalendar}
-            onChange={(e) => setActiveCalendar(e.target.value)}
-            className="select select-sm ui-app bg-base-200 border-none"
-          >
-            <option value="Month">View month</option>
-            <option value="Week">View week</option>
-            <option value="Day">View day</option>
-          </select>
-
           {weekMode && (
             <select
               value={+displayedWeek}
@@ -143,6 +133,17 @@ export default function ScheduleNav() {
               </select>
             </>
           )}
+
+          <select
+            value={activeCalendar}
+            onChange={(e) => setActiveCalendar(e.target.value)}
+            className="select select-sm ui-app bg-base-200 border-none"
+          >
+            <option value="Month">View month</option>
+            <option value="Week">View week</option>
+            <option value="Day">View day</option>
+          </select>
+
           <select className="select select-sm ui-app bg-base-200 border-none">
             <option>Filter</option>
           </select>
