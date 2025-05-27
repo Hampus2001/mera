@@ -32,6 +32,8 @@ export default function Calendar({ openDrawer }) {
     setActiveCalendar,
     getISOWeekNumber,
     setTodaysState,
+    shifts,
+    setShifts,
   } = useContext(HandleCalendarContext);
 
   const router = useRouter();

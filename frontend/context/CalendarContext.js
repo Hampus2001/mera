@@ -76,6 +76,25 @@ export default function CalendarContext({ children }) {
     getRedDays();
   }, []);
 
+  const [shifts, setShifts] = useState([
+    {
+      company_id: 32,
+      user_id: 1,
+      date: "2025-05-29",
+      start: "06:00",
+      end: "15:00",
+      description: "kött och chark - Rast 11:00 - 11:45",
+    },
+    {
+      company_id: 32,
+      user_id: 2,
+      date: "2025-05-12",
+      start: "07:00",
+      end: "16:00",
+      description: "Deli och färsk - Rast 11:45 - 12:30",
+    },
+  ]);
+
   const todaysDate = new Date();
   const todaysMonth = todaysDate.getMonth();
   const todaysYear = todaysDate.getFullYear();
@@ -161,6 +180,8 @@ export default function CalendarContext({ children }) {
         currentDay,
         daysInMonth,
         setDaysInMonth,
+        shifts,
+        setShifts,
       }}
     >
       {children}
