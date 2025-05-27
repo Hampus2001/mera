@@ -8,7 +8,7 @@ import ScheduleNav from "@/components/ScheduleNav";
 import { HandleCalendarContext } from "@/context/CalendarContext";
 
 import Sidebar from "@/components/Sidebar";
-import AdminDrawer from "@/components/AdminDrawer";
+
 import DrawerBase from "@/components/DrawerBase";
 
 export default function SchedulePage() {
@@ -20,7 +20,7 @@ export default function SchedulePage() {
   return (
     <>
       <Sidebar />
-      <DrawerBase></DrawerBase>
+      {/* <DrawerBase></DrawerBase> */}
 
       <div className="w-screen overflow-hidden">
         <ScheduleNav />
@@ -35,7 +35,7 @@ export default function SchedulePage() {
         </div>
         
       </div>
-      {/* <AdminDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} /> */}
+      
     </>
   );
 }
