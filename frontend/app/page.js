@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import LandingNav from "@/components/LandingNav";
 import Link from "next/link";
 import { useScroll, useMotionValueEvent } from "framer-motion";
@@ -24,7 +24,7 @@ export default function Home() {
               scrolled ? "backdrop-blur-none " : "backdrop-blur-md"
             }`}
           >
-            <h1 className="  text-6xl text-center font-instrument  ">
+            <h1 className="  text-6xl text-center font-instrument  dark:text-primary">
               Their Business Was Saved By <span className="italic">Mera</span>
             </h1>
             <h3 className=" text-2xl px-4 lg:px-32 font-diatype-regular text-center leading-snug lg:leading-tight ">
@@ -41,73 +41,6 @@ export default function Home() {
               <Link href="./auth">
                 <button className="btn ui-app btn-lg">Log In</button>
               </Link>
-            </div>
-          </div>
-        </section>
-        <section className=" container-xl mx-auto flex flex-col items-center justify-center w-full h-screen  px-8 lg:px-32 gap-y-4 lg:gap-y-2">
-          {/* <MyCalendar />
-          <div className=" flex flex-row flex-wrap items-center justify-center gap-4 px-4 lg:px-32">
-            <Link href="./createWorkspace">
-              <button className="btn ui-landing btn-lg ">BUTTON</button>
-            </Link>
-            <Link href="./createWorkspace">
-              <button className="btn btn-primary ui-landing btn-lg ">
-                Primary
-              </button>
-            </Link>
-            <Link href="/">
-              <button className="btn btn-secondary ui-landing btn-lg">
-                Secondary
-              </button>
-            </Link>
-            <Link href="/">
-              <button className="btn btn-accent ui-landing btn-lg">
-                Accent
-              </button>
-            </Link>
-            <Link href="/">
-              <button className="btn btn-neutral ui-landing btn-lg  ">
-                Neutral
-              </button>
-            </Link>
-            <Link href="./createWorkspace">
-              <button className="btn btn-info ui-landing btn-lg">Info</button>
-            </Link>
-            <Link href="/">
-              <button className="btn btn-error ui-landing btn-lg">ERROR</button>
-            </Link>
-            <Link href="/">
-              <button className="btn btn-warning ui-landing btn-lg ">
-                Warning
-              </button>
-            </Link>
-            <Link href="/">
-              <button className="btn btn-success ui-landing btn-lg ">
-                SUCCESS
-              </button>
-            </Link>
-          </div> */}
-        </section>
-        <section className="card flex flex-col    p-4 ">
-          <div className=" w-full aspect-square lg:aspect-video flex flex-col lg:flex-row items-center justify-start bg-base-300  rounded-3xl">
-            <div className="aspect-square flex flex-col items-start justify-center w-full lg:w-1/2  px-16 pb-8 pt-16 lg:px-32 gap-4">
-              <h4 className="font-mattone-black text-xs">TIME MANAGEMENT</h4>
-              <h2 className=" leading-tight">Make More Time</h2>
-
-              <p className=" leading-snug lg:mb-2">
-                Through expert insights and in-depth research, we forecast
-                'what's next' and infuse it into our production studio. This not
-                only keeps your brand ahead but deeply connects with your
-                audience. With us, you don't just ride the wave; you direct the
-                tide, transforming trends into lasting impact. This not only
-                keeps your brand ahead but deeply connects with your audience.
-                With us, you don't just ride the wave; you direct the tide,
-                transforming trends into lasting impact.
-              </p>
-              <span className="flex flex-row gap-4">
-                <button className="btn ui-app btn-primary">Join</button>{" "}
-                <button className="btn ui-app ">Share</button>
-              </span>
             </div>
           </div>
         </section>

@@ -399,7 +399,7 @@ export default function Calendar({ openDrawer }) {
                   return (
                     <div
                       key={index}
-                      className="flex flex-col w-full justify-center py-1 px-2 bg-secondary-content text-secondary rounded-lg"
+                      className="card flex flex-col w-full justify-center p-4 bg-secondary-content text-secondary "
                     >
                       <p key={index}>{` ${shift.role}`}</p>
                       <p>{` start: ${shift.start} - end: ${shift.end}`}</p>
@@ -411,16 +411,6 @@ export default function Calendar({ openDrawer }) {
           </div>
         </div>
       )}
-
-      <button
-        onClick={openDrawer}
-        id="+"
-        className="fixed lg:hidden flex items-center hover:cursor-pointer justify-center rounded-full right-10 bottom-12 w-16 h-16 bg-base-200 shadow-lg "
-      >
-        <h4 className="text-neutral  text-3xl">
-          <PlusIcon width={24} height={24} />
-        </h4>
-      </button>
     </>
   );
 }

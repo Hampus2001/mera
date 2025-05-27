@@ -94,7 +94,7 @@ export default function WeekCalendar({ openDrawer }) {
       newCalendar.push(
         <div
           key={i}
-          className={`flex flex-col w-full justify-start items-start h-full  ${dayStyle} `}
+          className={`flex flex-col w-full justify-start items-start h-full p-2 ${dayStyle} `}
         >
           {redDays.map((holiday) => {
             if (
@@ -124,9 +124,9 @@ export default function WeekCalendar({ openDrawer }) {
                     setShowModal(true);
                   }}
                   key={dayDate.getDate()}
-                  className="flex w-full rounded-lg p-3 lg-p-1 bg-info text-info-content justify-center hover:cursor-pointer"
+                  className="flex w-full card p-3 lg:p-2 bg-info text-info-content justify-center hover:cursor-pointer"
                 >
-                  <p className="hidden lg:flex">{holiday.name}</p>
+                  <p className="hidden lg:flex p-2">{holiday.name}</p>
                 </button>
               );
             }
@@ -143,14 +143,14 @@ export default function WeekCalendar({ openDrawer }) {
   }, [todaysState, month, year, redDays]);
 
   return (
-    <div className="flex flex-col w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] ">
-      <div className="flex flex-col p-0 w-full ">
-        <div className="flex text-xs w-full bg-base-100">
-          <div className="flex flex-col w-16 mt-6 justify-between items-center gap-y-4">
+    <div className="h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] z-0 flex flex-col w-full  pr-8 lg:pr-0 bg-base-100">
+      <div className="flex flex-col p-0 w-full h-full">
+        <div className="flex text-xs w-full">
+          <div className="flex flex-col w-16 mt-6 justify-between items-center h-full gap-y-2">
             {Array.from({ length: 24 }).map((_, index) => (
               <h6
                 key={index}
-                className={`flex justify-center  items-center
+                className={`flex justify-center items-center
               }`}
               >
                 {index.toString().padStart(2, "0")}:00
@@ -181,7 +181,7 @@ export default function WeekCalendar({ openDrawer }) {
                 S
               </h6>
             </div>
-            <div className="flex w-full h-full  divide-x divide-y">
+            <div className="flex w-full h-full  divide-x-[0.025rem] ">
               {calendar}
             </div>
           </div>
@@ -189,7 +189,7 @@ export default function WeekCalendar({ openDrawer }) {
       </div>
       {showModal && (
         <div
-          className={`absolute bg-white w-auto p-4 gap-4 rounded-xl h-auto`}
+          className={`absolute bg-secondary shadow-xl text-secondary-content min-w-64 rounded-2xl h-auto p-6`}
           style={{
             top: position.y > height - 50 ? position.y : position.y - 20,
             left:
@@ -212,7 +212,7 @@ export default function WeekCalendar({ openDrawer }) {
         </div>
       )}
 
-      <button
+      {/* <button
         onClick={openDrawer}
         id="+"
         className="fixed flex items-center hover:cursor-pointer justify-center rounded-full right-10 bottom-8 w-16 h-16 bg-base-100 border-2 border-neutral shadow-lg "
@@ -220,7 +220,7 @@ export default function WeekCalendar({ openDrawer }) {
         <h4 className="text-neutral text-3xl">
           <FaPlus />
         </h4>
-      </button>
+      </button> */}
     </div>
   );
 }

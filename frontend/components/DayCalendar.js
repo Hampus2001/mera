@@ -83,7 +83,7 @@ export default function DayCalendar({ openDrawer }) {
     newCalendar.push(
       <div
         key={dayDate}
-        className={`flex flex-col w-full justify-start divide-y-[0,025 rem] items-start h-full border-b border-l border-gray-300 ${dayStyle}`}
+        className={`flex flex-col w-full justify-start items-start h-full border-b-[0.025rem]  ${dayStyle}`}
       >
         {redDays.map((holiday) => {
           if (
@@ -132,26 +132,28 @@ export default function DayCalendar({ openDrawer }) {
 
   return (
     <>
-      <div className="flex flex-col gap-4 w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)]">
-        <div className="flex flex-grow text-xs w-full gap-1 text-start bg-base-100">
-          <div className="flex flex-col p-6 mt-6 justify-between w-[2.3rem] items-center bg-base-100">
+      <div className="flex flex-col gap-4 w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] pr-8 lg:pr-0 bg-base-100 overflow-x-hidden">
+        <div className="flex flex-grow text-xs w-full gap-1 text-start ">
+          <div className="flex flex-col p-6 mt-6 justify-between w-16 items-center ">
             {Array.from({ length: 24 }).map((_, index) => (
-              <p
+              <h6
                 key={index}
-                className={`flex text-xs lg:text-sm justify-center bg-base-100 items-center
+                className={`flex justify-center bg-base-100 py-1 items-center
               }`}
               >
                 {index.toString().padStart(2, "0")}:00
-              </p>
+              </h6>
             ))}
           </div>
-          <div className="flex flex-col w-full border devide-x devide-y devide-neutral">
-            <div className="flex justify-center items-center border-b border-neutral h-8">
-              <p>
+          <div className="flex flex-col w-full border-t-[0.025rem] border-l-[0.025rem] divide-x-[0.025rem] ">
+            <div className="flex justify-center items-center border-b-[0.025rem] h-8">
+              <h6>
                 {currentDayString} - {todaysState}
-              </p>
+              </h6>
             </div>
-            <div className="flex w-full h-full">{calendar}</div>
+            <div className="flex w-full h-full border-r-[0.025rem]">
+              {calendar}
+            </div>
           </div>
         </div>
       </div>
@@ -171,7 +173,7 @@ export default function DayCalendar({ openDrawer }) {
           <h4>{selectedEvents ? selectedEvents : ""}</h4>
         </div>
       )}
-      <button
+      {/* <button
         onClick={openDrawer}
         id="+"
         className="fixed flex items-center hover:cursor-pointer justify-center rounded-full right-10 bottom-8 w-16 h-16 bg-base-100 border-2 border-neutral shadow-lg "
@@ -179,7 +181,7 @@ export default function DayCalendar({ openDrawer }) {
         <h4 className="text-neutral text-3xl">
           <FaPlus />
         </h4>
-      </button>
+      </button> */}
     </>
   );
 }

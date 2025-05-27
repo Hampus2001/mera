@@ -16,7 +16,7 @@ export default function ToolBarAdmin() {
 
   return (
     <>
-      <div className="flex flex-col gap-y-8">
+      <div className=" flex-col gap-y-8 hidden lg:flex">
         <calendar-date className="cally bg-secondary text-secondary-content w-full">
           <svg
             aria-label="Previous"

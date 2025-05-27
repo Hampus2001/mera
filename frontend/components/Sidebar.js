@@ -12,17 +12,29 @@ import {
 import { MdOutlineSettings } from "react-icons/md";
 import ThemeSwitch from "./ThemeSwitch";
 
-export default function Sidebar() {
+export default function Sidebar({
+  openDrawer,
+  openEventCreator,
+  eventMode,
+  setEventMode,
+  activeDrawer,
+  setActiveDrawer,
+}) {
   const [open, setOpen] = useState(false);
 
   function handleMobileMenu() {
     setOpen((prev) => !prev);
   }
 
+  function handleAddButton() {
+    openDrawer();
+    openEventCreator();
+  }
+
   return (
     <>
-      <div className="fixed top-0 left-0 h-screen w-16 bg-secondary text-secondary-content z-30 hidden lg:block">
-        <div className="flex flex-col items-center w-full h-full pt-4 pb-8">
+      <div className="fixed top-0 left-0 h-screen w-16 bg-secondary text-secondary-content z-30 hidden lg:block shadow-md">
+        <div className="flex flex-col items-center w-full h-full pt-4 pb-8 ">
           <Link href="/" className="flex items-center justify-center">
             <svg
               className="w-8 h-[2rem] fill-current"
@@ -36,15 +48,15 @@ export default function Sidebar() {
 
           <ul className="w-full h-full flex flex-col items-center justify-between pt-8">
             <span className=" w-full h-full">
-              <Link
-                href="/createprojects"
-                className="aspect-square hover:bg-primary hover:text-primary-content w-full flex flex-col items-center justify-center  hover:opacity-80 gap-y-1.5"
+              <button
+                onClick={handleAddButton}
+                className="cursor-pointer aspect-square hover:bg-primary hover:text-primary-content w-full flex flex-col items-center justify-center  hover:opacity-80 gap-y-1.5"
               >
                 <PlusIcon width={24} height={24} />
                 <p className=" font-diatype-medium tracking-wide text-[10px]">
                   Add
                 </p>
-              </Link>
+              </button>
               <Link
                 href="/schedulePage"
                 className="aspect-square hover:bg-primary hover:text-primary-content  w-full flex flex-col items-center justify-center  hover:opacity-80 gap-y-1.5"

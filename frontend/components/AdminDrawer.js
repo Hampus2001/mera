@@ -184,9 +184,9 @@ export default function AdminDrawer() {
           </select>
         </div>
 
-        <button type="submit" className="btn btn-primary w-full mt-4">
+        {/* <button type="submit" className="btn btn-primary w-full mt-4">
           Add Shift
-        </button>
+        </button> */}
       </form>
     </div>
   );

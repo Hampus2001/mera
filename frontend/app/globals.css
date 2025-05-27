@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+@custom-variant dark (&:where([data-theme=mera-dark], [data-theme=mera-dark] *));
+
 @plugin "daisyui/theme" {
   name: "mera";
   default: true;

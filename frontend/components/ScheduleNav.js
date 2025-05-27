@@ -143,9 +143,9 @@ export default function ScheduleNav() {
             onChange={(e) => setActiveCalendar(e.target.value)}
             className="select select-sm ui-app bg-base-200 border-none"
           >
-            <option value="Month">View month</option>
-            <option value="Week">View week</option>
-            <option value="Day">View day</option>
+            <option value="Month">Month Mode</option>
+            <option value="Week">Week Mode</option>
+            <option value="Day">Day Mode</option>
           </select>
 
           <select className="select select-sm ui-app bg-base-200 border-none">
