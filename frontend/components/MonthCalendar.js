@@ -18,6 +18,7 @@ export default function Calendar({ openDrawer }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedEvents, setSelectedEvents] = useState([]);
   const [firstWeekOfMonth, setFirstWeekOfMonth] = useState("");
+  const [selectedShifts, setSelectedShifts] = useState([]);
 
   const {
     redDays,
@@ -49,6 +50,15 @@ export default function Calendar({ openDrawer }) {
       y: rect.top + window.scrollY,
     });
   };
+
+  function findShiftsOnDate(date) {
+    const shiftsAtDate = shifts.filter((shift) => shift.date == date);
+    setSelectedShifts(shiftsAtDate);
+  }
+
+  useEffect(() => {
+    findShiftsOnDate(selectedDate);
+  }, [selectedDate]);
 
   function handleDayClick(year, month, day, e) {
     setYear(year);
@@ -188,6 +198,9 @@ export default function Calendar({ openDrawer }) {
         currentDayStyle =
           "bg-primary text-primary-content hover:bg-secondary hover:text-secondary-content ";
       }
+      let date = `${year}-${month + 1 < 10 ? "0" + (month + 1) : month + 1}-${
+        i < 10 ? "0" + i : i
+      }`;
       newCalendar.push(
         <button
           onClick={(e) => {
@@ -204,9 +217,10 @@ export default function Calendar({ openDrawer }) {
             getCoordinates(e);
           }}
           key={`current-${i}`}
-          className={`bg-base-100 col-span-1 row-span-1 flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 font-diatype-medium text-xs lg:text-base    ${currentDayStyle} `}
+          className={`bg-base-100 col-span-1 row-span-1 flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 font-diatype-medium text-xs lg:text-base gap-1    ${currentDayStyle} `}
         >
           <h6>{i}</h6>
+
           {redDays?.map((holiday) => {
             let thisDayDate = `${currentYear}-${(currentMonth + 1)
               .toString()
@@ -218,6 +232,18 @@ export default function Calendar({ openDrawer }) {
                   key={i}
                   className="flex p-2 bg-base-300 text-base-content justify-center animate-pulse rounded-3xl"
                 ></h6>
+              );
+            }
+          })}
+          {shifts?.map((shift, index) => {
+            if (shift.date == date) {
+              return (
+                <h6
+                  className="flex justify-center text-center items-center py-1 px-2 bg-success text-success-content rounded-full"
+                  key={index}
+                >
+                  {shift.start} - {shift.end}
+                </h6>
               );
             }
           })}
@@ -343,7 +369,7 @@ export default function Calendar({ openDrawer }) {
       </div>
       {showModal && (
         <div
-          className={`absolute bg-info text-info-content min-w-64 rounded-2xl h-auto p-6`}
+          className={`absolute bg-secondary shadow-xl text-secondary-content min-w-64 rounded-2xl h-auto p-6`}
           style={{
             top: position.y > height - 50 ? position.y : position.y - 20,
             left:
@@ -354,12 +380,12 @@ export default function Calendar({ openDrawer }) {
                 : position.x,
           }}
         >
-          <div className="flex flex-col items-start justify-center gap-4">
+          <div className="flex flex-col items-start justify-center gap-4 min-w-md">
             <div className="flex justify-between items-center  w-full">
               <p>{selectedDate}</p>
 
               <button
-                className="btn btn-sm btn-info ui-app btn-circle "
+                className="btn btn-sm btn-ghost ui-app btn-circle "
                 onClick={() => setShowModal(false)}
               >
                 <Cross1Icon width={16} height={16} />
@@ -367,6 +393,18 @@ export default function Calendar({ openDrawer }) {
             </div>
 
             <p className="">{selectedEvents ? selectedEvents : ""}</p>
+
+            {selectedShifts
+              ? selectedShifts.map((shift, index) => {
+                  return (
+                    <div className="flex flex-col w-full justify-center py-1 px-2 bg-secondary-content text-secondary rounded-lg">
+                      <p key={index}>{` ${shift.role}`}</p>
+                      <p>{` start: ${shift.start} - end: ${shift.end}`}</p>
+                      <p>{shift.description}</p>
+                    </div>
+                  );
+                })
+              : ""}
           </div>
         </div>
       )}

@@ -83,7 +83,8 @@ export default function CalendarContext({ children }) {
       date: "2025-05-29",
       start: "06:00",
       end: "15:00",
-      description: "kött och chark - Rast 11:00 - 11:45",
+      description: "Rast 11:00 - 11:45",
+      role: "kött och chark",
     },
     {
       company_id: 32,
@@ -91,7 +92,17 @@ export default function CalendarContext({ children }) {
       date: "2025-05-12",
       start: "07:00",
       end: "16:00",
-      description: "Deli och färsk - Rast 11:45 - 12:30",
+      description: "Rast 11:45 - 12:30",
+      role: "Deli och färsk",
+    },
+    {
+      company_id: 32,
+      user_id: 2,
+      date: "2025-05-12",
+      start: "08:00",
+      end: "17:00",
+      description: "Rast 11:45 - 12:30",
+      role: "Deli och färsk",
     },
   ]);
 
