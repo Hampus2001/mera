@@ -33,12 +33,12 @@ export default function Home() {
               do best!
             </h3>
             <div className="flex flex-row flex-wrap items-center justify-center gap-4 mt-0 lg:mt-4">
-              <Link href="./signUp">
+              <Link href="./auth">
                 <button className="btn btn-primary ui-app btn-lg dark:btn-secondary">
                   Get Started
                 </button>
               </Link>
-              <Link href="./logIn">
+              <Link href="./auth">
                 <button className="btn ui-app btn-lg">Log In</button>
               </Link>
             </div>

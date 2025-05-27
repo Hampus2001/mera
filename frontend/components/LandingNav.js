@@ -80,14 +80,14 @@ export default function LandingNav({ variant }) {
               <Link
                 className="btn ui-app"
                 onClick={handleMobileMenu}
-                href="/logIn"
+                href="/auth"
               >
                 Log In
               </Link>
               <Link
                 className="btn ui-app btn-primary"
                 onClick={handleMobileMenu}
-                href="/signUp"
+                href="/auth"
               >
                 Sign Up
               </Link>
