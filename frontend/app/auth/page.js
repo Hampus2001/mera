@@ -10,20 +10,9 @@ import CustomizeForm from "@/components/auth/CustomizeForm";
 import CreateUsersForm from "@/components/auth/CreateUsersForm";
 
 export default function AuthPage() {
-  const { step, setStep } = useContext(HandleWorkspaceContext);
-
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [company, setCompany] = useState("");
-  const [roles, setRoles] = useState("");
-  const [meraTheme, setMeraTheme] = useState("");
-  const [monthView, setMonthView] = useState("");
-
-  const { setContextId, setActiveUser } = useContext(HandleWorkspaceContext);
-  const router = useRouter();
-
-  const sharedProps = {
+  const {
+    step,
+    setStep,
     email,
     setEmail,
     username,
@@ -40,8 +29,9 @@ export default function AuthPage() {
     setMonthView,
     setContextId,
     setActiveUser,
-    router,
-  };
+  } = useContext(HandleWorkspaceContext);
+
+  const router = useRouter();
 
   return (
     <>
@@ -50,9 +40,9 @@ export default function AuthPage() {
       </div>
       <section className="flex justify-center items-center h-screen w-screen overflow-hidden pt-0 lg:pt-12">
         <div className="card bg-base-100 lg:max-w-3xl shadow-none lg:shadow-lg p-8 lg:p-12 w-full flex flex-col gap-y-8">
-          {step === "login" && <LoginForm {...sharedProps} />}
-          {step === "signup" && <SignupForm {...sharedProps} />}
-          {step === "customize" && <CustomizeForm {...sharedProps} />}
+          {step === "login" && <LoginForm />}
+          {step === "signup" && <SignupForm />}
+          {step === "customize" && <CustomizeForm />}
           {step === "createUsers" && <CreateUsersForm />}
         </div>
       </section>

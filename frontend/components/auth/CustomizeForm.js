@@ -3,17 +3,18 @@
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 import { useState, useContext } from "react";
 
-export default function CustomizeForm({
-  company,
-  setCompany,
-  roles,
-  setRoles,
-  meraTheme,
-  setMeraTheme,
-  monthView,
-  setMonthView,
-}) {
-  const { step, setStep } = useContext(HandleWorkspaceContext);
+export default function CustomizeForm() {
+  const {
+    setStep,
+    company,
+    setCompany,
+    roles,
+    setRoles,
+    meraTheme,
+    setMeraTheme,
+    monthView,
+    setMonthView,
+  } = useContext(HandleWorkspaceContext);
 
   return (
     <form className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">

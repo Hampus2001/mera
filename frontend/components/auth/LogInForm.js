@@ -3,15 +3,17 @@
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 import { useContext } from "react";
 
-export default function LoginForm({
-  email,
-  setEmail,
-  password,
-  setPassword,
-  setContextId,
-  setActiveUser,
-  router,
-}) {
+export default function LoginForm() {
+  const {
+    setStep,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    setContextId,
+    setActiveUser,
+  } = useContext(HandleWorkspaceContext);
+
   async function handleLogin(e) {
     e.preventDefault();
 
@@ -35,8 +37,6 @@ export default function LoginForm({
     setEmail("");
     setPassword("");
   }
-
-  const { step, setStep } = useContext(HandleWorkspaceContext);
 
   return (
     <div className="">
