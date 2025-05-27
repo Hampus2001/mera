@@ -42,6 +42,10 @@ export default function ScheduleNav() {
     getDateOfISOWeek,
     daysInMonth,
     setDaysInMonth,
+    users,
+    activeUserId,
+    activeUser,
+    setActiveUser,
   } = useContext(HandleCalendarContext);
 
   useEffect(() => {
@@ -145,7 +149,7 @@ export default function ScheduleNav() {
           </select>
 
           <select className="select select-sm ui-app bg-base-200 border-none">
-            <option>Filter</option>
+            <option value={"Filter users"}>Filter users</option>
           </select>
         </div>
         <div className="flex items-center justify-end  w-full">

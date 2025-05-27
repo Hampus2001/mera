@@ -7,6 +7,7 @@ export const HandleWorkspaceContext = createContext([]);
 export default function WorkspaceContext({ children }) {
   const [contextId, setContextId] = useState(1746442347439);
   const [activeUser, setActiveUser] = useState(null);
+  const [activeUserId, setActiveUserId] = useState(null);
 
   //Create account data
   const [step, setStep] = useState("login");
@@ -30,8 +31,13 @@ export default function WorkspaceContext({ children }) {
   });
 
   useEffect(() => {
-    console.log("active user", activeUser);
-  }, [activeUser]);
+    if (activeUserId != null) {
+      console.log("active userid", activeUserId);
+      const active = users.find((user) => user.user_id == activeUserId);
+      console.log("active user", active.username);
+      setActiveUser(active.username);
+    }
+  }, [activeUserId && users]);
 
   useEffect(() => {
     console.log("users", users);
@@ -63,6 +69,8 @@ export default function WorkspaceContext({ children }) {
         setUsers,
         createUser,
         setCreateUsers,
+        activeUserId,
+        setActiveUserId,
       }}
     >
       {children}

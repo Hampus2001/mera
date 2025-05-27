@@ -397,7 +397,10 @@ export default function Calendar({ openDrawer }) {
             {selectedShifts
               ? selectedShifts.map((shift, index) => {
                   return (
-                    <div className="flex flex-col w-full justify-center py-1 px-2 bg-secondary-content text-secondary rounded-lg">
+                    <div
+                      key={index}
+                      className="flex flex-col w-full justify-center py-1 px-2 bg-secondary-content text-secondary rounded-lg"
+                    >
                       <p key={index}>{` ${shift.role}`}</p>
                       <p>{` start: ${shift.start} - end: ${shift.end}`}</p>
                       <p>{shift.description}</p>

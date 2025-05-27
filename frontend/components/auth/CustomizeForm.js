@@ -19,6 +19,7 @@ export default function CustomizeForm() {
     companyId,
     createUser,
     setCreateUsers,
+    setActiveUserId,
   } = useContext(HandleWorkspaceContext);
 
   return (
@@ -74,6 +75,7 @@ export default function CustomizeForm() {
         onClick={() => {
           if (company && createUser.role && monthView && meraTheme) {
             setUsers([createUser]);
+            setActiveUserId(createUser.user_id);
             setStep("createUsers");
             console.log(createUser);
           } else {

@@ -200,7 +200,9 @@ export default function CreateUsersForm() {
 
       <button
         className="btn btn-primary w-full"
-        onClick={() => router.push("/schedulePage")}
+        onClick={() => {
+          router.push("/schedulePage");
+        }}
       >
         Finish
       </button>
