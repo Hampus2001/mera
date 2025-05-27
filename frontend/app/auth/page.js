@@ -1,16 +1,16 @@
 "use client";
-import { useState, useContext } from "react";
+import { useState, t } from "react";
 import { useRouter } from "next/navigation";
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 import LogInSingInBar from "@/components/LoginSignInNavBar";
 
-import LoginForm from "@/components/auth/LoginForm";
-import SignupForm from "@/components/auth/SignupForm";
+import LoginForm from "@/components/auth/LogInForm";
+import SignupForm from "@/components/auth/SignUpForm";
 import CustomizeForm from "@/components/auth/CustomizeForm";
 import CreateUsersForm from "@/components/auth/CreateUsersForm";
 
 export default function AuthPage() {
-  const [step, setStep] = useState("login");
+  const { step, setStep } = useContext(HandleWorkspaceContext);
 
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -38,7 +38,6 @@ export default function AuthPage() {
     setMeraTheme,
     monthView,
     setMonthView,
-    setStep,
     setContextId,
     setActiveUser,
     router,

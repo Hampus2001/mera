@@ -1,5 +1,8 @@
 "use client";
 
+import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
+import { useState, useContext } from "react";
+
 export default function CustomizeForm({
   company,
   setCompany,
@@ -9,8 +12,9 @@ export default function CustomizeForm({
   setMeraTheme,
   monthView,
   setMonthView,
-  setStep,
 }) {
+  const { step, setStep } = useContext(HandleWorkspaceContext);
+
   return (
     <form className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
       <h2 className="text-3xl col-span-full pb-8 lg:pb-6">
@@ -24,20 +28,15 @@ export default function CustomizeForm({
           onChange={(e) => setCompany(e.target.value)}
           placeholder="Company name"
           className="input"
-          required
         />
+
         <input
-          type="text"
           value={roles}
           onChange={(e) => setRoles(e.target.value)}
-          placeholder="Role"
+          type="text"
+          placeholder="What your role?"
           className="input"
-          required
         />
-        <textarea
-          placeholder="Bio description"
-          className="textarea h-32"
-        ></textarea>
       </div>
 
       <div className="col-span-1 flex flex-col gap-6">
@@ -45,7 +44,6 @@ export default function CustomizeForm({
           value={meraTheme}
           onChange={(e) => setMeraTheme(e.target.value)}
           className="select"
-          required
         >
           <option value="">Choose theme</option>
           <option value="light">Light</option>
@@ -56,21 +54,25 @@ export default function CustomizeForm({
           value={monthView}
           onChange={(e) => setMonthView(e.target.value)}
           className="select"
-          required
         >
-          <option value="">Month View</option>
-          <option value="calendar">Calendar</option>
-          <option value="list">List</option>
+          <option value="Month">Month view</option>
+          <option value="Week">Week view</option>
+          <option value="Day">Day view</option>
         </select>
-
-        <button
-          type="button"
-          className="btn btn-primary w-full"
-          onClick={() => setStep("createUsers")}
-        >
-          Next
-        </button>
       </div>
+      <button
+        type="button"
+        className="btn btn-primary w-full col-span-2"
+        onClick={() => {
+          if (company && roles && monthView && meraTheme) {
+            setStep("createUsers");
+          } else {
+            alert("Complete all fields!");
+          }
+        }}
+      >
+        Next
+      </button>
     </form>
   );
 }

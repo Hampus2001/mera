@@ -6,7 +6,7 @@ export const HandleWorkspaceContext = createContext([]);
 
 export default function WorkspaceContext({ children }) {
   const [contextId, setContextId] = useState(1746442347439);
-
+  const [step, setStep] = useState("login");
   const [activeUser, setActiveUser] = useState(null);
 
   useEffect(() => {
@@ -15,7 +15,14 @@ export default function WorkspaceContext({ children }) {
 
   return (
     <HandleWorkspaceContext.Provider
-      value={{ contextId, setContextId, activeUser, setActiveUser }}
+      value={{
+        contextId,
+        setContextId,
+        activeUser,
+        setActiveUser,
+        step,
+        setStep,
+      }}
     >
       {children}
     </HandleWorkspaceContext.Provider>
