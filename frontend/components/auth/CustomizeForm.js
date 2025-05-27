@@ -14,6 +14,11 @@ export default function CustomizeForm() {
     setMeraTheme,
     monthView,
     setMonthView,
+    users,
+    setUsers,
+    companyId,
+    createUser,
+    setCreateusers,
   } = useContext(HandleWorkspaceContext);
 
   return (

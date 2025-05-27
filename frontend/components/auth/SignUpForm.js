@@ -1,7 +1,7 @@
 "use client";
 
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 export default function SignupForm() {
   const {
@@ -12,7 +12,15 @@ export default function SignupForm() {
     setUsername,
     password,
     setPassword,
+    companyId,
+    roles,
+    users,
+    setUsers,
+    createUser,
+    setCreateUsers
   } = useContext(HandleWorkspaceContext);
+
+
   return (
     <div>
       <h2 className="text-3xl leading-loose pb-8 lg:pb-6">
@@ -21,16 +29,16 @@ export default function SignupForm() {
       <form className="flex flex-col gap-4">
         <input
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={createUser.username}
+          onChange={(e) => setCreateUsers({...createUser, username: e.target.value})}
           placeholder="Username"
           className="input w-full"
           required
         />
         <input
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={createUser.password}
+          onChange={(e) => setCreateUsers({...createUser, password: e.target.value})}
           placeholder="Password"
           className="input w-full"
           required
@@ -38,7 +46,7 @@ export default function SignupForm() {
         <input
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+         onChange={(e) => setCreateUsers({...createUser, email: e.target.value})}
           placeholder="Email"
           className="input w-full"
           required
@@ -47,7 +55,10 @@ export default function SignupForm() {
       <div className="mt-4">
         <button
           className="btn btn-primary w-full"
-          onClick={() => setStep("customize")}
+          onClick={() => {
+            setStep("customize");
+            setUsers(...users, createUser)
+          }}
         >
           Next
         </button>
