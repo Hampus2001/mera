@@ -9,21 +9,17 @@ export default function CreateUsersForm() {
   const [role, setRole] = useState("");
   const [admin, setAdmin] = useState(false);
   const [users, setUsers] = useState([]);
-  const [displayUsers, setDisplayUsers] = useState([]);
 
-  const [companyRoles, setCompanyRoles] = useState([]); // ideally should come from props/context
+  const [companyRoles, setCompanyRoles] = useState([]); // ideally from props/context
   const [companyObject, setCompanyObject] = useState([]);
   const [companyId] = useState(Date.now());
 
   const { setContextId, setActiveUser } = useContext(HandleWorkspaceContext);
   const router = useRouter();
+
   useEffect(() => {
     setContextId(companyId);
   }, [companyId]);
-
-  useEffect(() => {
-    createUsersTable();
-  }, [users]);
 
   function createAccount() {
     const createAdmin = {
@@ -37,7 +33,7 @@ export default function CreateUsersForm() {
     };
     const createCompany = {
       company_id: companyId,
-      name: "My Company", // update this to come from props
+      name: "My Company", // should come from props
     };
     setUsers([createAdmin]);
     setCompanyObject([createCompany]);
@@ -79,72 +75,6 @@ export default function CreateUsersForm() {
     setUsers(updated);
   }
 
-  function createUsersTable() {
-    const userElements = users.map((user, index) => (
-      <tr key={index}>
-        <td>
-          <input
-            value={user.username}
-            onChange={(e) =>
-              handleUserChange(index, "username", e.target.value)
-            }
-          />
-        </td>
-        <td>
-          <input
-            value={user.password}
-            onChange={(e) =>
-              handleUserChange(index, "password", e.target.value)
-            }
-          />
-        </td>
-        <td>
-          <select
-            value={user.role}
-            onChange={(e) => handleUserChange(index, "role", e.target.value)}
-          >
-            <option value="">Choose role</option>
-            {companyRoles.map((r, i) => (
-              <option key={i} value={r}>
-                {r}
-              </option>
-            ))}
-          </select>
-        </td>
-        <td>
-          <input
-            value={user.email}
-            onChange={(e) => handleUserChange(index, "email", e.target.value)}
-          />
-        </td>
-        <td>
-          <input
-            type="number"
-            value={user.hours}
-            onChange={(e) => handleUserChange(index, "hours", e.target.value)}
-          />
-        </td>
-        <td>
-          <select
-            value={user.admin}
-            onChange={(e) =>
-              handleUserChange(index, "admin", e.target.value === "true")
-            }
-          >
-            <option value="true">True</option>
-            <option value="false">False</option>
-          </select>
-        </td>
-        {index !== 0 && (
-          <td>
-            <button onClick={() => handleDeleteUser(index)}>Delete</button>
-          </td>
-        )}
-      </tr>
-    ));
-    setDisplayUsers(userElements);
-  }
-
   async function workspaceData() {
     setActiveUser(users[0]);
     const data = {
@@ -159,9 +89,10 @@ export default function CreateUsersForm() {
     });
     router.push("/schedulePage");
   }
+
   return (
-    <div className="flex flex-col gap-10 p-36 items-center min-h-screen">
-      <h2 className="text-3xl">Add Users</h2>
+    <div className="flex flex-col gap-6 w-full">
+      <h2 className="text-3xl col-span-full pb-8 lg:pb-6">Add Users</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="flex flex-col gap-4">
@@ -173,28 +104,25 @@ export default function CreateUsersForm() {
           />
           <input
             className="input"
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
           />
           <input
             className="input"
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
           />
-          <select
-            className="select"
+          <input
+            className="input"
             value={role}
             onChange={(e) => setRole(e.target.value)}
-          >
-            <option value="">Select Role</option>
-            {companyRoles.map((r, i) => (
-              <option key={i} value={r}>
-                {r}
-              </option>
-            ))}
-          </select>
+            placeholder="Role"
+          />
+
           <label className="flex items-center gap-2">
             Admin?
             <input
@@ -208,23 +136,88 @@ export default function CreateUsersForm() {
           </button>
         </div>
 
-        <div>
-          {displayUsers.length ? (
-            <table className="table w-full">
-              <thead>
+        <div className="overflow-auto max-h-[400px] w-full border rounded-lg">
+          {users.length ? (
+            <table className="table-auto w-full border-collapse">
+              <thead className="bg-gray-100">
                 <tr>
-                  <th>Username</th>
-                  <th>Password</th>
-                  <th>Role</th>
-                  <th>Email</th>
-                  <th>Admin</th>
-                  <th></th>
+                  <th className="px-3 py-3 text-left">Username</th>
+                  <th className="px-3 py-3 text-left">Password</th>
+                  <th className="px-3 py-3 text-left">Role</th>
+                  <th className="px-3 py-3 text-left">Email</th>
+                  <th className="px-3 py-3 text-left">Admin</th>
+                  <th className="px-3 py-3 text-left">X</th>
                 </tr>
               </thead>
-              <tbody>{displayUsers}</tbody>
+              <tbody>
+                {users.map((user, index) => (
+                  <tr key={index} className="border-t">
+                    <td className="px-2 py-2">
+                      <input
+                        className="w-full border px-1 py-1 rounded"
+                        value={user.username}
+                        onChange={(e) =>
+                          handleUserChange(index, "username", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td className="px-2 py-2">
+                      <input
+                        className="w-full border px-1 py-1 rounded"
+                        type="text"
+                        value={user.password}
+                        onChange={(e) =>
+                          handleUserChange(index, "password", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td className="px-2 py-2">
+                      <input
+                        className="w-full border px-1 py-1 rounded"
+                        value={user.role}
+                        onChange={(e) =>
+                          handleUserChange(index, "role", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td className="px-2 py-2">
+                      <input
+                        className="w-full border px-1 py-1 rounded"
+                        type="email"
+                        value={user.email}
+                        onChange={(e) =>
+                          handleUserChange(index, "email", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td className="px-2 py-2">
+                      <select
+                        className="w-full border px-1 py-1 rounded"
+                        value={user.admin}
+                        onChange={(e) =>
+                          handleUserChange(
+                            index,
+                            "admin",
+                            e.target.value === "true"
+                          )
+                        }
+                      >
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                      </select>
+                    </td>
+                    <td
+                      className="px-2 py-2 text-red-500 cursor-pointer"
+                      onClick={() => handleDeleteUser(index)}
+                    >
+                      X
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           ) : (
-            <p>No users added</p>
+            <p className="p-4">No users added</p>
           )}
         </div>
       </div>
