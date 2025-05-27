@@ -16,7 +16,7 @@ export default function ToolBarAdmin() {
 
   return (
     <>
-      <div className="flex flex-col lg:p-8 gap-y-8">
+      <div className="flex flex-col gap-y-8">
         <calendar-date className="cally bg-secondary text-secondary-content w-full">
           <svg
             aria-label="Previous"
@@ -38,13 +38,6 @@ export default function ToolBarAdmin() {
           </svg>
           <calendar-month></calendar-month>
         </calendar-date>
-
-        <button
-          type="submit"
-          className="btn btn-secondary rounded-full border-secondary-content w-full"
-        >
-          Add to My Schedule
-        </button>
       </div>
     </>
   );

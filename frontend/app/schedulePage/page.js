@@ -25,9 +25,7 @@ export default function SchedulePage() {
         <ScheduleNav />
 
         <div className="lg:pl-16 w-full h-full">
-          {activeCalendar == "Month" && (
-            <MonthCalendar openDrawer={() => setDrawerOpen(true)} />
-          )}
+          {activeCalendar == "Month" && <MonthCalendar />}
           {activeCalendar == "Week" && <WeekCalendar />}
           {activeCalendar == "Day" && <DayCalendar />}
         </div>
