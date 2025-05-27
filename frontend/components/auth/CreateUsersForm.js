@@ -8,7 +8,7 @@ export default function CreateUsersForm() {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [admin, setAdmin] = useState(false);
-  const [users, setUsers] = useState([]);
+  const { users, setUsers } = useContext(HandleWorkspaceContext);
 
   const [companyRoles, setCompanyRoles] = useState([]); // ideally from props/context
   const [companyObject, setCompanyObject] = useState([]);
@@ -21,31 +21,10 @@ export default function CreateUsersForm() {
     setContextId(companyId);
   }, [companyId]);
 
-  function createAccount() {
-    const createAdmin = {
-      company_id: companyId,
-      username,
-      password,
-      role,
-      email,
-      admin: true,
-      hours: 40,
-    };
-    const createCompany = {
-      company_id: companyId,
-      name: "My Company", // should come from props
-    };
-    setUsers([createAdmin]);
-    setCompanyObject([createCompany]);
-    setUsername("");
-    setPassword("");
-    setEmail("");
-    setRole("");
-  }
-
   function addEmployee() {
     const createUser = {
       company_id: companyId,
+      user_id: users.length + 1,
       username,
       password,
       role,

@@ -17,11 +17,15 @@ export default function WorkspaceContext({ children }) {
   const [roles, setRoles] = useState("");
   const [meraTheme, setMeraTheme] = useState("");
   const [monthView, setMonthView] = useState("");
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     console.log("active user", activeUser);
   }, [activeUser]);
 
+  useEffect(() => {
+    console.log("users", users);
+  }, [users]);
   return (
     <HandleWorkspaceContext.Provider
       value={{
@@ -45,6 +49,8 @@ export default function WorkspaceContext({ children }) {
         setMeraTheme,
         monthView,
         setMonthView,
+        users,
+        setUsers,
       }}
     >
       {children}
