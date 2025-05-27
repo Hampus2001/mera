@@ -1,17 +1,44 @@
 "use client";
-import AdminDrawer from "./AdminDrawer";
+
+import { useState } from "react";
+import * as motion from "motion/react-client";
+
 import ToolBarAdmin from "./ToolBarAdmin";
 
-export default function DrawerBase() {
+export default function DrawerBase({ isAdmin }) {
+  const [activeDrawer, setActiveDrawer] = useState(false);
+
+  function openDrawer() {
+    setActiveDrawer((prev) => !prev);
+  }
   return (
     <>
-      <div className="absolute right-0 card w-sm h-full bg-neutral ml-auto">
+      <motion.div
+        className={`absolute cursor-pointer ${
+          activeDrawer ? "right-0" : "-right-[356px]"
+        } top-0 z-30 w-[384px] h-full pt-16 pb-16 transition-all ${
+          isAdmin ? "hidden lg:block" : "hidden"
+        }`}
+        whileHover={!activeDrawer ? { x: -64 } : {}}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      >
+        {/* -right-[356px] */}
         {/* <AdminDrawer></AdminDrawer> */}
-        <ToolBarAdmin></ToolBarAdmin>
-        <div className="w-6 h-42 bg-neutral rounded-l-full absolute top-16 -left-4 shadow-md"></div>
+        <div className=" cursor-pointer flex flex-row w-full h-full ">
+          <div
+            onClick={openDrawer}
+            className="cursor-pointer flex flex-col h-full pt-16"
+          >
+            <div className="cursor-pointer flex items-center justify-center w-[28px] h-36 bg-secondary rounded-l-full py-6 pl-2 border-r-secondary">
+              <div className="w-1 h-full bg-secondary-content rounded-l-full"></div>
+            </div>
+          </div>
 
-        <div className="w-1 h-28 bg-base-200 rounded-l-full absolute top-24 left-0"></div>
-      </div>
+          <div className="flex flex-col bg-secondary w-full h-full rounded-l-3xl border-l-secondary">
+            <ToolBarAdmin></ToolBarAdmin>
+          </div>
+        </div>
+      </motion.div>
     </>
   );
 }

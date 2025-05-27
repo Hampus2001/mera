@@ -299,7 +299,7 @@ export default function Calendar({ openDrawer }) {
   return (
     <>
       <div className="overflow-hidden bg-base-100 ">
-        <div className="flex w-full h-8 lg:h-6 divide-y-[0.025rem] border-t-[0.025rem] border-b-[0.025rem]   ">
+        <div className="flex w-full h-8 lg:h-6 divide-y-[0.025rem] border-t-[0.025rem] border-b-[0.025rem]">
           <div className="w-8 h-8 lg:w-6 lg:h-6   border-r-[0.025rem] border-b-[0.025rem] "></div>
           <div className=" grid grid-cols-7 w-full items-center justify-start h-full   divide-x-[0.025rem] ">
             <h6 className=" flex justify-center items-center h-full">M</h6>

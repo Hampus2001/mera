@@ -1,13 +1,26 @@
-import "cally";
+"use client";
+
+import { useEffect } from "react";
 
 export default function ToolBarAdmin() {
+  useEffect(() => {
+    // Only runs on the client
+    import("cally")
+      .then((mod) => {
+        // Optionally you can initialize Cally here if needed
+      })
+      .catch((err) => {
+        console.error("Failed to load Cally:", err);
+      });
+  }, []);
+
   return (
     <>
-      <div>
-        <calendar-date className="cally bg-neutral text-neutral-content ml-12 mt-12">s
+      <div className="flex flex-col lg:p-8 gap-y-8">
+        <calendar-date className="cally bg-secondary text-secondary-content w-full">
           <svg
             aria-label="Previous"
-            className="fill-current size-4 text-base-100 hover:text-neutral active:text-neutral"
+            className="fill-current size-4 text-secondary-content hover:text-secondary-content active:text-secondary-content"
             slot="previous"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -16,7 +29,7 @@ export default function ToolBarAdmin() {
           </svg>
           <svg
             aria-label="Next"
-            className="fill-current size-4 text-base-100 hover:text-neutral active:text-neutral"
+            className="fill-current size-4 text-secondary-content hover:text-secondary-content active:text-secondary-content"
             slot="next"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -25,11 +38,10 @@ export default function ToolBarAdmin() {
           </svg>
           <calendar-month></calendar-month>
         </calendar-date>
-      </div>
-      <div className="w-70 mx-auto mt-10">
+
         <button
           type="submit"
-          className="btn btn-neutral rounded-full border-neutral-content w-full"
+          className="btn btn-secondary rounded-full border-secondary-content w-full"
         >
           Add to My Schedule
         </button>

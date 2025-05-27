@@ -41,16 +41,16 @@ export default function Sidebar() {
                 className="aspect-square hover:bg-primary hover:text-primary-content w-full flex flex-col items-center justify-center  hover:opacity-80 gap-y-1.5"
               >
                 <PlusIcon width={24} height={24} />
-                <h7 className=" font-diatype-medium tracking-wide text-[10px]">
+                <p className=" font-diatype-medium tracking-wide text-[10px]">
                   Add
-                </h7>
+                </p>
               </Link>
               <Link
                 href="/schedulePage"
                 className="aspect-square hover:bg-primary hover:text-primary-content  w-full flex flex-col items-center justify-center  hover:opacity-80 gap-y-1.5"
               >
                 <CalendarIcon width={24} height={24} />
-                <h7 className=" font-diatype-medium tracking-wide text-[10px]"></h7>
+                <p className=" font-diatype-medium tracking-wide text-[10px]"></p>
               </Link>
             </span>
 
@@ -69,9 +69,9 @@ export default function Sidebar() {
                 className="aspect-square hover:bg-primary hover:text-primary-content  w-full flex flex-col items-center justify-center space-y-1 hover:opacity-80"
               >
                 <GearIcon width={24} height={24} />
-                <h7 className=" font-diatype-medium tracking-wide text-[10px]">
+                <p className=" font-diatype-medium tracking-wide text-[10px]">
                   Settings
-                </h7>
+                </p>
               </Link>
               <div className="aspect-square hover:bg-primary hover:text-primary-content  w-full flex flex-col items-center justify-center space-y-1 hover:opacity-80">
                 <ThemeSwitch hideText={true} />
