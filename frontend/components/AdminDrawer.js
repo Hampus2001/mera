@@ -1,11 +1,13 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import { HandleCalendarContext } from "@/context/CalendarContext";
 import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 
 export default function AdminDrawer() {
-  const { activeUser } = useContext(HandleWorkspaceContext);
-  const [users, setUsers] = useState([]);
+  const { shifts, setShifts } = useContext(HandleCalendarContext);
+  const { users, company } = useContext(HandleWorkspaceContext);
+
   const [newShift, setNewShift] = useState({
     user_id: "",
     schedule_name: "",
@@ -14,47 +16,37 @@ export default function AdminDrawer() {
     end: "",
     break_duration: "",
     description: "",
+    role: "",
+    recurrence: "",
   });
 
-  // // Only fetch users if admin is logged in
-  // useEffect(() => {
-  //   if (activeUser?.admin) {
-  //     fetch("http://localhost:3001/sendUsers", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ contextId: activeUser.company_id }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => setUsers(data))
-  //       .catch((err) => console.error("Failed to fetch users:", err));
-  //   }
-  // }, [activeUser]);
+  const uniqueRoles = Array.from(
+    new Set(shifts.map((shift) => shift.role).filter(Boolean))
+  );
 
-  // // Conditionally render for admin only
-  // if (!activeUser?.admin) return null;
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      const res = await fetch("http://localhost:3001/sendShift", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          contextId: activeUser.company_id,
-          newShift,
-        }),
-      });
+    const shiftToAdd = {
+      ...newShift,
+      company_id: company || null,
+    };
 
-      const data = await res.json();
-      console.log("Shift saved:", data);
-    } catch (err) {
-      console.error("Failed to send shift:", err);
-    }
+    setShifts((prevShifts) => [...prevShifts, shiftToAdd]);
+
+    setNewShift({
+      user_id: "",
+      schedule_name: "",
+      date: "",
+      start: "",
+      end: "",
+      break_duration: "",
+      description: "",
+      role: "",
+      recurrence: "",
+    });
+
+    console.log("New shift added:", shiftToAdd);
   };
 
   return (
@@ -63,6 +55,7 @@ export default function AdminDrawer() {
         onSubmit={handleSubmit}
         className="flex flex-col gap-y-4 text-base-content w-full"
       >
+        {/* User select */}
         <div className="flex flex-col gap-y-2 w-full">
           <label className="text-base-100 text-sm font-medium ml-2">
             Users
@@ -72,9 +65,9 @@ export default function AdminDrawer() {
             onChange={(e) =>
               setNewShift((prev) => ({ ...prev, user_id: e.target.value }))
             }
-            className=" select w-full"
+            className="select w-full"
           >
-            <option>Pick a User</option>
+            <option value="">Pick a User</option>
             {users.map((user) => (
               <option key={user.id} value={user.id}>
                 {user.username}
@@ -82,6 +75,8 @@ export default function AdminDrawer() {
             ))}
           </select>
         </div>
+
+        {/* Role select */}
         <div className="flex flex-col gap-y-2 w-full">
           <label className="text-base-100 text-sm font-medium ml-2">Role</label>
           <select
@@ -89,13 +84,25 @@ export default function AdminDrawer() {
             onChange={(e) =>
               setNewShift((prev) => ({ ...prev, role: e.target.value }))
             }
-            className="select w-full "
+            className="select w-full"
           >
             <option value="">Pick a role</option>
-            <option value="admin">Admin</option>
-            <option value="staff">Staff</option>
+            {uniqueRoles.length > 0 ? (
+              uniqueRoles.map((role) => (
+                <option key={role} value={role}>
+                  {role}
+                </option>
+              ))
+            ) : (
+              <>
+                <option value="admin">Admin</option>
+                <option value="staff">Staff</option>
+              </>
+            )}
           </select>
         </div>
+
+        {/* Date */}
         <div className="flex flex-col gap-y-2 w-full">
           <label className="text-base-100 text-sm font-medium ml-2">Date</label>
           <input
@@ -107,6 +114,8 @@ export default function AdminDrawer() {
             className="input w-full"
           />
         </div>
+
+        {/* Time */}
         <div className="flex items-start justify-start gap-4 w-full">
           <div className="flex flex-col w-full gap-y-2">
             <label className="text-base-100 text-sm font-medium ml-2">
@@ -131,16 +140,18 @@ export default function AdminDrawer() {
               onChange={(e) =>
                 setNewShift((prev) => ({ ...prev, end: e.target.value }))
               }
-              className="input w-full "
+              className="input w-full"
             />
           </div>
         </div>
+
+        {/* Description */}
         <div className="flex flex-col gap-y-2 w-full">
           <label className="text-base-100 text-sm font-medium ml-2">
             Comments
           </label>
           <textarea
-            placeholder="This is my Bio description that I've added to my profile"
+            placeholder="Add shift description"
             value={newShift.description}
             onChange={(e) =>
               setNewShift((prev) => ({
@@ -148,9 +159,11 @@ export default function AdminDrawer() {
                 description: e.target.value,
               }))
             }
-            className=" textarea w-full  "
+            className="textarea w-full"
           />
         </div>
+
+        {/* Recurrence */}
         <div className="flex flex-col gap-y-2 w-full">
           <label className="text-base-100 text-sm font-medium ml-2">
             Recurrence
@@ -158,7 +171,10 @@ export default function AdminDrawer() {
           <select
             value={newShift.recurrence}
             onChange={(e) =>
-              setNewShift((prev) => ({ ...prev, recurrance: e.target.value }))
+              setNewShift((prev) => ({
+                ...prev,
+                recurrence: e.target.value,
+              }))
             }
             className="select w-full "
           >
@@ -167,6 +183,10 @@ export default function AdminDrawer() {
             <option value="everyday">Every day</option>
           </select>
         </div>
+
+        <button type="submit" className="btn btn-primary w-full mt-4">
+          Add Shift
+        </button>
       </form>
     </div>
   );
