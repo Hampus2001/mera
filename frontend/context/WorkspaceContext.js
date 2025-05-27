@@ -19,13 +19,13 @@ export default function WorkspaceContext({ children }) {
   const [monthView, setMonthView] = useState("");
   const [users, setUsers] = useState([]);
 
-    const [createUser, setCreateUsers] = useState ({
-    company_id: companyId,
+  const [createUser, setCreateUsers] = useState({
+    company_id: contextId,
     user_id: users.length + 1,
-    username: username,
-    password: password,
-    role: roles,
-    emai: email,
+    username: "",
+    password: "",
+    role: "",
+    email: "",
     admin: true,
   });
 
@@ -62,7 +62,7 @@ export default function WorkspaceContext({ children }) {
         users,
         setUsers,
         createUser,
-        setCreateUsers
+        setCreateUsers,
       }}
     >
       {children}

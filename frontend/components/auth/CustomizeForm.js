@@ -18,7 +18,7 @@ export default function CustomizeForm() {
     setUsers,
     companyId,
     createUser,
-    setCreateusers,
+    setCreateUsers,
   } = useContext(HandleWorkspaceContext);
 
   return (
@@ -37,8 +37,10 @@ export default function CustomizeForm() {
         />
 
         <input
-          value={roles}
-          onChange={(e) => setRoles(e.target.value)}
+          value={createUser.role}
+          onChange={(e) =>
+            setCreateUsers({ ...createUser, role: e.target.value })
+          }
           type="text"
           placeholder="What your role?"
           className="input"
@@ -70,8 +72,10 @@ export default function CustomizeForm() {
         type="button"
         className="btn btn-primary w-full col-span-2"
         onClick={() => {
-          if (company && roles && monthView && meraTheme) {
+          if (company && createUser.role && monthView && meraTheme) {
+            setUsers([createUser]);
             setStep("createUsers");
+            console.log(createUser);
           } else {
             alert("Complete all fields!");
           }

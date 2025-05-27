@@ -17,9 +17,8 @@ export default function SignupForm() {
     users,
     setUsers,
     createUser,
-    setCreateUsers
+    setCreateUsers,
   } = useContext(HandleWorkspaceContext);
-
 
   return (
     <div>
@@ -30,7 +29,9 @@ export default function SignupForm() {
         <input
           type="text"
           value={createUser.username}
-          onChange={(e) => setCreateUsers({...createUser, username: e.target.value})}
+          onChange={(e) =>
+            setCreateUsers({ ...createUser, username: e.target.value })
+          }
           placeholder="Username"
           className="input w-full"
           required
@@ -38,15 +39,19 @@ export default function SignupForm() {
         <input
           type="password"
           value={createUser.password}
-          onChange={(e) => setCreateUsers({...createUser, password: e.target.value})}
+          onChange={(e) =>
+            setCreateUsers({ ...createUser, password: e.target.value })
+          }
           placeholder="Password"
           className="input w-full"
           required
         />
         <input
           type="email"
-          value={email}
-         onChange={(e) => setCreateUsers({...createUser, email: e.target.value})}
+          value={createUser.email}
+          onChange={(e) =>
+            setCreateUsers({ ...createUser, email: e.target.value })
+          }
           placeholder="Email"
           className="input w-full"
           required
@@ -57,7 +62,7 @@ export default function SignupForm() {
           className="btn btn-primary w-full"
           onClick={() => {
             setStep("customize");
-            setUsers(...users, createUser)
+            setUsers(...users, createUser);
           }}
         >
           Next

@@ -12,18 +12,15 @@ export default function CreateUsersForm() {
 
   const [companyRoles, setCompanyRoles] = useState([]); // ideally from props/context
   const [companyObject, setCompanyObject] = useState([]);
-  const [companyId] = useState(Date.now());
 
-  const { setContextId, setActiveUser } = useContext(HandleWorkspaceContext);
+  const { setContextId, setActiveUser, contextId } = useContext(
+    HandleWorkspaceContext
+  );
   const router = useRouter();
-
-  useEffect(() => {
-    setContextId(companyId);
-  }, [companyId]);
 
   function addEmployee() {
     const createUser = {
-      company_id: companyId,
+      company_id: contextId,
       user_id: users.length + 1,
       username,
       password,
@@ -201,7 +198,10 @@ export default function CreateUsersForm() {
         </div>
       </div>
 
-      <button className="btn btn-primary w-full" onClick={workspaceData}>
+      <button
+        className="btn btn-primary w-full"
+        onClick={() => router.push("/schedulePage")}
+      >
         Finish
       </button>
     </div>
