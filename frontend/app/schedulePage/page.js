@@ -8,7 +8,7 @@ import ScheduleNav from "@/components/ScheduleNav";
 import { HandleCalendarContext } from "@/context/CalendarContext";
 
 import Sidebar from "@/components/Sidebar";
-import AdminDrawer from "@/components/AdminDrawer";
+
 import DrawerBase from "@/components/DrawerBase";
 
 export default function SchedulePage() {

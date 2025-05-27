@@ -1,5 +1,8 @@
 "use client";
 
+import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
+import { useContext } from "react";
+
 export default function SignupForm({
   username,
   setUsername,
@@ -7,8 +10,8 @@ export default function SignupForm({
   setEmail,
   password,
   setPassword,
-  setStep,
 }) {
+  const { step, setStep } = useContext(HandleWorkspaceContext);
   return (
     <div>
       <h2 className="text-3xl leading-loose pb-8 lg:pb-6">

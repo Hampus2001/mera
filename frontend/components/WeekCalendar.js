@@ -143,10 +143,10 @@ export default function WeekCalendar({ openDrawer }) {
   }, [todaysState, month, year, redDays]);
 
   return (
-    <div className="flex flex-col w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)]">
-      <div className="flex flex-col gap-4 lg:p-4 p-0 w-full ">
+    <div className="flex flex-col w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] ">
+      <div className="flex flex-col p-0 w-full ">
         <div className="flex text-xs w-full bg-base-100">
-          <div className="flex flex-col w-16 mt-6 justify-between items-center gap-y-4 pt-4">
+          <div className="flex flex-col w-16 mt-6 justify-between items-center gap-y-4">
             {Array.from({ length: 24 }).map((_, index) => (
               <h6
                 key={index}

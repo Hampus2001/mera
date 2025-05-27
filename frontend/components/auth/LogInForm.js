@@ -1,11 +1,13 @@
 "use client";
 
+import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
+import { useContext } from "react";
+
 export default function LoginForm({
   email,
   setEmail,
   password,
   setPassword,
-  setStep,
   setContextId,
   setActiveUser,
   router,
@@ -33,6 +35,8 @@ export default function LoginForm({
     setEmail("");
     setPassword("");
   }
+
+  const { step, setStep } = useContext(HandleWorkspaceContext);
 
   return (
     <div className="">

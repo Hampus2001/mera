@@ -83,7 +83,7 @@ export default function DayCalendar({ openDrawer }) {
     newCalendar.push(
       <div
         key={dayDate}
-        className={`flex flex-col w-full justify-start items-start h-full border-b border-l border-gray-300 ${dayStyle}`}
+        className={`flex flex-col w-full justify-start divide-y-[0,025 rem] items-start h-full border-b border-l border-gray-300 ${dayStyle}`}
       >
         {redDays.map((holiday) => {
           if (
@@ -132,9 +132,9 @@ export default function DayCalendar({ openDrawer }) {
 
   return (
     <>
-      <div className="flex flex-col gap-4  w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)]">
+      <div className="flex flex-col gap-4 w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)]">
         <div className="flex flex-grow text-xs w-full gap-1 text-start bg-base-100">
-          <div className="flex flex-col w-fit mt-6  justify-between items-center bg-base-100">
+          <div className="flex flex-col p-6 mt-6 justify-between w-[2.3rem] items-center bg-base-100">
             {Array.from({ length: 24 }).map((_, index) => (
               <p
                 key={index}
@@ -146,7 +146,7 @@ export default function DayCalendar({ openDrawer }) {
             ))}
           </div>
           <div className="flex flex-col w-full border devide-x devide-y devide-neutral">
-            <div className="flex justify-center items-center border-b border-neutral h-6">
+            <div className="flex justify-center items-center border-b border-neutral h-8">
               <p>
                 {currentDayString} - {todaysState}
               </p>
