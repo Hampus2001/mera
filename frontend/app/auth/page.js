@@ -10,20 +10,9 @@ import CustomizeForm from "@/components/auth/CustomizeForm";
 import CreateUsersForm from "@/components/auth/CreateUsersForm";
 
 export default function AuthPage() {
-  const { step, setStep } = useContext(HandleWorkspaceContext);
-
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [company, setCompany] = useState("");
-  const [roles, setRoles] = useState("");
-  const [meraTheme, setMeraTheme] = useState("");
-  const [monthView, setMonthView] = useState("");
-
-  const { setContextId, setActiveUser } = useContext(HandleWorkspaceContext);
-  const router = useRouter();
-
-  const sharedProps = {
+  const {
+    step,
+    setStep,
     email,
     setEmail,
     username,
@@ -40,8 +29,9 @@ export default function AuthPage() {
     setMonthView,
     setContextId,
     setActiveUser,
-    router,
-  };
+  } = useContext(HandleWorkspaceContext);
+
+  const router = useRouter();
 
   return (
     <>
