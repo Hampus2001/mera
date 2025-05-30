@@ -7,7 +7,7 @@ export const HandleWorkspaceContext = createContext([]);
 export default function WorkspaceContext({ children }) {
   const [contextId, setContextId] = useState(1746442347439);
   const [activeUser, setActiveUser] = useState(null);
-  const [activeUserId, setActiveUserId] = useState(null);
+  const [activeUserId, setActiveUserId] = useState(2);
 
   //Create account data
   const [step, setStep] = useState("login");
@@ -18,7 +18,35 @@ export default function WorkspaceContext({ children }) {
   const [roles, setRoles] = useState("");
   const [meraTheme, setMeraTheme] = useState("");
   const [monthView, setMonthView] = useState("Month");
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([
+    {
+      company_id: contextId,
+      user_id: 1,
+      username: "Hampus",
+      password: "sommar",
+      role: "chef",
+      email: "Hampus@test.com",
+      admin: true,
+    },
+    {
+      company_id: contextId,
+      user_id: 2,
+      username: "Hugo",
+      password: "sommar",
+      role: "CEO",
+      email: "Huggebigge@test.com",
+      admin: true,
+    },
+    {
+      company_id: contextId,
+      user_id: 3,
+      username: "Justus",
+      password: "vinter",
+      role: "Medarbetare",
+      email: "Jurre@test.com",
+      admin: true,
+    },
+  ]);
 
   const [createUser, setCreateUsers] = useState({
     company_id: contextId,

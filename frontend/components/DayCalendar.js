@@ -1,6 +1,7 @@
 "use client";
 
 import { HandleCalendarContext } from "@/context/CalendarContext";
+import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 import { useContext, useEffect, useState } from "react";
 
 import { FaArrowLeft, FaArrowRight, FaPlus, FaBars } from "react-icons/fa";
@@ -36,7 +37,10 @@ export default function DayCalendar({ openDrawer }) {
     activeCalendar,
     setActiveCalendar,
     todaysState,
+    shifts,
   } = useContext(HandleCalendarContext);
+
+  const { activeUserId, activeUser } = useContext(HandleWorkspaceContext);
 
   const [currentDayString, setCurrentDayString] = useState("");
   const [lastDayOfCurrentMonth, setLastDayOfCurrentMonth] = useState(
@@ -46,6 +50,9 @@ export default function DayCalendar({ openDrawer }) {
     lastDayOfCurrentMonth.getDate()
   );
 
+  useEffect(() => {
+    getDaysInCurrentWeek();
+  }, [activeUserId]);
   function getDaysInCurrentWeek() {
     const newCalendar = [];
 
@@ -54,7 +61,7 @@ export default function DayCalendar({ openDrawer }) {
 
     // Create a new date object based on `todaysState`
     const baseDate = new Date(year, month, todaysState);
-    console.log("base", baseDate);
+
     const currentDay = baseDate.getDay(); // Sunday = 0, Monday = 1, ..., Saturday = 6
 
     if (currentDay == 0) {
@@ -79,11 +86,14 @@ export default function DayCalendar({ openDrawer }) {
       dayDate.toDateString() === todaysDate.toDateString()
         ? "bg-base-100" //Change bgColor of todays date.
         : "bg-base-100";
-
+    let date = `${year}-${
+      month + 1 < 10 && month + 1 != 1 ? "0" + (month + 1) : month + 1
+    }-${todaysState < 10 ? "0" + todaysState : todaysState}`;
+    console.log("date", date);
     newCalendar.push(
       <div
         key={dayDate}
-        className={`flex flex-col w-full justify-start items-start h-full border-b-[0.025rem]  ${dayStyle}`}
+        className={`grid grid-cols-10 grid-rows-24 w-full justify-start items-start  border-b-[0.025rem]  ${dayStyle}`}
       >
         {redDays.map((holiday) => {
           if (
@@ -120,6 +130,25 @@ export default function DayCalendar({ openDrawer }) {
             );
           }
         })}
+        {shifts?.map((shift, index) => {
+          if (shift.date == date && shift.user_id == activeUserId) {
+            const startHour = parseInt(shift.start.split(":")[0], 10);
+            const endHour = parseInt(shift.end.split(":")[0], 10);
+            const rowSpan = Math.max(1, endHour - startHour);
+
+            return (
+              <p
+                className={`flex w-full h-full card items-center p-5 lg:p-2 row-span-${rowSpan} bg-success text-success-content justify-center hover:cursor-pointer`}
+                style={{
+                  gridRowStart: startHour + 1, // +1 because grid rows start at 1
+                }}
+                key={index}
+              >
+                {shift.start} - {shift.end}
+              </p>
+            );
+          }
+        })}
       </div>
     );
 
@@ -134,7 +163,7 @@ export default function DayCalendar({ openDrawer }) {
     <>
       <div className="flex flex-col gap-4 w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] pr-8 lg:pr-0 bg-base-100 overflow-x-hidden">
         <div className="flex flex-grow text-xs w-full gap-1 text-start ">
-          <div className="flex flex-col p-6 mt-6 justify-between w-16 items-center ">
+          <div className="flex flex-col px-6 mt-4 justify-between w-16 items-center ">
             {Array.from({ length: 24 }).map((_, index) => (
               <h6
                 key={index}
@@ -151,9 +180,7 @@ export default function DayCalendar({ openDrawer }) {
                 {currentDayString} - {todaysState}
               </h6>
             </div>
-            <div className="flex w-full h-full border-r-[0.025rem]">
-              {calendar}
-            </div>
+            <div className=" w-full h-full border-r-[0.025rem]">{calendar}</div>
           </div>
         </div>
       </div>

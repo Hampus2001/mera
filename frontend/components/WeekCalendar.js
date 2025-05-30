@@ -4,6 +4,7 @@ import { HandleCalendarContext } from "@/context/CalendarContext";
 import { useContext, useEffect, useState } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { FaArrowLeft, FaArrowRight, FaPlus, FaBars } from "react-icons/fa";
+import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 
 export default function WeekCalendar({ openDrawer }) {
   //Get x and y coordinates for modal window
@@ -45,7 +46,14 @@ export default function WeekCalendar({ openDrawer }) {
     setTodaysState,
     baseDate,
     currentDay,
+    shifts,
   } = useContext(HandleCalendarContext);
+
+  const { activeUser, activeUserId } = useContext(HandleWorkspaceContext);
+
+  useEffect(() => {
+    getDaysInCurrentWeek();
+  }, [activeUserId]);
 
   function getDaysInCurrentWeek() {
     const newCalendar = [];
@@ -85,6 +93,11 @@ export default function WeekCalendar({ openDrawer }) {
 
         setDisplayedWeek(getISOWeekNumber(currentWeek));
       }
+      let date = `${year}-${
+        month + 1 < 10 && month + 1 != 1 ? "0" + (month + 1) : month + 1
+      }-${
+        dayDate.getDate() < 10 ? "0" + dayDate.getDate() : dayDate.getDate()
+      }`;
 
       const dayStyle =
         dayDate.toDateString() === todaysDate.toDateString()
@@ -94,7 +107,7 @@ export default function WeekCalendar({ openDrawer }) {
       newCalendar.push(
         <div
           key={i}
-          className={`flex flex-col w-full justify-start items-start h-full p-2 ${dayStyle} `}
+          className={`flex flex-col w-full gap-2 justify-start items-start h-full p-2 ${dayStyle} `}
         >
           {redDays.map((holiday) => {
             if (
@@ -128,6 +141,18 @@ export default function WeekCalendar({ openDrawer }) {
                 >
                   <p className="hidden lg:flex p-2">{holiday.name}</p>
                 </button>
+              );
+            }
+          })}
+          {shifts?.map((shift, index) => {
+            if (shift.date == date && shift.user_id == activeUserId) {
+              return (
+                <p
+                  className="flex w-full card p-5 lg:p-2 bg-success text-success-content justify-center hover:cursor-pointer"
+                  key={index}
+                >
+                  {shift.start} - {shift.end}
+                </p>
               );
             }
           })}
