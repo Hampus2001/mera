@@ -17,7 +17,7 @@ export default function WorkspaceContext({ children }) {
   const [company, setCompany] = useState("");
   const [roles, setRoles] = useState("");
   const [meraTheme, setMeraTheme] = useState("");
-  const [monthView, setMonthView] = useState("");
+  const [monthView, setMonthView] = useState("Month");
   const [users, setUsers] = useState([]);
 
   const [createUser, setCreateUsers] = useState({

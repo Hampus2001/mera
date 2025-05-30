@@ -17,6 +17,7 @@ import {
   ArrowLeftIcon,
   ArrowRightIcon,
 } from "@radix-ui/react-icons";
+import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 
 export default function ScheduleNav() {
   const [isOpen, setOpen] = useState(false);
@@ -42,11 +43,9 @@ export default function ScheduleNav() {
     getDateOfISOWeek,
     daysInMonth,
     setDaysInMonth,
-    users,
-    activeUserId,
-    activeUser,
-    setActiveUser,
   } = useContext(HandleCalendarContext);
+  const { users, activeUserId, activeUser, setActiveUser, setActiveUserId } =
+    useContext(HandleWorkspaceContext);
 
   useEffect(() => {
     setMonthMode(activeCalendar === "Month");
@@ -148,8 +147,16 @@ export default function ScheduleNav() {
             <option value="Day">Day Mode</option>
           </select>
 
-          <select className="select select-sm ui-app bg-base-200 border-none">
-            <option value={"Filter users"}>Filter users</option>
+          <select
+            value={activeUserId}
+            onChange={(e) => setActiveUserId(Number(e.target.value))}
+            className="select select-sm ui-app bg-base-200 border-none"
+          >
+            {users?.map((user) => (
+              <option value={user.user_id} key={user.user_id}>
+                {user.username}
+              </option>
+            ))}
           </select>
         </div>
         <div className="flex items-center justify-end  w-full">

@@ -97,7 +97,7 @@ export default function CalendarContext({ children }) {
     },
     {
       company_id: 32,
-      user_id: 2,
+      user_id: 3,
       date: "2025-05-12",
       start: "08:00",
       end: "17:00",

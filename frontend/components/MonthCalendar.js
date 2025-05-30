@@ -7,6 +7,7 @@ import { FaPlus } from "react-icons/fa";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
+import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 
 export default function Calendar({ openDrawer }) {
   //states
@@ -37,6 +38,8 @@ export default function Calendar({ openDrawer }) {
     setShifts,
   } = useContext(HandleCalendarContext);
 
+  const { activeUserId, activeUser } = useContext(HandleWorkspaceContext);
+
   const router = useRouter();
 
   //Get x and y coordinates for modal window
@@ -52,7 +55,9 @@ export default function Calendar({ openDrawer }) {
   };
 
   function findShiftsOnDate(date) {
-    const shiftsAtDate = shifts.filter((shift) => shift.date == date);
+    const shiftsAtDate = shifts.filter(
+      (shift) => shift.date == date && shift.user_id == activeUserId
+    );
     setSelectedShifts(shiftsAtDate);
   }
 
@@ -70,8 +75,10 @@ export default function Calendar({ openDrawer }) {
         .padStart(2, "0")}`
     );
     setSelectedEvents([]);
-    setShowModal(true);
     getCoordinates(e);
+    setTimeout(() => {
+      setShowModal(true);
+    }, 50);
 
     if (width < 1024) {
       setActiveCalendar("Day");
@@ -91,6 +98,10 @@ export default function Calendar({ openDrawer }) {
       }
     }
   }, [showModal]);
+
+  useEffect(() => {
+    getDaysInCurrentMonth();
+  }, [activeUserId]);
 
   function getDaysInCurrentMonth() {
     const newCalendar = [];
@@ -142,7 +153,7 @@ export default function Calendar({ openDrawer }) {
             if (currentMonth == 0) {
               setSelectedDate(`${currentYear - 1}-12-${i < 10 ? "0" + i : i}`);
               setSelectedEvents([]);
-              setShowModal(true);
+
               getCoordinates(e);
               handleDayClick(currentYear - 1, currentMonth - 1, i, e);
             } else {
@@ -152,7 +163,7 @@ export default function Calendar({ openDrawer }) {
                 }-${i < 10 ? "0" + i : i}`
               );
               setSelectedEvents([]);
-              setShowModal(true);
+
               getCoordinates(e);
               handleDayClick(currentYear, currentMonth - 1, i, e);
             }
@@ -213,7 +224,7 @@ export default function Calendar({ openDrawer }) {
               }-${i < 10 ? "0" + i : i}`
             );
             setSelectedEvents([]);
-            setShowModal(true);
+
             getCoordinates(e);
           }}
           key={`current-${i}`}
@@ -236,7 +247,7 @@ export default function Calendar({ openDrawer }) {
             }
           })}
           {shifts?.map((shift, index) => {
-            if (shift.date == date) {
+            if (shift.date == date && shift.user_id == activeUserId) {
               return (
                 <h6
                   className="flex justify-center text-center items-center py-1 px-2 bg-success text-success-content rounded-full"
@@ -262,7 +273,7 @@ export default function Calendar({ openDrawer }) {
             if (currentMonth == 11) {
               setSelectedDate(`${currentYear + 1}-01-${i < 10 ? "0" + i : i}`);
               setSelectedEvents([]);
-              setShowModal(true);
+
               getCoordinates(e);
               handleDayClick(currentYear + 1, currentMonth + 1, i, e);
             } else {
@@ -274,7 +285,7 @@ export default function Calendar({ openDrawer }) {
                 }-${i < 10 ? "0" + i : i}`
               );
               setSelectedEvents([]);
-              setShowModal(true);
+
               getCoordinates(e);
               handleDayClick(currentYear, currentMonth + 1, i, e);
             }
@@ -401,7 +412,10 @@ export default function Calendar({ openDrawer }) {
                       key={index}
                       className="card flex flex-col w-full justify-center p-4 bg-secondary-content text-secondary "
                     >
-                      <p key={index}>{` ${shift.role}`}</p>
+                      <p
+                        className="font-bold"
+                        key={index}
+                      >{` ${shift.role}`}</p>
                       <p>{` start: ${shift.start} - end: ${shift.end}`}</p>
                       <p>{shift.description}</p>
                     </div>
