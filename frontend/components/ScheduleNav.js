@@ -96,28 +96,55 @@ export default function ScheduleNav() {
             <option value="10">November</option>
             <option value="11">December</option>
           </select>
-
-          {weekMode && (
+          {monthMode && (
             <select
-              value={+displayedWeek}
-              onChange={(e) => {
-                setDisplayedWeek(parseInt(e.target.value));
-                const mondayOfSelectedWeekDate = getDateOfISOWeek(
-                  parseInt(e.target.value),
-                  year
-                );
-                setYear(parseInt(mondayOfSelectedWeekDate.year));
-                setMonth(parseInt(mondayOfSelectedWeekDate.month - 1));
-                setTodaysState(parseInt(mondayOfSelectedWeekDate.day));
-              }}
+              value={activeUserId}
+              onChange={(e) => setActiveUserId(Number(e.target.value))}
               className="select select-sm ui-app bg-base-200 border-none"
             >
-              {Array.from({ length: 52 }).map((_, index) => (
-                <option value={index + 1} key={index + 1}>
-                  Week {index + 1}
+              {users?.map((user) => (
+                <option value={user.user_id} key={user.user_id}>
+                  {user.username}
                 </option>
               ))}
             </select>
+          )}
+
+          {weekMode && (
+            <>
+              <select
+                value={+displayedWeek}
+                onChange={(e) => {
+                  setDisplayedWeek(parseInt(e.target.value));
+                  const mondayOfSelectedWeekDate = getDateOfISOWeek(
+                    parseInt(e.target.value),
+                    year
+                  );
+                  setYear(parseInt(mondayOfSelectedWeekDate.year));
+                  setMonth(parseInt(mondayOfSelectedWeekDate.month - 1));
+                  setTodaysState(parseInt(mondayOfSelectedWeekDate.day));
+                }}
+                className="select select-sm ui-app bg-base-200 border-none"
+              >
+                {Array.from({ length: 52 }).map((_, index) => (
+                  <option value={index + 1} key={index + 1}>
+                    Week {index + 1}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={activeUserId}
+                onChange={(e) => setActiveUserId(Number(e.target.value))}
+                className="select select-sm ui-app bg-base-200 border-none"
+              >
+                <option value={0}>all</option>
+                {users?.map((user) => (
+                  <option value={user.user_id} key={user.user_id}>
+                    {user.username}
+                  </option>
+                ))}
+              </select>
+            </>
           )}
 
           {dayMode && (
@@ -134,6 +161,18 @@ export default function ScheduleNav() {
                   </option>
                 ))}
               </select>
+              <select
+                value={activeUserId}
+                onChange={(e) => setActiveUserId(Number(e.target.value))}
+                className="select select-sm ui-app bg-base-200 border-none"
+              >
+                <option value={0}>all</option>
+                {users?.map((user) => (
+                  <option value={user.user_id} key={user.user_id}>
+                    {user.username}
+                  </option>
+                ))}
+              </select>
             </>
           )}
 
@@ -145,18 +184,6 @@ export default function ScheduleNav() {
             <option value="Month">Month Mode</option>
             <option value="Week">Week Mode</option>
             <option value="Day">Day Mode</option>
-          </select>
-
-          <select
-            value={activeUserId}
-            onChange={(e) => setActiveUserId(Number(e.target.value))}
-            className="select select-sm ui-app bg-base-200 border-none"
-          >
-            {users?.map((user) => (
-              <option value={user.user_id} key={user.user_id}>
-                {user.username}
-              </option>
-            ))}
           </select>
         </div>
         <div className="flex items-center justify-end  w-full">

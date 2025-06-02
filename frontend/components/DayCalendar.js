@@ -83,69 +83,77 @@ export default function DayCalendar({ openDrawer }) {
 
     const dayDate = new Date(baseDate);
 
-    const dayStyle =
-      dayDate.toDateString() === todaysDate.toDateString()
-        ? "bg-base-100" //Change bgColor of todays date.
-        : "bg-base-100";
     let date = `${year}-${
       month + 1 < 10 && month + 1 != 1 ? "0" + (month + 1) : month + 1
     }-${todaysState < 10 ? "0" + todaysState : todaysState}`;
-    console.log("date", date);
+
+    const displayShifts = [];
+    shifts?.map((shift, index) => {
+      if (activeUserId != 0) {
+        if (shift.date == date && shift.user_id == activeUserId) {
+          const startHour = parseInt(shift.start.split(":")[0], 10);
+          const endHour = parseInt(shift.end.split(":")[0], 10);
+          const rowSpan = endHour - startHour;
+          displayShifts.push(
+            <p
+              className={`flex w-auto h-full row-span-${rowSpan} col-start-${
+                displayShifts.length + 1
+              } col-span-1 p-5 lg:p-2 bg-primary text-primary-content rounded-lg justify-center items-center text-center hover:cursor-pointer`}
+              style={{
+                gridRowStart: startHour + 2,
+                gridRowEnd: endHour + 2,
+              }}
+              key={index}
+            >
+              {shift.start}
+              <br /> - <br /> {shift.end}
+            </p>
+          );
+        }
+      } else if (activeUserId == 0) {
+        if (shift.date == date) {
+          const startHour = parseInt(shift.start.split(":")[0], 10);
+          const endHour = parseInt(shift.end.split(":")[0], 10);
+          const rowSpan = endHour - startHour;
+          displayShifts.push(
+            <p
+              className={`flex w-auto h-full row-span-${rowSpan} col-start-${
+                displayShifts.length + 1
+              } col-span-1 p-5 lg:p-2 bg-primary text-primary-content rounded-lg justify-center items-center text-center hover:cursor-pointer`}
+              style={{
+                gridRowStart: startHour + 2,
+                gridRowEnd: endHour + 2,
+              }}
+              key={index}
+            >
+              {shift.start}
+              <br /> - <br /> {shift.end}
+            </p>
+          );
+        }
+      }
+    });
+    redDays.map((holiday) => {
+      if (
+        holiday.date ==
+        year +
+          "-" +
+          (month + 1 < 10 ? "0" + (month + 1) : month + 1) +
+          "-" +
+          (dayDate.getDate() < 10 ? "0" + dayDate.getDate() : dayDate.getDate())
+      ) {
+        setActiveHoliday(holiday.name);
+      } else {
+        setActiveHoliday("test");
+      }
+    });
+
     newCalendar.push(
       <div
         key={dayDate}
-        className={`grid grid-cols-20 gap-1 grid-rows-24 w-full justify-start items-start border-b-[0.025rem] h-[calc(100vh-16rem)] lg:h-[calc(100vh-8rem)] ${dayStyle}`}
+        className={`grid grid-cols-${displayShifts.length} gap-x-1 grid-rows-24 w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-8rem)]`}
       >
-        {Array.from({ length: 24 }).map((_, index) => (
-          <h6
-            key={index}
-            className={`flex h-full items-end justify-center row-span-1 col-span-1 col-start-1 row-start-${
-              index + 1
-            } 
-              }`}
-          >
-            {index.toString().padStart(2, "0")}:00
-          </h6>
-        ))}
-
-        {redDays.map((holiday) => {
-          if (
-            holiday.date ==
-            year +
-              "-" +
-              (month + 1 < 10 ? "0" + (month + 1) : month + 1) +
-              "-" +
-              (dayDate.getDate() < 10
-                ? "0" + dayDate.getDate()
-                : dayDate.getDate())
-          ) {
-            setActiveHoliday(holiday.name);
-          } else {
-            setActiveHoliday("test");
-          }
-        })}
-        {shifts?.map((shift, index) => {
-          if (shift.date == date && shift.user_id == activeUserId) {
-            const startHour = parseInt(shift.start.split(":")[0], 10);
-            const endHour = parseInt(shift.end.split(":")[0], 10);
-            const rowSpan = Math.max(1, endHour - startHour);
-            const colStart = 2 + index * 4;
-            return (
-              <p
-                className={`flex w-full h-full rounded-lg items-center p-5 lg:p-2 row-start-${
-                  startHour + 2
-                } row-span-${rowSpan} col-span-4 bg-secondary-content text-success-content justify-center hover:cursor-pointer`}
-                style={{
-                  gridRowStart: startHour + 2,
-                  gridColumnStart: colStart,
-                }}
-                key={index}
-              >
-                {shift.start} - {shift.end}
-              </p>
-            );
-          }
-        })}
+        {displayShifts ? displayShifts : ""}
       </div>
     );
 
@@ -173,15 +181,30 @@ export default function DayCalendar({ openDrawer }) {
   return (
     <>
       <div className="flex flex-col gap-4 w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] pr-8 lg:pr-0 bg-base-100 overflow-x-hidden">
-        <div className="flex flex-grow text-xs w-full gap-1 text-start ">
-          <div className="flex flex-col w-full border-t-[0.025rem] border-l-[0.025rem] divide-x-[0.025rem] ">
-            <div className="flex justify-center items-center border-b-[0.025rem] h-8">
-              <h6>
-                {currentDayString} - {todaysState}{" "}
-                {activeHoliday ? " - " + activeHoliday.name : ""}
+        <div className="grid grid-cols-16 grid-rows-25 w-full ">
+          <div className="flex col-start-2 col-span-14 justify-center items-center border-x-[0.025rem] border-t-[0.025rem]  px-1">
+            <h6>
+              {currentDayString} - {todaysState}{" "}
+              {activeHoliday ? " - " + activeHoliday.name : ""}
+            </h6>
+          </div>
+
+          <div className="grid grid-rows-24 grid-cols-1 row-start-2 col-start-1 row-span-25 px-1">
+            {Array.from({ length: 24 }).map((_, index) => (
+              <h6
+                key={index}
+                className={`flex col-span-1 row-span-1 col-start-1 justify-center items-end
+              }`}
+                style={{
+                  gridRowStart: index + 1,
+                }}
+              >
+                {index.toString().padStart(2, "0")}:00
               </h6>
-            </div>
-            <div className=" w-full h-full border-r-[0.025rem]">{calendar}</div>
+            ))}
+          </div>
+          <div className="row-start-2 col-start-2 col-span-14 row-span-24 px-1 border-[0.025rem]">
+            {calendar}
           </div>
         </div>
       </div>

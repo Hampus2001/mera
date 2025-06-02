@@ -80,7 +80,7 @@ export default function CalendarContext({ children }) {
     {
       company_id: 32,
       user_id: 1,
-      date: "2025-05-29",
+      date: "2025-06-03",
       start: "06:00",
       end: "15:00",
       description: "Rast 11:00 - 11:45",
@@ -89,7 +89,16 @@ export default function CalendarContext({ children }) {
     {
       company_id: 32,
       user_id: 1,
-      date: "2025-05-29",
+      date: "2025-06-03",
+      start: "03:00",
+      end: "11:00",
+      description: "Rast 07:00 - 08:00",
+      role: "öppning",
+    },
+    {
+      company_id: 32,
+      user_id: 1,
+      date: "2025-06-03",
       start: "10:00",
       end: "19:00",
       description: "Rast 14:00 - 14:45",

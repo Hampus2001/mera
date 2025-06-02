@@ -98,66 +98,105 @@ export default function WeekCalendar({ openDrawer }) {
       }-${
         dayDate.getDate() < 10 ? "0" + dayDate.getDate() : dayDate.getDate()
       }`;
+      const displayShifts = [];
+      {
+        shifts?.map((shift, index) => {
+          if (activeUserId != 0) {
+            if (shift.date == date && shift.user_id == activeUserId) {
+              const startHour = parseInt(shift.start.split(":")[0], 10);
+              const endHour = parseInt(shift.end.split(":")[0], 10);
+              const rowSpan = endHour - startHour;
+              displayShifts.push(
+                <p
+                  className={`flex w-auto h-full row-span-${rowSpan} col-start-${
+                    displayShifts.length + 1
+                  } col-span-1 p-5 lg:p-2 bg-primary text-primary-content rounded-lg justify-center items-center text-center hover:cursor-pointer`}
+                  style={{
+                    gridRowStart: startHour + 2,
+                    gridRowEnd: endHour + 2,
+                  }}
+                  key={index}
+                >
+                  {shift.start}
+                  <br /> - <br /> {shift.end}
+                </p>
+              );
+            }
+          } else if (activeUserId == 0) {
+            if (shift.date == date) {
+              const startHour = parseInt(shift.start.split(":")[0], 10);
+              const endHour = parseInt(shift.end.split(":")[0], 10);
+              const rowSpan = endHour - startHour;
+              displayShifts.push(
+                <p
+                  className={`flex w-auto h-full row-span-${rowSpan} col-start-${
+                    displayShifts.length + 1
+                  } col-span-1 p-5 lg:p-2 bg-primary text-primary-content rounded-lg justify-center items-center text-center hover:cursor-pointer`}
+                  style={{
+                    gridRowStart: startHour + 2,
+                    gridRowEnd: endHour + 2,
+                  }}
+                  key={index}
+                >
+                  {shift.start}
+                  <br /> - <br /> {shift.end}
+                </p>
+              );
+            }
+          }
+        });
+      }
+      const displayHolidays = [];
+      {
+        redDays.map((holiday) => {
+          if (
+            holiday.date ==
+            year +
+              "-" +
+              (month + 1 < 10 ? "0" + (month + 1) : month + 1) +
+              "-" +
+              (dayDate.getDate() < 10
+                ? "0" + dayDate.getDate()
+                : dayDate.getDate())
+          ) {
+            displayHolidays.push(
+              <button
+                onClick={(e) => {
+                  setSelectedDate(
+                    year +
+                      "-" +
+                      (month + 1 < 10 ? "0" + (month + 1) : month + 1) +
+                      "-" +
+                      (dayDate.getDate() < 10
+                        ? "0" + dayDate.getDate()
+                        : dayDate.getDate())
+                  );
+                  setSelectedEvents(holiday.name);
+                  getCoordinates(e);
+                  setShowModal(true);
+                }}
+                key={dayDate.getDate()}
+                className={`flex w-full row-span-1 col-start-${displayHolidays.length} col-span-1 bg-info text-info-content justify-center items-center rounded-lg hover:cursor-pointer`}
+              >
+                <p className="hidden lg:flex p-2">{holiday.name}</p>
+              </button>
+            );
+          }
+        });
+      }
 
-      const dayStyle =
-        dayDate.toDateString() === todaysDate.toDateString()
-          ? "bg-primary text-primary-content"
-          : "bg-base-100 text-base-content";
+      const gridCols = displayShifts.length + displayHolidays.length;
+      console.log("grid cols", gridCols);
 
       newCalendar.push(
         <div
           key={i}
-          className={`flex w-full row-span-24 col-start-${
+          className={`grid p-1 gap-1 bg-base-100 text-base-content row-span-24 col-start-${
             i + 1
-          } gap-1 justify-start items-start h-full p-2 ${dayStyle} `}
+          } columns-${gridCols} grid-rows-24 col-span-1 h-full `}
         >
-          {redDays.map((holiday) => {
-            if (
-              holiday.date ==
-              year +
-                "-" +
-                (month + 1 < 10 ? "0" + (month + 1) : month + 1) +
-                "-" +
-                (dayDate.getDate() < 10
-                  ? "0" + dayDate.getDate()
-                  : dayDate.getDate())
-            ) {
-              return (
-                <button
-                  onClick={(e) => {
-                    setSelectedDate(
-                      year +
-                        "-" +
-                        (month + 1 < 10 ? "0" + (month + 1) : month + 1) +
-                        "-" +
-                        (dayDate.getDate() < 10
-                          ? "0" + dayDate.getDate()
-                          : dayDate.getDate())
-                    );
-                    setSelectedEvents(holiday.name);
-                    getCoordinates(e);
-                    setShowModal(true);
-                  }}
-                  key={dayDate.getDate()}
-                  className="flex w-full card p-3 lg:p-2 bg-info text-info-content justify-center hover:cursor-pointer"
-                >
-                  <p className="hidden lg:flex p-2">{holiday.name}</p>
-                </button>
-              );
-            }
-          })}
-          {shifts?.map((shift, index) => {
-            if (shift.date == date && shift.user_id == activeUserId) {
-              return (
-                <p
-                  className="flex w-full card p-5 lg:p-2 bg-success text-success-content justify-center hover:cursor-pointer"
-                  key={index}
-                >
-                  {shift.start} - {shift.end}
-                </p>
-              );
-            }
-          })}
+          {displayHolidays ? displayHolidays : ""}
+          {displayShifts ? displayShifts : ""}
         </div>
       );
     }
@@ -170,43 +209,45 @@ export default function WeekCalendar({ openDrawer }) {
   }, [todaysState, month, year, redDays]);
 
   return (
-    <div className="h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] z-0 grid grid-cols-8 grid-rows-25 w-full gap-1  pr-8 lg:pr-0 bg-base-100">
-      {Array.from({ length: 24 }).map((_, index) => (
-        <h6
-          key={index}
-          className={`flex col-span-1 row-span-1 col-start-1 justify-center items-center
+    <div className="h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] z-0 grid grid-cols-16  grid-rows-25 w-full pr-8 lg:pr-0 bg-base-100">
+      <div className="grid grid-rows-25 grid-cols-1 row-start-1 col-start-1 row-span-25 p-1">
+        {Array.from({ length: 24 }).map((_, index) => (
+          <h6
+            key={index}
+            className={`flex col-span-1 row-span-1 col-start-1 justify-center items-end
               }`}
-          style={{
-            gridRowStart: index + 2,
-          }}
-        >
-          {index.toString().padStart(2, "0")}:00
-        </h6>
-      ))}
+            style={{
+              gridRowStart: index + 2,
+            }}
+          >
+            {index.toString().padStart(2, "0")}:00
+          </h6>
+        ))}
+      </div>
 
-      <h6 className="flex w-full h-full justify-center items-center col-start-2 row-start-1">
+      <h6 className="flex w-full h-full justify-center border-y-[0.025rem] border-l-[0.025rem] items-center col-start-2 col-span-2 row-start-1">
         M
       </h6>
-      <h6 className="flex w-full h-full justify-center items-center col-start-3 row-start-1">
+      <h6 className="flex w-full h-full justify-center border-y-[0.025rem] border-l-[0.025rem] items-center col-start-4 col-span-2 row-start-1">
         T
       </h6>
-      <h6 className="flex w-full h-full justify-center items-center col-start-4 row-start-1">
+      <h6 className="flex w-full h-full justify-center border-y-[0.025rem] border-l-[0.025rem] items-center col-start-6 col-span-2 row-start-1">
         W
       </h6>
-      <h6 className="flex w-full h-full justify-center items-center col-start-5 row-start-1">
+      <h6 className="flex w-full h-full justify-center border-y-[0.025rem] border-l-[0.025rem] items-center col-start-8 col-span-2 row-start-1">
         T
       </h6>
-      <h6 className="flex w-full h-full justify-center items-center col-start-6 row-start-1">
+      <h6 className="flex w-full h-full justify-center border-y-[0.025rem] border-l-[0.025rem] items-center col-start-10 col-span-2 row-start-1">
         F
       </h6>
-      <h6 className="flex w-full h-full justify-center items-center col-start-7 row-start-1">
+      <h6 className="flex w-full h-full justify-center border-y-[0.025rem] border-l-[0.025rem] items-center col-start-12 col-span-2 row-start-1">
         S
       </h6>
-      <h6 className="flex w-full h-full justify-center items-center  col-start-8 row-start-1 border-b-[0.025rem]">
+      <h6 className="flex w-full h-full justify-center items-center  col-start-14 col-span-2 row-start-1 border-y-[0.025rem] border-x-[0.025rem]">
         S
       </h6>
 
-      <div className=" grid grid-cols-7 grid-rows-24 row-start-2 col-start-2 col-span-7 row-span-24">
+      <div className=" grid grid-cols-7 grid-rows-24 row-start-2 col-start-2 col-span-14 row-span-24 divide-x-[0.025rem] border-x-[0.025rem] border-b-[0.025rem]">
         {calendar}
       </div>
 
