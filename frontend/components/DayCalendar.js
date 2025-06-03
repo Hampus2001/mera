@@ -182,7 +182,7 @@ export default function DayCalendar({ openDrawer }) {
     <>
       <div className="flex flex-col gap-4 w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] pr-8 lg:pr-0 bg-base-100 overflow-x-hidden">
         <div className="grid grid-cols-16 grid-rows-25 w-full ">
-          <div className="flex col-start-2 col-span-14 justify-center items-center border-x-[0.025rem] border-t-[0.025rem]  px-1">
+          <div className="flex col-start-2 col-span-15 justify-center items-center border-x-[0.025rem] border-t-[0.025rem]  px-1">
             <h6>
               {currentDayString} - {todaysState}{" "}
               {activeHoliday ? " - " + activeHoliday.name : ""}
@@ -203,7 +203,7 @@ export default function DayCalendar({ openDrawer }) {
               </h6>
             ))}
           </div>
-          <div className="row-start-2 col-start-2 col-span-14 row-span-24 px-1 border-[0.025rem]">
+          <div className="row-start-2 col-start-2 col-span-15 row-span-24 px-1 border-[0.025rem]">
             {calendar}
           </div>
         </div>

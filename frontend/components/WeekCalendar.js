@@ -209,7 +209,7 @@ export default function WeekCalendar({ openDrawer }) {
   }, [todaysState, month, year, redDays]);
 
   return (
-    <div className="h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] z-0 grid grid-cols-16  grid-rows-25 w-full pr-8 lg:pr-0 bg-base-100">
+    <div className="h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] z-0 grid grid-cols-15  grid-rows-25 w-full pr-8 lg:pr-0 bg-base-100">
       <div className="grid grid-rows-25 grid-cols-1 row-start-1 col-start-1 row-span-25 p-1">
         {Array.from({ length: 24 }).map((_, index) => (
           <h6
