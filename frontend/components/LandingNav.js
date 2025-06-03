@@ -1,18 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { CaretDownIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { FaInstagram, FaFacebook } from "react-icons/fa";
 import ThemeSwitch from "./ThemeSwitch";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 import * as motion from "motion/react-client";
+import { HandleWorkspaceContext } from "@/context/WorkspaceContext";
 
 export default function LandingNav({ variant }) {
   const [open, setOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const [scrolled, setScrolled] = useState(false);
   const isAppMode = variant === "appMode";
+  const { setStep } = useContext(HandleWorkspaceContext);
 
   function handleMobileMenu() {
     setOpen((prev) => !prev);
@@ -76,21 +78,16 @@ export default function LandingNav({ variant }) {
                   </li>
                 </ul>
               </div>
-
-              <Link
-                className="btn ui-app"
-                onClick={handleMobileMenu}
-                href="/auth"
-              >
-                Log In
-              </Link>
-              <Link
-                className="btn ui-app btn-primary"
-                onClick={handleMobileMenu}
-                href="/auth"
-              >
-                Sign Up
-              </Link>
+              <button onClick={() => setStep("login")}>
+                <Link className="btn ui-app" href="/auth">
+                  Log In
+                </Link>
+              </button>
+              <button onClick={() => setStep("signup")}>
+                <Link className="btn ui-app btn-primary" href="/auth">
+                  Sign Up
+                </Link>
+              </button>
             </div>
 
             {/* Mobile menu button */}

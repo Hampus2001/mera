@@ -10,7 +10,7 @@ export default function WorkspaceContext({ children }) {
   const [activeUserId, setActiveUserId] = useState(1);
 
   //Create account data
-  const [step, setStep] = useState("login");
+  const [step, setStep] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
