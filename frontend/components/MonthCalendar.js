@@ -169,7 +169,7 @@ export default function Calendar({ openDrawer }) {
             }
           }}
           key={`prev-${i}`}
-          className=" col-span-1 bg-base-100 row-span-1 flex hover:cursor-pointer hover:bg-base-200 items-center flex-col p-2"
+          className=" col-span-1 bg-base-300 rounded-2xl lg:bg-base-100 lg:rounded-none row-span-1 flex hover:cursor-pointer hover:bg-base-200 items-center flex-col p-2"
         >
           {redDays?.map((holiday) => {
             let thisDayDate = "";
@@ -204,10 +204,11 @@ export default function Calendar({ openDrawer }) {
 
     // Fill in days of the current month
     for (let i = 1; i <= daysInMonth; i++) {
-      let currentDayStyle = "  bg-base-100 hover:bg-base-200 text-base-content";
+      let currentDayStyle =
+        "  bg-base-200  lg:bg-base-100 rounded-2xl lg:rounded-none hover:bg-base-200 text-base-content";
       if (i == currentDay && month == todaysMonth && year == todaysYear) {
         currentDayStyle =
-          "bg-primary text-primary-content hover:bg-secondary hover:text-secondary-content ";
+          "bg-primary text-primary-content hover:bg-secondary hover:text-secondary-content";
       }
       let date = `${year}-${month + 1 < 10 ? "0" + (month + 1) : month + 1}-${
         i < 10 ? "0" + i : i
@@ -228,7 +229,7 @@ export default function Calendar({ openDrawer }) {
             getCoordinates(e);
           }}
           key={`current-${i}`}
-          className={`bg-base-100 col-span-1 row-span-1 flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 font-diatype-medium text-xs lg:text-base gap-1    ${currentDayStyle} `}
+          className={`bg-base-200 rounded-2xl lg:base-100 lg:rounded-none col-span-1 row-span-1 flex hover:cursor-pointer items-center flex-col p-2 lg:p-4 font-diatype-medium text-xs lg:text-base gap-1    ${currentDayStyle} `}
         >
           <h6>{i}</h6>
 
@@ -250,10 +251,10 @@ export default function Calendar({ openDrawer }) {
             if (shift.date == date && shift.user_id == activeUserId) {
               return (
                 <h6
-                  className="flex justify-center text-center items-center py-1 px-2 bg-success text-success-content rounded-full"
+                  className=" justify-center text-center items-center  m-1 lg:m-0 py-1 px-2 bg-success text-success-content rounded-full"
                   key={index}
                 >
-                  {shift.start} - {shift.end}
+                  {width < 1024 && `${shift.start}-${shift.end}`}
                 </h6>
               );
             }
@@ -291,7 +292,7 @@ export default function Calendar({ openDrawer }) {
             }
           }}
           key={`next-${i}`}
-          className="col-span-1 row-span-1 bg-base-100 flex hover:cursor-pointer hover:bg-base-300 items-center flex-col p-2 font-diatype-medium text-xs lg:text-base"
+          className="col-span-1 row-span-1 bg-base-300 rounded-2xl lg:bg-base-100 lg:rounded-none flex hover:cursor-pointer hover:bg-base-300 items-center flex-col p-2 font-diatype-medium text-xs lg:text-base"
         >
           {redDays?.map((holiday) => {
             let thisDayDate = "";
@@ -337,11 +338,11 @@ export default function Calendar({ openDrawer }) {
 
   return (
     <>
-      <div className="overflow-hidden bg-base-100 ">
-        <div className="flex w-full h-8 lg:h-6 divide-y-[0.025rem] border-t-[0.025rem] border-b-[0.025rem]   ">
-          <div className="w-8 h-8 lg:w-6 lg:h-6 border-r-[0.025rem] border-b-[0.025rem] "></div>
-          <div className=" grid grid-cols-7 w-full items-center justify-start h-full divide-x-[0.025rem] ">
-            <h6 className=" flex justify-center items-center h-full">M</h6>
+      <div className="overflow-hidden bg-base-100  ">
+        <div className="flex w-full pl-0 pr-8 lg:pr-0 h-8 lg:h-6 lg:divide-y-[0.025rem] lg:border-t-[0.025rem] lg:border-b-[0.025rem] lg:bg-base-100  ">
+          <div className="w-16 h-8 lg:w-6 lg:h-6 lg:border-r-[0.025rem] lg:border-b-[0.025rem]"></div>
+          <div className=" grid grid-cols-7 w-full items-center justify-start h-full lg:divide-x-[0.025rem] bg-base-100 rounded-3xl ">
+            <h6 className=" flex justify-center items-center h-full ">M</h6>
             <h6 className=" flex justify-center items-center h-full">T</h6>
             <h6 className=" flex  justify-center items-center h-full">W</h6>
             <h6 className=" flex  justify-center items-center h-full">T</h6>
@@ -351,8 +352,8 @@ export default function Calendar({ openDrawer }) {
           </div>
         </div>
 
-        <div className="flex w-full bg-base-content divide-x-[0.025rem] ">
-          <div className=" grid grid-cols-1 grid-rows-6 w-8 lg:w-6  divide-y-[0.025rem] bg-base-100 ">
+        <div className="flex pl-0 lg:pl-0 w-full lg:divide-x-[0.025rem] ">
+          <div className=" grid grid-cols-1 grid-rows-6 w-16 lg:w-6  lg:divide-y-[0.025rem] bg-base-100 rounded-3xl lg:rounded-none  ">
             <h6 className="tracking-tight flex p-2 lg:p-0 items-start lg:items-center justify-center">
               {firstWeekOfMonth}
             </h6>
@@ -373,7 +374,7 @@ export default function Calendar({ openDrawer }) {
             </h6>
           </div>
 
-          <div className="h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] grid grid-cols-7 grid-rows-6 w-full bg-base-100 divide-x-[0.025rem] divide-y-[0.025rem] text-xs lg:text-base">
+          <div className="h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] grid grid-cols-7 grid-rows-6 pr-8 pb-8 lg:pb-0 lg:pr-0 lg:w-full lg:bg-base-100 lg:divide-x-[0.025rem] lg:divide-y-[0.025rem] text-xs lg:text-base rounded-3xl ">
             {calendar}
           </div>
         </div>
