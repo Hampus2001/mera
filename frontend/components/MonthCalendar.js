@@ -374,7 +374,7 @@ export default function Calendar({ openDrawer }) {
             </h6>
           </div>
 
-          <div className="h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] grid grid-cols-7 grid-rows-6 pr-8 pb-8 lg:pb-0 lg:pr-0 lg:w-full lg:bg-base-100 lg:divide-x-[0.025rem] lg:divide-y-[0.025rem] text-xs lg:text-base rounded-3xl ">
+          <div className="h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] grid grid-cols-7 grid-rows-6 pr-8 pb-8 lg:pb-0 lg:pr-0 w-full lg:bg-base-100 lg:divide-x-[0.025rem] lg:divide-y-[0.025rem] text-xs lg:text-base rounded-3xl ">
             {calendar}
           </div>
         </div>
