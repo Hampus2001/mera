@@ -191,7 +191,7 @@ export default function WeekCalendar({ openDrawer }) {
       newCalendar.push(
         <div
           key={i}
-          className={`grid p-1 gap-1 bg-base-200 lg:bg-base-100 rounded-2xl lg:rounded-none text-base-content row-span-24 col-start-${
+          className={`grid p-1 gap-1 bg-base-300 lg:bg-base-100 rounded-2xl lg:rounded-none text-base-content row-span-24 col-start-${
             i + 1
           } columns-${gridCols} grid-rows-24 col-span-1 h-full `}
         >
@@ -243,7 +243,7 @@ export default function WeekCalendar({ openDrawer }) {
           </h6>
         </div>
 
-        <div className="grid grid-cols-7 h-full w-full  lg:divide-x-[0.025rem] lg:border-x-[0.025rem] lg:border-b-[0.025rem] rounded-2xl lg:rounded-none">
+        <div className="grid grid-cols-7 grid-rows-25 h-full w-full  lg:divide-x-[0.025rem] lg:border-x-[0.025rem] lg:border-b-[0.025rem] rounded-2xl lg:rounded-none">
           {calendar}
         </div>
       </div>

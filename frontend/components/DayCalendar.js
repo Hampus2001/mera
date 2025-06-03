@@ -204,7 +204,7 @@ export default function DayCalendar({ openDrawer }) {
             </h6>
           </div>
 
-          <div className="grid grid-cols-7 grid-rows-25 px-1 bg-base-200 lg:bg-base-100  rounded-2xl lg:rounded-none lg:border-[0.025rem] w-full">
+          <div className="grid grid-cols-7 grid-rows-25 px-1 bg-base-300 lg:bg-base-100  rounded-2xl lg:rounded-none lg:border-[0.025rem] w-full">
             {calendar}
           </div>
         </div>
