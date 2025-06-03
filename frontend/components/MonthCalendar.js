@@ -340,7 +340,7 @@ export default function Calendar({ openDrawer }) {
     <>
       <div className="overflow-hidden bg-base-100">
         <div className="flex w-full pl-0 pr-8 lg:pr-0 h-8 lg:h-6 lg:divide-y-[0.025rem] lg:border-t-[0.025rem] lg:border-b-[0.025rem] lg:bg-base-100  ">
-          <div className="w-16 h-8 lg:w-6 lg:h-6 lg:border-r-[0.025rem] lg:border-b-[0.025rem]"></div>
+          <div className="w-10 h-8 lg:w-6 lg:h-6 lg:border-r-[0.025rem] lg:border-b-[0.025rem]"></div>
           <div className=" grid grid-cols-7 w-full items-center justify-start h-full lg:divide-x-[0.025rem] bg-base-100 rounded-3xl ">
             <h6 className=" flex justify-center items-center h-full ">M</h6>
             <h6 className=" flex justify-center items-center h-full">T</h6>
@@ -353,7 +353,7 @@ export default function Calendar({ openDrawer }) {
         </div>
 
         <div className="flex pl-0 lg:pl-0 w-full lg:divide-x-[0.025rem] ">
-          <div className=" grid grid-cols-1 grid-rows-6 w-16 lg:w-6  lg:divide-y-[0.025rem] bg-base-100 rounded-3xl lg:rounded-none  ">
+          <div className=" grid grid-cols-1 grid-rows-6 w-10 lg:w-6  lg:divide-y-[0.025rem] bg-base-100 rounded-3xl lg:rounded-none  ">
             <h6 className="tracking-tight flex p-2 lg:p-0 items-start lg:items-center justify-center">
               {firstWeekOfMonth}
             </h6>

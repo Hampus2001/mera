@@ -58,7 +58,15 @@ export default function ScheduleNav() {
       <div className="w-full flex flex-row items-center justify-between pr-4 lg:pr-6 h-16 border-b-[0.025rem] lg:border-none">
         <div className="w-full">
           <Link href="/">
-            <h1 className="text-4xl tracking-tight pl-4 lg:pl-6">MERA</h1>
+            <h1
+              className={`text-4xl tracking-tight pl-4 lg:pl-6 ${
+                activeCalendar === "Week" || activeCalendar === "Day"
+                  ? "lg:pl-8"
+                  : ""
+              }`}
+            >
+              MERA
+            </h1>
           </Link>
         </div>
         <div className="hidden lg:flex flex-row items-center justify-between gap-4 w-full">

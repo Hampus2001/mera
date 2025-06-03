@@ -176,7 +176,7 @@ export default function WeekCalendar({ openDrawer }) {
                   setShowModal(true);
                 }}
                 key={dayDate.getDate()}
-                className={`flex w-full row-span-1 col-start-${displayHolidays.length} col-span-1 bg-info text-info-content justify-center items-center rounded-lg hover:cursor-pointer`}
+                className={`flex w-full row-span-1 col-start-${displayHolidays.length} col-span-1 bg-info text-info-content justify-center items-center card hover:cursor-pointer`}
               >
                 <p className="hidden lg:flex p-2">{holiday.name}</p>
               </button>
@@ -191,7 +191,7 @@ export default function WeekCalendar({ openDrawer }) {
       newCalendar.push(
         <div
           key={i}
-          className={`grid p-1 gap-1 bg-base-100 text-base-content row-span-24 col-start-${
+          className={`grid p-1 gap-1 bg-base-200 lg:bg-base-100 rounded-2xl lg:rounded-none text-base-content row-span-24 col-start-${
             i + 1
           } columns-${gridCols} grid-rows-24 col-span-1 h-full `}
         >
@@ -209,46 +209,43 @@ export default function WeekCalendar({ openDrawer }) {
   }, [todaysState, month, year, redDays]);
 
   return (
-    <div className="h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] z-0 grid grid-cols-15  grid-rows-25 w-full pr-8 lg:pr-0 bg-base-100">
-      <div className="grid grid-rows-25 grid-cols-1 row-start-1 col-start-1 row-span-25 p-1">
+    <div className="h-screen lg:h-[calc(100vh-5.5rem)] w-full flex items-start justify-start z-0 pr-8 pb-8 lg:pb-0 lg:pr-0 bg-base-100 overflow-hidden lg:overflow-y-hidden ">
+      <div className="grid grid-rows-25 w-10 lg:w-8 lg:border-t-[0.025rem] ">
+        <div className="h-8 lg:h-6 lg:border-b-[0.025rem]"></div>
         {Array.from({ length: 24 }).map((_, index) => (
           <h6
             key={index}
-            className={`flex col-span-1 row-span-1 col-start-1 justify-center items-end
-              }`}
+            className={` lg:border-b-[0.025rem] row-span-1 flex justify-center items-center py-1.25 lg:py-1 `}
             style={{
               gridRowStart: index + 2,
             }}
           >
-            {index.toString().padStart(2, "0")}:00
+            {index.toString().padStart(2, "0")}
           </h6>
         ))}
       </div>
+      <div className="flex flex-col w-full h-full lg:border-t-[0.025rem]">
+        <div className="grid grid-cols-7 w-full lg:divide-x-[0.025rem] lg:divide-y-[0.025rem] lg:border-l-[0.025rem]">
+          <h6 className="flex w-full h-8 lg:h-6 justify-center  items-center col-start-1">
+            M
+          </h6>
+          <h6 className="flex w-full h-full justify-center  items-center ">
+            T
+          </h6>
+          <h6 className="flex w-full h-full justify-center items-center">W</h6>
+          <h6 className="flex w-full h-full justify-center items-center ">T</h6>
+          <h6 className="flex w-full h-full justify-center items-center ">F</h6>
+          <h6 className="flex w-full h-full justify-center  items-center ">
+            S
+          </h6>
+          <h6 className="flex w-full h-full justify-center items-center lg:border-b-[0.025rem]  ">
+            S
+          </h6>
+        </div>
 
-      <h6 className="flex w-full h-full justify-center border-y-[0.025rem] border-l-[0.025rem] items-center col-start-2 col-span-2 row-start-1">
-        M
-      </h6>
-      <h6 className="flex w-full h-full justify-center border-y-[0.025rem] border-l-[0.025rem] items-center col-start-4 col-span-2 row-start-1">
-        T
-      </h6>
-      <h6 className="flex w-full h-full justify-center border-y-[0.025rem] border-l-[0.025rem] items-center col-start-6 col-span-2 row-start-1">
-        W
-      </h6>
-      <h6 className="flex w-full h-full justify-center border-y-[0.025rem] border-l-[0.025rem] items-center col-start-8 col-span-2 row-start-1">
-        T
-      </h6>
-      <h6 className="flex w-full h-full justify-center border-y-[0.025rem] border-l-[0.025rem] items-center col-start-10 col-span-2 row-start-1">
-        F
-      </h6>
-      <h6 className="flex w-full h-full justify-center border-y-[0.025rem] border-l-[0.025rem] items-center col-start-12 col-span-2 row-start-1">
-        S
-      </h6>
-      <h6 className="flex w-full h-full justify-center items-center  col-start-14 col-span-2 row-start-1 border-y-[0.025rem] border-x-[0.025rem]">
-        S
-      </h6>
-
-      <div className=" grid grid-cols-7 grid-rows-24 row-start-2 col-start-2 col-span-14 row-span-24 divide-x-[0.025rem] border-x-[0.025rem] border-b-[0.025rem]">
-        {calendar}
+        <div className="grid grid-cols-7 h-full w-full  lg:divide-x-[0.025rem] lg:border-x-[0.025rem] lg:border-b-[0.025rem] rounded-2xl lg:rounded-none">
+          {calendar}
+        </div>
       </div>
 
       {showModal && (

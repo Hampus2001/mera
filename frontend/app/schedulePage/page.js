@@ -43,7 +43,7 @@ export default function SchedulePage() {
       <button
         onClick={openDrawer}
         id="+"
-        className="fixed z-20 lg:hidden btn w-16 h-16 btn-base-300  btn-circle  right-10 bottom-16 shadow-lg "
+        className="fixed z-20 lg:hidden btn w-16 h-16 btn-secondary  btn-circle  right-10 bottom-16 shadow-lg "
       >
         <PlusIcon width={24} height={24} />
       </button>
