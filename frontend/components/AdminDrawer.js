@@ -24,9 +24,8 @@ export default function AdminDrawer() {
     new Set(shifts.map((shift) => shift.role).filter(Boolean))
   );
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-
     const shiftToAdd = {
       ...newShift,
       company_id: company || null,
@@ -47,7 +46,7 @@ export default function AdminDrawer() {
     });
 
     console.log("New shift added:", shiftToAdd);
-  };
+  }
 
   return (
     <div className="w-full">
@@ -67,9 +66,11 @@ export default function AdminDrawer() {
             }
             className="select w-full"
           >
-            <option value="">Pick a User</option>
+            <option key={0} value="">
+              Pick a User
+            </option>
             {users.map((user) => (
-              <option key={user.id} value={user.id}>
+              <option key={user.user_id} value={user.user_id}>
                 {user.username}
               </option>
             ))}
@@ -184,9 +185,9 @@ export default function AdminDrawer() {
           </select>
         </div>
 
-        {/* <button type="submit" className="btn btn-primary w-full mt-4">
+        <button type="submit" className="btn btn-primary w-full mt-4">
           Add Shift
-        </button> */}
+        </button>
       </form>
     </div>
   );
