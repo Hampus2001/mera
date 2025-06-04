@@ -180,31 +180,30 @@ export default function DayCalendar({ openDrawer }) {
 
   return (
     <>
-      <div className="flex items-start justify-start w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] pr-8  lg:pr-0 bg-base-100 overflow-x-hidden">
-        <div className="grid grid-rows-25  w-10 lg:w-8  lg:border-t-[0.025rem] ">
-          <div className="h-8 lg:h-6 lg:border-b-[0.025rem]"></div>
-          {Array.from({ length: 24 }).map((_, index) => (
-            <h6
-              key={index}
-              className={` lg:border-b-[0.025rem] row-span-1 flex justify-center items-start py-1.25 lg:py-1 `}
-              style={{
-                gridRowStart: index + 2,
-              }}
-            >
-              {index.toString().padStart(2, "0")}
-            </h6>
-          ))}
-        </div>
-
-        <div className="flex flex-col w-full h-full">
-          <div className="flex w-full h-8 lg:h-6 justify-center items-center lg:border-x-[0.025rem] lg:border-t-[0.025rem]  px-1">
-            <h6 className="h-8 lg:h-6 flex justify-center items-center  ">
+      <div className="flex flex-col gap-4 w-full h-[calc(100vh-16rem)] lg:h-[calc(100vh-5.5rem)] pr-8 lg:pr-0 bg-base-100 overflow-x-hidden">
+        <div className="grid grid-cols-16 grid-rows-25 w-full ">
+          <div className="flex col-start-2 col-span-15 justify-center items-center border-x-[0.025rem] border-t-[0.025rem]  px-1">
+            <h6>
               {currentDayString} - {todaysState}{" "}
               {activeHoliday ? " - " + activeHoliday.name : ""}
             </h6>
           </div>
 
-          <div className="grid grid-cols-7 grid-rows-25 px-1 bg-base-300 lg:bg-base-100  rounded-2xl lg:rounded-none lg:border-[0.025rem] w-full">
+          <div className="grid grid-rows-24 grid-cols-1 row-start-2 col-start-1 row-span-25 px-1">
+            {Array.from({ length: 24 }).map((_, index) => (
+              <h6
+                key={index}
+                className={`flex col-span-1 row-span-1 col-start-1 justify-center items-end
+              }`}
+                style={{
+                  gridRowStart: index + 1,
+                }}
+              >
+                {index.toString().padStart(2, "0")}:00
+              </h6>
+            ))}
+          </div>
+          <div className="row-start-2 col-start-2 col-span-15 row-span-24 px-1 border-[0.025rem]">
             {calendar}
           </div>
         </div>
