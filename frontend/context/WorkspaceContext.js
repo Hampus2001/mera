@@ -40,9 +40,6 @@ export default function WorkspaceContext({ children }) {
     }
   }, [activeUserId && users]);
 
-  useEffect(() => {
-    console.log("users", users);
-  }, [users]);
   return (
     <HandleWorkspaceContext.Provider
       value={{
