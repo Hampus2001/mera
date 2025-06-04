@@ -33,7 +33,6 @@ export default function WorkspaceContext({ children }) {
   useEffect(() => {
     if (activeUserId != undefined) {
       if (activeUserId != undefined) {
-        console.log("active userid", activeUserId);
         const active = users.find((user) => user.user_id == activeUserId);
         setActiveUser(active.username);
       }
