@@ -17,7 +17,7 @@ jobs:
       - name: Copy files to EC2
         uses: appleboy/scp-action@master
         with:
-          host: http://ec2-16-171-239-29.eu-north-1.compute.amazonaws.com/
+          host: ec2-16-171-239-29.eu-north-1.compute.amazonaws.com
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: 22
@@ -27,7 +27,7 @@ jobs:
       - name: Run Docker on EC2
         uses: appleboy/ssh-action@master
         with:
-          host: http://ec2-16-171-239-29.eu-north-1.compute.amazonaws.com/
+          host: ec2-16-171-239-29.eu-north-1.compute.amazonaws.com
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: 22
