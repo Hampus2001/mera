@@ -1,15 +1,13 @@
 import "dotenv/config";
 import express from "express";
-import bodyParser from "body-parser";
 import cors from "cors";
 import mysql from "mysql2/promise";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
