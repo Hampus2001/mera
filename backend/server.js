@@ -1,21 +1,22 @@
+import "dotenv/config";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mysql from "mysql2/promise";
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
 const pool = mysql.createPool({
-  host: "ec2-13-48-30-37.eu-north-1.compute.amazonaws.com", // Change this to your EC2 public IP if remote
-  user: "admin",
-  password: "admin",
-  database: "mera-db",
-  port: 3307, // inside container MySQL port, mapped to 3307 locally, so keep 3306 here
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: Number(process.env.DB_PORT),
 });
 
 app.post("/createCompanyAccount", async (req, res) => {
