@@ -26,7 +26,7 @@ export default function AuthPage() {
     };
 
     try {
-      const res = await fetch("http://localhost:3001/session", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/session`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

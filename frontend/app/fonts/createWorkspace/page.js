@@ -195,7 +195,7 @@ export default function CreateWorkspace() {
       roles: companyRoles,
     };
 
-    await fetch("http://localhost:3001/createCompanyAccount", {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/createCompanyAccount`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
