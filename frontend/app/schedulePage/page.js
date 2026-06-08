@@ -48,7 +48,7 @@ export default function SchedulePage() {
         <PlusIcon width={24} height={24} />
       </button>
 
-      <div className="w-screen overflow-hidden">
+      <div className="w-full overflow-x-hidden">
         <ScheduleNav />
         {isAdmin && (
           <motion.div

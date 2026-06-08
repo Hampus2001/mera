@@ -66,7 +66,7 @@ export default function RootLayout({ children }) {
       <WorkspaceContext>
         <CalendarContext>
           <body
-            className={`${fontAbsans.variable} ${fontMattone.variable} ${fontMattoneBold.variable} ${fontMattoneBlack.variable} ${fontInstrument.variable} ${fontRoboto.variable} ${fontDiatypeRegular.variable} ${fontDiatypeMedium.variable} ${fontDiatypeBold.variable}  antialiased`}
+            className={`${fontAbsans.variable} ${fontMattone.variable} ${fontMattoneBold.variable} ${fontMattoneBlack.variable} ${fontInstrument.variable} ${fontRoboto.variable} ${fontDiatypeRegular.variable} ${fontDiatypeMedium.variable} ${fontDiatypeBold.variable} antialiased overflow-x-hidden max-w-[100vw]`}
           >
             {children}
           </body>
