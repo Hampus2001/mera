@@ -47,6 +47,12 @@ export default function LandingNav({ variant }) {
           <>
             {/* Desktop nav */}
             <nav className=" hidden lg:flex space-x-8 items-center font-diatype-medium w-full">
+              <a
+                className="cursor-pointer opacity-60 hover:opacity-100 transition-opacity"
+                href="https://www.irene-rubio.com"
+              >
+                ← Back to Portfolio
+              </a>
               <Link className="cursor-pointer" href="/">
                 Examples
               </Link>
@@ -131,6 +137,9 @@ export default function LandingNav({ variant }) {
 
           {/* Navigation links */}
           <nav className="flex flex-col space-y-2">
+            <a href="https://www.irene-rubio.com" className="flex justify-between items-center border-b-[0.025rem]">
+              <p className="leading-loose opacity-60">← Back to Portfolio</p>
+            </a>
             <Link onClick={handleMobileMenu} href="/">
               <p className=" leading-loose  border-b-[0.025rem]">Product</p>
             </Link>
