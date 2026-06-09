@@ -195,7 +195,13 @@ export default function ScheduleNav() {
           </select>
         </div>
         <div className="flex items-center justify-end  w-full">
-          <span className="hidden lg:flex gap-4 w-full justify-end">
+          <span className="hidden lg:flex gap-4 w-full justify-end items-center">
+            <a
+              href="https://www.irene-rubio.com"
+              className="cursor-pointer opacity-60 hover:opacity-100 transition-opacity text-sm whitespace-nowrap"
+            >
+              ← Back to Portfolio
+            </a>
             <button className="btn btn-sm ui-app ">Settings</button>
             <button className="btn btn-sm ui-app btn-primary">Share</button>
 
@@ -287,6 +293,12 @@ export default function ScheduleNav() {
             <Link href="/">
               <p className=" leading-loose">Back to Home</p>
             </Link>
+            <a
+              href="https://www.irene-rubio.com"
+              className="flex justify-between items-center border-b-[0.025rem]"
+            >
+              <p className="leading-loose opacity-60">← Back to Portfolio</p>
+            </a>
           </nav>
           <span className="flex flex-col gap-4">
             <button className="btn  btn-accent w-full ui-app uppercase">
